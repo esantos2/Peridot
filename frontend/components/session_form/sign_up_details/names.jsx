@@ -10,8 +10,7 @@ class Names extends React.Component {
 
     handleNext(e) {
         e.preventDefault();
-        //validate fields
-        this.props.nextStep();
+        this.checkFields();
     }
 
     handlePrev(e) {
@@ -19,10 +18,22 @@ class Names extends React.Component {
         this.props.prevStep();
     }
 
+    checkFields() {
+        const { values } = this.props;
+        let newErrors = [];
+        Object.keys(values).forEach(val => {
+            if (values[val] === '') {
+                newErrors.push(`${val} can't be blank!`);
+            }
+        })
+        this.props.addErrors(newErrors);
+    }
+
     render() {
         const { values } = this.props;
         return (
             <form className="sign-up-form" >
+                {this.props.showErrors()}
                 <label>Username
                     <input type='text' value={values.username} onChange={this.props.update("username")} />
                 </label>

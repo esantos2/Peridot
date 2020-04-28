@@ -10,8 +10,7 @@ class LanguageAndRegion extends React.Component {
 
     handleNext(e) {
         e.preventDefault();
-        //validate fields
-        this.props.nextStep(e);
+        this.checkFields();
     }
 
     handlePrev(e) {
@@ -19,10 +18,21 @@ class LanguageAndRegion extends React.Component {
         this.props.prevStep();
     }
 
-    render() {
+    checkFields() {
         const { values } = this.props;
+        let newErrors = [];
+        Object.keys(values).forEach(val => {
+            if (values[val] === '') {
+                newErrors.push(`${val} can't be blank!`);
+            }
+        })
+        this.props.addErrors(newErrors);
+    }
+
+    render() {
         return (
             <form className="sign-up-form">
+                {this.props.showErrors()}
                 <label htmlFor="language">Language</label>
                 <select id="language" onChange={this.props.update("language")}>
                     <option value="">--Select language--</option>

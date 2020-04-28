@@ -9,14 +9,25 @@ class Credentials extends React.Component {
 
     handleNext(e){
         e.preventDefault();
-        //validate fields
-        this.props.nextStep();
+        this.checkFields();
+    }
+
+    checkFields(){
+        const { values } = this.props;
+        let newErrors = [];
+        Object.keys(values).forEach( val => {
+            if (values[val] === ''){
+                newErrors.push(`${val} can't be blank!`);
+            }
+        })
+        this.props.addErrors(newErrors);
     }
 
     render(){
         const { values } = this.props;
         return (
             <form className="sign-up-form" >
+                {this.props.showErrors()}
                 <label>Email
                     <input type='text' value={values.email} onChange={this.props.update("email")} />
                 </label>

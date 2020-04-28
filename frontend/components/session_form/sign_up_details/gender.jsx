@@ -10,8 +10,7 @@ class Gender extends React.Component{
 
     handleNext(e) {
         e.preventDefault();
-        //validate fields
-        this.props.nextStep();
+        this.checkFields();
     }
 
     handlePrev(e) {
@@ -19,11 +18,22 @@ class Gender extends React.Component{
         this.props.prevStep();
     }
 
-    render() {
+    checkFields() {
         const { values } = this.props;
+        let newErrors = [];
+        Object.keys(values).forEach(val => {
+            if (values[val] === '') {
+                newErrors.push(`${val} can't be blank!`);
+            }
+        })
+        this.props.addErrors(newErrors);
+    }
+
+    render() {
         return (
             <form className="sign-up-form">
                 <p>Gender</p>
+                {this.props.showErrors()}
                 <input type="radio" id="male" value="male" onClick={this.props.update("gender")} />
                 <label htmlFor="male">Male</label>
                 <input type="radio" id="female" value="female" onClick={this.props.update("gender")} />

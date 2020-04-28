@@ -3,6 +3,7 @@ import Credentials from './sign_up_details/credentials';
 import Names from './sign_up_details/names';
 import Gender from './sign_up_details/gender';
 import LanguageAndRegion from './sign_up_details/language_and_region';
+import Success from './sign_up_details/success';
 
 class SignUpForm extends React.Component{
     constructor(props){
@@ -24,7 +25,8 @@ class SignUpForm extends React.Component{
         this.prevStep = this.prevStep.bind(this);
         this.submitForm = this.submitForm.bind(this);
         this.update = this.update.bind(this);
-        this.validateInput = this.validateInput.bind(this);
+        this.addErrors = this.addErrors.bind(this);
+        this.showErrors = this.showErrors.bind(this);
     }
 
     showErrors(){
@@ -36,23 +38,11 @@ class SignUpForm extends React.Component{
         </ul>)
     }
 
-    errorsPresent(){
-        const { errors } = this.state;
-        return errors !== []
-    }
-
-    validateInput(field){
-        if (this.state[field] === ''){
-            this.setState({ errors: this.state.errors.concat([ `${field} can't be blank!`])})
-        }
-    }
-
     nextStep(){
-        if (this.errorsPresent()){
-            this.setState({errors: errors})
+        const {errors, step} = this.state;
+        if (errors.length === 0){
+            this.setState({ step: step + 1})
         }
-        const {step} = this.state;
-        this.setState({ step: step + 1})
     }
 
     prevStep(){
@@ -62,35 +52,65 @@ class SignUpForm extends React.Component{
 
     update(field) {
         return e => {
-            this.setState({ [field]: e.target.value })
+            this.setState({ [field]: e.target.value });
         }
+    }
+
+    addErrors(arr){
+        this.setState({errors: arr}, () => this.nextStep());
     }
 
     submitForm(e){
         e.preventDefault();
         const user = Object.assign({}, this.state);
         delete user["step"];
+        delete user["errors"];
         const { processForm } = this.props;
+        debugger
         processForm(user);
     }
 
     render(){
-        const {step} = this.state;
-        const {email, password, age, username, first_name, last_name, gender, language, region} = this.state;
+        const {step, email, password, age, username, first_name, last_name, gender, language, region} = this.state;
         const credVals = { email, password, age};
         const nameVals = { username, first_name, last_name};
         const genVal = { gender };
         const langAndRegVals = { language, region };
         switch(step){
             case 1: //email, password, age
-                return <Credentials update={this.update} nextStep={this.nextStep} values={credVals}/>;
+                return <Credentials 
+                    update={this.update} 
+                    nextStep={this.nextStep}
+                    addErrors={this.addErrors}
+                    showErrors={this.showErrors}
+                    values={credVals}/>;
             case 2: //username, first_name, last_name
-                return <Names update={this.update} nextStep={this.nextStep} prevStep={this.prevStep} values={nameVals}/>;
+                return <Names 
+                    update={this.update} 
+                    nextStep={this.nextStep} 
+                    prevStep={this.prevStep} 
+                    addErrors={this.addErrors}
+                    showErrors={this.showErrors}
+                    values={nameVals}/>;
             case 3: //gender
-                return <Gender update={this.update} nextStep={this.nextStep} prevStep={this.prevStep} values={genVal} />;
+                return <Gender 
+                    update={this.update} 
+                    nextStep={this.nextStep} 
+                    prevStep={this.prevStep} 
+                    addErrors={this.addErrors}
+                    showErrors={this.showErrors}
+                    values={genVal} />;
             case 4: //language, region
-                return <LanguageAndRegion update={this.update} nextStep={this.submitForm} prevStep={this.prevStep} values={langAndRegVals} />;
-            // case 5: //signup
+                return <LanguageAndRegion 
+                    update={this.update} 
+                    nextStep={this.submitForm} 
+                    prevStep={this.prevStep} 
+                    addErrors={this.addErrors}
+                    showErrors={this.showErrors}
+                    values={langAndRegVals} />;
+            case 5: //signup
+                return <Success 
+                    submitForm={this.submitForm}/>;
         }
     }
 }

@@ -9,7 +9,7 @@
 User.create!(
     email: "notSoSuper@gmail.com", 
     password: "password",
-    age: 33,
+    age: "33",
     username: "man_of_steel", 
     gender: "male",
     language: "English",
@@ -21,7 +21,7 @@ User.create!(
 User.create!(
     email: "batBoy@yahoo.com", 
     password: "password",
-    age: 35,
+    age: "35",
     username: "dark_knight", 
     gender: "male",
     language: "English",
@@ -33,7 +33,7 @@ User.create!(
 User.create!(
     email: "qween@io", 
     password: "password",
-    age: 28,
+    age: "28",
     username: "woman_of_wonder", 
     gender: "female",
     language: "English",
