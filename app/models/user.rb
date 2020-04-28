@@ -8,15 +8,18 @@
 #  last_name       :string           not null
 #  email           :string           not null
 #  bio             :text
-#  location        :string
 #  session_token   :string           not null
 #  password_digest :string           not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  age             :integer          not null
+#  gender          :string           not null
+#  language        :string           not null
+#  region          :string           not null
 #
 class User < ApplicationRecord
     validates :username, :email, :session_token, presence: true, uniqueness: true
-    validates :password_digest, :first_name, :last_name, presence: true
+    validates :password_digest, :first_name, :last_name, :age, :gender, :language, :region, presence: true
     validates :password, length: {minimum: 6, allow_nil: true}
 
     attr_reader :password

@@ -7,30 +7,39 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 User.create!(
+    email: "notSoSuper@gmail.com", 
+    password: "password",
+    age: 33,
     username: "man_of_steel", 
+    gender: "male",
+    language: "English",
+    region: "USA",
     first_name: "Clark", 
     last_name: "Kent", 
-    email: "notSoSuper@gmail.com", 
-    bio: "Just a simple farmer, nothing to see here.", 
-    location: "Smallville",
-    password: "password")
+    bio: "Just a simple farmer, nothing to see here.")
 
 User.create!(
+    email: "batBoy@yahoo.com", 
+    password: "password",
+    age: 35,
     username: "dark_knight", 
+    gender: "male",
+    language: "English",
+    region: "USA",
     first_name: "Bruce", 
     last_name: "Wayne", 
-    email: "batBoy@yahoo.com", 
-    bio: "I'm rich.", 
-    location: "Gotham City",
-    password: "password")
+    bio: "I'm rich.")
 
 User.create!(
-    username: "worldOfWonder", 
+    email: "qween@io", 
+    password: "password",
+    age: 28,
+    username: "woman_of_wonder", 
+    gender: "female",
+    language: "English",
+    region: "Themyscira",
     first_name: "Diana", 
     last_name: "Prince", 
-    email: "qween.io", 
-    bio: "Fighting doesn't make you a hero", 
-    location: "Themyscira",
-    password: "password")
+    bio: "Fighting doesn't make you a hero")
 
     

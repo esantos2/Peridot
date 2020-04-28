@@ -8,11 +8,14 @@
 #  last_name       :string           not null
 #  email           :string           not null
 #  bio             :text
-#  location        :string
 #  session_token   :string           not null
 #  password_digest :string           not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  age             :integer          not null
+#  gender          :string           not null
+#  language        :string           not null
+#  region          :string           not null
 #
 require 'test_helper'
 
