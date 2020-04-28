@@ -6,6 +6,7 @@ const Greeting = ({currentUser, logout}) => {
     const loggedin = () =>  {
         return (
             <div className="header-logout">
+                <h1>Peridot!</h1>
                 <h2>{currentUser.username}</h2>
                 <button onClick={logout} >Logout</button>
             </div>

@@ -8,7 +8,7 @@ import SignupFormContainer from './session_form/signup_form_container';
 const App = () => (
     <div>
         <header>
-            <h1>Peridot App</h1>
+            {/* <h1>Peridot App</h1> */}
             <GreetingContainer />
         </header>
         <AuthRoute path='/login' component={LoginFormContainer} />

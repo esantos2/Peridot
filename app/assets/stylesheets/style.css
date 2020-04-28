@@ -1,0 +1,17 @@
+.body{
+    display: flex;
+    /* position: relative; */
+}
+
+.header-login-signup{
+
+}
+
+.header-logout{
+    display: block;
+    position: absolute;
+    /* background-color: rgb(54, 247, 54); */
+    background-image: linear-gradient(to bottom );
+    box-shadow: 5px 10px 28px #888888;
+
+}

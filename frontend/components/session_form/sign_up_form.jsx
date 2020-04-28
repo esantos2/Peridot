@@ -66,7 +66,6 @@ class SignUpForm extends React.Component{
         delete user["step"];
         delete user["errors"];
         const { processForm } = this.props;
-        debugger
         processForm(user);
     }
 
