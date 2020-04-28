@@ -301,45 +301,10 @@ var Root = function Root(_ref) {
 
 /***/ }),
 
-/***/ "./frontend/components/session_form/login_form_container.js":
-/*!******************************************************************!*\
-  !*** ./frontend/components/session_form/login_form_container.js ***!
-  \******************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
-/* harmony import */ var _session_form__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./session_form */ "./frontend/components/session_form/session_form.jsx");
-
-
-
-
-var mapStateToProps = function mapStateToProps(state) {
-  return {
-    errors: state.errors.session,
-    formType: 'login'
-  };
-};
-
-var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {
-    processForm: function processForm(user) {
-      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["login"])(user));
-    }
-  };
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_session_form__WEBPACK_IMPORTED_MODULE_2__["default"]));
-
-/***/ }),
-
-/***/ "./frontend/components/session_form/session_form.jsx":
-/*!***********************************************************!*\
-  !*** ./frontend/components/session_form/session_form.jsx ***!
-  \***********************************************************/
+/***/ "./frontend/components/session_form/login_form.jsx":
+/*!*********************************************************!*\
+  !*** ./frontend/components/session_form/login_form.jsx ***!
+  \*********************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -373,15 +338,15 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
-var SessionForm = /*#__PURE__*/function (_React$Component) {
-  _inherits(SessionForm, _React$Component);
+var LoginForm = /*#__PURE__*/function (_React$Component) {
+  _inherits(LoginForm, _React$Component);
 
-  var _super = _createSuper(SessionForm);
+  var _super = _createSuper(LoginForm);
 
-  function SessionForm(props) {
+  function LoginForm(props) {
     var _this;
 
-    _classCallCheck(this, SessionForm);
+    _classCallCheck(this, LoginForm);
 
     _this = _super.call(this, props);
     _this.state = {
@@ -392,7 +357,7 @@ var SessionForm = /*#__PURE__*/function (_React$Component) {
     return _this;
   }
 
-  _createClass(SessionForm, [{
+  _createClass(LoginForm, [{
     key: "update",
     value: function update(field) {
       var _this2 = this;
@@ -434,10 +399,56 @@ var SessionForm = /*#__PURE__*/function (_React$Component) {
     }
   }]);
 
-  return SessionForm;
+  return LoginForm;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-/* harmony default export */ __webpack_exports__["default"] = (SessionForm);
+/* harmony default export */ __webpack_exports__["default"] = (LoginForm);
+
+/***/ }),
+
+/***/ "./frontend/components/session_form/login_form_container.js":
+/*!******************************************************************!*\
+  !*** ./frontend/components/session_form/login_form_container.js ***!
+  \******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
+/* harmony import */ var _login_form__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./login_form */ "./frontend/components/session_form/login_form.jsx");
+
+
+
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    errors: state.errors.session,
+    formType: 'login'
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    processForm: function processForm(user) {
+      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["login"])(user));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_login_form__WEBPACK_IMPORTED_MODULE_2__["default"]));
+
+/***/ }),
+
+/***/ "./frontend/components/session_form/sign_up_form.jsx":
+/*!***********************************************************!*\
+  !*** ./frontend/components/session_form/sign_up_form.jsx ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, exports) {
+
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /home/esant2/Documents/Peridot/Peridot/frontend/components/session_form/sign_up_form.jsx: Identifier 'gender' has already been declared (133:14)\n\n\u001b[0m \u001b[90m 131 | \u001b[39m        \u001b[36mconst\u001b[39m credVals \u001b[33m=\u001b[39m { email\u001b[33m,\u001b[39m password\u001b[33m,\u001b[39m age}\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 132 | \u001b[39m        \u001b[36mconst\u001b[39m nameVals \u001b[33m=\u001b[39m { username\u001b[33m,\u001b[39m first_name\u001b[33m,\u001b[39m last_name}\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 133 | \u001b[39m        \u001b[36mconst\u001b[39m gender \u001b[33m=\u001b[39m { gender }\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m     | \u001b[39m              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 134 | \u001b[39m        \u001b[36mconst\u001b[39m langAndRegVals \u001b[33m=\u001b[39m { language\u001b[33m,\u001b[39m region }\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 135 | \u001b[39m        \u001b[36mswitch\u001b[39m(step){\u001b[0m\n\u001b[0m \u001b[90m 136 | \u001b[39m            \u001b[36mcase\u001b[39m \u001b[35m1\u001b[39m\u001b[33m:\u001b[39m \u001b[90m//email, password, age\u001b[39m\u001b[0m\n    at Object._raise (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:742:17)\n    at Object.raiseWithData (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:735:17)\n    at Object.raise (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:729:17)\n    at ScopeHandler.checkRedeclarationInScope (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:4769:12)\n    at ScopeHandler.declareName (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:4735:12)\n    at Object.checkLVal (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:9207:22)\n    at Object.parseVarId (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:11762:10)\n    at Object.parseVar (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:11737:12)\n    at Object.parseVarStatement (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:11549:10)\n    at Object.parseStatementContent (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:11148:21)\n    at Object.parseStatement (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:11081:17)\n    at Object.parseBlockOrModuleBlockBody (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:11656:25)\n    at Object.parseBlockBody (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:11642:10)\n    at Object.parseBlock (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:11626:10)\n    at Object.parseFunctionBody (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:10634:24)\n    at Object.parseFunctionBodyAndFinish (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:10617:10)\n    at Object.parseMethod (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:10579:10)\n    at Object.pushClassMethod (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:12081:30)\n    at Object.parseClassMemberWithIsStatic (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:11998:12)\n    at Object.parseClassMember (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:11940:10)\n    at withTopicForbiddingContext (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:11885:14)\n    at Object.withTopicForbiddingContext (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:10956:14)\n    at Object.parseClassBody (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:11862:10)\n    at Object.parseClass (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:11836:22)\n    at Object.parseStatementContent (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:11123:21)\n    at Object.parseStatement (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:11081:17)\n    at Object.parseBlockOrModuleBlockBody (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:11656:25)\n    at Object.parseBlockBody (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:11642:10)\n    at Object.parseTopLevel (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:11012:10)\n    at Object.parse (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:12637:10)");
 
 /***/ }),
 
@@ -452,7 +463,7 @@ var SessionForm = /*#__PURE__*/function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
-/* harmony import */ var _session_form__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./session_form */ "./frontend/components/session_form/session_form.jsx");
+/* harmony import */ var _sign_up_form__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./sign_up_form */ "./frontend/components/session_form/sign_up_form.jsx");
 
 
 
@@ -460,7 +471,7 @@ __webpack_require__.r(__webpack_exports__);
 var mapStateToProps = function mapStateToProps(state, ownProps) {
   return {
     errors: state.errors.session,
-    formType: 'signup'
+    inputs: {}
   };
 };
 
@@ -472,7 +483,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_session_form__WEBPACK_IMPORTED_MODULE_2__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_sign_up_form__WEBPACK_IMPORTED_MODULE_2__["default"]));
 
 /***/ }),
 
