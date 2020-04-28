@@ -576,7 +576,7 @@ var Gender = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.handleNext = _this.handleNext.bind(_assertThisInitialized(_this));
-    _this.handlePrev = _this.handleNext.bind(_assertThisInitialized(_this));
+    _this.handlePrev = _this.handlePrev.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -682,7 +682,7 @@ var LanguageAndRegion = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.handleNext = _this.handleNext.bind(_assertThisInitialized(_this));
-    _this.handlePrev = _this.handleNext.bind(_assertThisInitialized(_this));
+    _this.handlePrev = _this.handlePrev.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -691,7 +691,7 @@ var LanguageAndRegion = /*#__PURE__*/function (_React$Component) {
     value: function handleNext(e) {
       e.preventDefault(); //validate fields
 
-      this.props.nextStep();
+      this.props.nextStep(e);
     }
   }, {
     key: "handlePrev",
@@ -789,7 +789,7 @@ var Names = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.handleNext = _this.handleNext.bind(_assertThisInitialized(_this));
-    _this.handlePrev = _this.handleNext.bind(_assertThisInitialized(_this));
+    _this.handlePrev = _this.handlePrev.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -798,13 +798,11 @@ var Names = /*#__PURE__*/function (_React$Component) {
     value: function handleNext(e) {
       e.preventDefault(); //validate fields
 
-      debugger;
       this.props.nextStep();
     }
   }, {
     key: "handlePrev",
     value: function handlePrev(e) {
-      debugger;
       e.preventDefault();
       this.props.prevStep();
     }
@@ -826,9 +824,9 @@ var Names = /*#__PURE__*/function (_React$Component) {
         type: "text",
         value: values.last_name,
         onChange: this.props.update("last_name")
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.handlePrev
-      }, '<'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, '<'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.handleNext
       }, '>'));
     }
@@ -899,6 +897,7 @@ var SignUpForm = /*#__PURE__*/function (_React$Component) {
     _this = _super.call(this, props);
     _this.state = {
       step: 1,
+      errors: [],
       email: '',
       password: '',
       age: '',
@@ -913,13 +912,14 @@ var SignUpForm = /*#__PURE__*/function (_React$Component) {
     _this.prevStep = _this.prevStep.bind(_assertThisInitialized(_this));
     _this.submitForm = _this.submitForm.bind(_assertThisInitialized(_this));
     _this.update = _this.update.bind(_assertThisInitialized(_this));
+    _this.validateInput = _this.validateInput.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(SignUpForm, [{
     key: "showErrors",
     value: function showErrors() {
-      var errors = this.props.errors;
+      var errors = this.state.errors;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, errors.map(function (err, idx) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
           key: idx
@@ -927,11 +927,29 @@ var SignUpForm = /*#__PURE__*/function (_React$Component) {
       }));
     }
   }, {
+    key: "errorsPresent",
+    value: function errorsPresent() {
+      var errors = this.state.errors;
+      return errors !== [];
+    }
+  }, {
     key: "validateInput",
-    value: function validateInput(field) {}
+    value: function validateInput(field) {
+      if (this.state[field] === '') {
+        this.setState({
+          errors: this.state.errors.concat(["".concat(field, " can't be blank!")])
+        });
+      }
+    }
   }, {
     key: "nextStep",
-    value: function nextStep(e) {
+    value: function nextStep() {
+      if (this.errorsPresent()) {
+        this.setState({
+          errors: errors
+        });
+      }
+
       var step = this.state.step;
       this.setState({
         step: step + 1
@@ -939,7 +957,7 @@ var SignUpForm = /*#__PURE__*/function (_React$Component) {
     }
   }, {
     key: "prevStep",
-    value: function prevStep(e) {
+    value: function prevStep() {
       var step = this.state.step;
       this.setState({
         step: step - 1

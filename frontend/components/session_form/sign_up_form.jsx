@@ -9,6 +9,7 @@ class SignUpForm extends React.Component{
         super(props)
         this.state = {
             step: 1,
+            errors: [],
             email: '',
             password: '',
             age: '',
@@ -23,10 +24,11 @@ class SignUpForm extends React.Component{
         this.prevStep = this.prevStep.bind(this);
         this.submitForm = this.submitForm.bind(this);
         this.update = this.update.bind(this);
+        this.validateInput = this.validateInput.bind(this);
     }
 
     showErrors(){
-        const {errors} = this.props;
+        const {errors} = this.state;
         return (<ul>
             {errors.map((err, idx) => {
                 return <li key={idx}>{err}</li>
@@ -34,16 +36,26 @@ class SignUpForm extends React.Component{
         </ul>)
     }
 
-    validateInput(field){
-        
+    errorsPresent(){
+        const { errors } = this.state;
+        return errors !== []
     }
 
-    nextStep(e){
+    validateInput(field){
+        if (this.state[field] === ''){
+            this.setState({ errors: this.state.errors.concat([ `${field} can't be blank!`])})
+        }
+    }
+
+    nextStep(){
+        if (this.errorsPresent()){
+            this.setState({errors: errors})
+        }
         const {step} = this.state;
         this.setState({ step: step + 1})
     }
 
-    prevStep(e){
+    prevStep(){
         const {step} = this.state;
         this.setState({ step: step - 1})
     }

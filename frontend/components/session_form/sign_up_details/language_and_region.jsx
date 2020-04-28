@@ -5,13 +5,13 @@ class LanguageAndRegion extends React.Component {
     constructor(props) {
         super(props)
         this.handleNext = this.handleNext.bind(this);
-        this.handlePrev = this.handleNext.bind(this);
+        this.handlePrev = this.handlePrev.bind(this);
     }
 
     handleNext(e) {
         e.preventDefault();
         //validate fields
-        this.props.nextStep();
+        this.props.nextStep(e);
     }
 
     handlePrev(e) {

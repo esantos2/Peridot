@@ -5,18 +5,16 @@ class Names extends React.Component {
     constructor(props) {
         super(props)
         this.handleNext = this.handleNext.bind(this);
-        this.handlePrev = this.handleNext.bind(this);
+        this.handlePrev = this.handlePrev.bind(this);
     }
 
     handleNext(e) {
         e.preventDefault();
         //validate fields
-        debugger
         this.props.nextStep();
     }
 
     handlePrev(e) {
-        debugger
         e.preventDefault();
         this.props.prevStep();
     }
@@ -34,9 +32,7 @@ class Names extends React.Component {
                 <label>Last Name
                     <input type='text' value={values.last_name} onChange={this.props.update("last_name")} />
                 </label>
-                <br></br>
                 <button onClick={this.handlePrev}>{'<'}</button>
-                <br></br>
                 <button onClick={this.handleNext}>{'>'}</button>
             </form>
         )
