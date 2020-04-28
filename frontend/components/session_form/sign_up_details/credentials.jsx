@@ -4,10 +4,10 @@ class Credentials extends React.Component {
 
     constructor(props){
         super(props)
-        this.checkForm = this.checkForm.bind(this);
+        this.handleNext = this.handleNext.bind(this);
     }
 
-    checkForm(e){
+    handleNext(e){
         e.preventDefault();
         //validate fields
         this.props.nextStep();
@@ -26,7 +26,7 @@ class Credentials extends React.Component {
                 <label>Age
                     <input type='text' value={values.age} onChange={this.props.update("age")} />
                 </label>
-                <button onClick={this.checkForm}>{'>'}</button>
+                <button onClick={this.handleNext}>{'>'}</button>
             </form>
         )
     }

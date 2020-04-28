@@ -441,14 +441,604 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 /***/ }),
 
+/***/ "./frontend/components/session_form/sign_up_details/credentials.jsx":
+/*!**************************************************************************!*\
+  !*** ./frontend/components/session_form/sign_up_details/credentials.jsx ***!
+  \**************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+var Credentials = /*#__PURE__*/function (_React$Component) {
+  _inherits(Credentials, _React$Component);
+
+  var _super = _createSuper(Credentials);
+
+  function Credentials(props) {
+    var _this;
+
+    _classCallCheck(this, Credentials);
+
+    _this = _super.call(this, props);
+    _this.handleNext = _this.handleNext.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(Credentials, [{
+    key: "handleNext",
+    value: function handleNext(e) {
+      e.preventDefault(); //validate fields
+
+      this.props.nextStep();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var values = this.props.values;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        className: "sign-up-form"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Email", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        value: values.email,
+        onChange: this.props.update("email")
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Password", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "password",
+        value: values.password,
+        onChange: this.props.update("password")
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Age", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        value: values.age,
+        onChange: this.props.update("age")
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.handleNext
+      }, '>'));
+    }
+  }]);
+
+  return Credentials;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (Credentials);
+
+/***/ }),
+
+/***/ "./frontend/components/session_form/sign_up_details/gender.jsx":
+/*!*********************************************************************!*\
+  !*** ./frontend/components/session_form/sign_up_details/gender.jsx ***!
+  \*********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+var Gender = /*#__PURE__*/function (_React$Component) {
+  _inherits(Gender, _React$Component);
+
+  var _super = _createSuper(Gender);
+
+  function Gender(props) {
+    var _this;
+
+    _classCallCheck(this, Gender);
+
+    _this = _super.call(this, props);
+    _this.handleNext = _this.handleNext.bind(_assertThisInitialized(_this));
+    _this.handlePrev = _this.handleNext.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(Gender, [{
+    key: "handleNext",
+    value: function handleNext(e) {
+      e.preventDefault(); //validate fields
+
+      this.props.nextStep();
+    }
+  }, {
+    key: "handlePrev",
+    value: function handlePrev(e) {
+      e.preventDefault();
+      this.props.prevStep();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var values = this.props.values;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        className: "sign-up-form"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Gender"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "radio",
+        id: "male",
+        value: "male",
+        onClick: this.props.update("gender")
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "male"
+      }, "Male"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "radio",
+        id: "female",
+        value: "female",
+        onClick: this.props.update("gender")
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "female"
+      }, "Female"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "radio",
+        id: "other",
+        value: "other",
+        onClick: this.props.update("gender")
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "other"
+      }, "Other"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.handlePrev
+      }, '<'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.handleNext
+      }, '>'));
+    }
+  }]);
+
+  return Gender;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (Gender);
+
+/***/ }),
+
+/***/ "./frontend/components/session_form/sign_up_details/language_and_region.jsx":
+/*!**********************************************************************************!*\
+  !*** ./frontend/components/session_form/sign_up_details/language_and_region.jsx ***!
+  \**********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+var LanguageAndRegion = /*#__PURE__*/function (_React$Component) {
+  _inherits(LanguageAndRegion, _React$Component);
+
+  var _super = _createSuper(LanguageAndRegion);
+
+  function LanguageAndRegion(props) {
+    var _this;
+
+    _classCallCheck(this, LanguageAndRegion);
+
+    _this = _super.call(this, props);
+    _this.handleNext = _this.handleNext.bind(_assertThisInitialized(_this));
+    _this.handlePrev = _this.handleNext.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(LanguageAndRegion, [{
+    key: "handleNext",
+    value: function handleNext(e) {
+      e.preventDefault(); //validate fields
+
+      this.props.nextStep();
+    }
+  }, {
+    key: "handlePrev",
+    value: function handlePrev(e) {
+      e.preventDefault();
+      this.props.prevStep();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var values = this.props.values;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        className: "sign-up-form"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "language"
+      }, "Language"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        id: "language",
+        onChange: this.props.update("language")
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: ""
+      }, "--Select language--"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "English"
+      }, "English"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "Spanish"
+      }, "Spanish")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "region"
+      }, "Region"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        id: "region",
+        onChange: this.props.update("region")
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: ""
+      }, "--Select Region--"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "USA"
+      }, "USA"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "Canada"
+      }, "Canada")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.handlePrev
+      }, '<'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.handleNext
+      }, 'Submit'));
+    }
+  }]);
+
+  return LanguageAndRegion;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (LanguageAndRegion);
+
+/***/ }),
+
+/***/ "./frontend/components/session_form/sign_up_details/names.jsx":
+/*!********************************************************************!*\
+  !*** ./frontend/components/session_form/sign_up_details/names.jsx ***!
+  \********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+var Names = /*#__PURE__*/function (_React$Component) {
+  _inherits(Names, _React$Component);
+
+  var _super = _createSuper(Names);
+
+  function Names(props) {
+    var _this;
+
+    _classCallCheck(this, Names);
+
+    _this = _super.call(this, props);
+    _this.handleNext = _this.handleNext.bind(_assertThisInitialized(_this));
+    _this.handlePrev = _this.handleNext.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(Names, [{
+    key: "handleNext",
+    value: function handleNext(e) {
+      e.preventDefault(); //validate fields
+
+      debugger;
+      this.props.nextStep();
+    }
+  }, {
+    key: "handlePrev",
+    value: function handlePrev(e) {
+      debugger;
+      e.preventDefault();
+      this.props.prevStep();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var values = this.props.values;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        className: "sign-up-form"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Username", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        value: values.username,
+        onChange: this.props.update("username")
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "First Name", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        value: values.first_name,
+        onChange: this.props.update("first_name")
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Last Name", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        value: values.last_name,
+        onChange: this.props.update("last_name")
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.handlePrev
+      }, '<'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.handleNext
+      }, '>'));
+    }
+  }]);
+
+  return Names;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (Names);
+
+/***/ }),
+
 /***/ "./frontend/components/session_form/sign_up_form.jsx":
 /*!***********************************************************!*\
   !*** ./frontend/components/session_form/sign_up_form.jsx ***!
   \***********************************************************/
 /*! exports provided: default */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /home/esant2/Documents/Peridot/Peridot/frontend/components/session_form/sign_up_form.jsx: Identifier 'gender' has already been declared (133:14)\n\n\u001b[0m \u001b[90m 131 | \u001b[39m        \u001b[36mconst\u001b[39m credVals \u001b[33m=\u001b[39m { email\u001b[33m,\u001b[39m password\u001b[33m,\u001b[39m age}\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 132 | \u001b[39m        \u001b[36mconst\u001b[39m nameVals \u001b[33m=\u001b[39m { username\u001b[33m,\u001b[39m first_name\u001b[33m,\u001b[39m last_name}\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 133 | \u001b[39m        \u001b[36mconst\u001b[39m gender \u001b[33m=\u001b[39m { gender }\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m     | \u001b[39m              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 134 | \u001b[39m        \u001b[36mconst\u001b[39m langAndRegVals \u001b[33m=\u001b[39m { language\u001b[33m,\u001b[39m region }\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 135 | \u001b[39m        \u001b[36mswitch\u001b[39m(step){\u001b[0m\n\u001b[0m \u001b[90m 136 | \u001b[39m            \u001b[36mcase\u001b[39m \u001b[35m1\u001b[39m\u001b[33m:\u001b[39m \u001b[90m//email, password, age\u001b[39m\u001b[0m\n    at Object._raise (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:742:17)\n    at Object.raiseWithData (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:735:17)\n    at Object.raise (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:729:17)\n    at ScopeHandler.checkRedeclarationInScope (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:4769:12)\n    at ScopeHandler.declareName (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:4735:12)\n    at Object.checkLVal (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:9207:22)\n    at Object.parseVarId (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:11762:10)\n    at Object.parseVar (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:11737:12)\n    at Object.parseVarStatement (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:11549:10)\n    at Object.parseStatementContent (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:11148:21)\n    at Object.parseStatement (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:11081:17)\n    at Object.parseBlockOrModuleBlockBody (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:11656:25)\n    at Object.parseBlockBody (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:11642:10)\n    at Object.parseBlock (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:11626:10)\n    at Object.parseFunctionBody (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:10634:24)\n    at Object.parseFunctionBodyAndFinish (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:10617:10)\n    at Object.parseMethod (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:10579:10)\n    at Object.pushClassMethod (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:12081:30)\n    at Object.parseClassMemberWithIsStatic (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:11998:12)\n    at Object.parseClassMember (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:11940:10)\n    at withTopicForbiddingContext (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:11885:14)\n    at Object.withTopicForbiddingContext (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:10956:14)\n    at Object.parseClassBody (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:11862:10)\n    at Object.parseClass (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:11836:22)\n    at Object.parseStatementContent (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:11123:21)\n    at Object.parseStatement (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:11081:17)\n    at Object.parseBlockOrModuleBlockBody (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:11656:25)\n    at Object.parseBlockBody (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:11642:10)\n    at Object.parseTopLevel (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:11012:10)\n    at Object.parse (/home/esant2/Documents/Peridot/Peridot/node_modules/@babel/parser/lib/index.js:12637:10)");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _sign_up_details_credentials__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sign_up_details/credentials */ "./frontend/components/session_form/sign_up_details/credentials.jsx");
+/* harmony import */ var _sign_up_details_names__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./sign_up_details/names */ "./frontend/components/session_form/sign_up_details/names.jsx");
+/* harmony import */ var _sign_up_details_gender__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./sign_up_details/gender */ "./frontend/components/session_form/sign_up_details/gender.jsx");
+/* harmony import */ var _sign_up_details_language_and_region__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./sign_up_details/language_and_region */ "./frontend/components/session_form/sign_up_details/language_and_region.jsx");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+
+
+
+var SignUpForm = /*#__PURE__*/function (_React$Component) {
+  _inherits(SignUpForm, _React$Component);
+
+  var _super = _createSuper(SignUpForm);
+
+  function SignUpForm(props) {
+    var _this;
+
+    _classCallCheck(this, SignUpForm);
+
+    _this = _super.call(this, props);
+    _this.state = {
+      step: 1,
+      email: '',
+      password: '',
+      age: '',
+      username: '',
+      first_name: '',
+      last_name: '',
+      gender: '',
+      language: '',
+      region: ''
+    };
+    _this.nextStep = _this.nextStep.bind(_assertThisInitialized(_this));
+    _this.prevStep = _this.prevStep.bind(_assertThisInitialized(_this));
+    _this.submitForm = _this.submitForm.bind(_assertThisInitialized(_this));
+    _this.update = _this.update.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(SignUpForm, [{
+    key: "showErrors",
+    value: function showErrors() {
+      var errors = this.props.errors;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, errors.map(function (err, idx) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+          key: idx
+        }, err);
+      }));
+    }
+  }, {
+    key: "validateInput",
+    value: function validateInput(field) {}
+  }, {
+    key: "nextStep",
+    value: function nextStep(e) {
+      var step = this.state.step;
+      this.setState({
+        step: step + 1
+      });
+    }
+  }, {
+    key: "prevStep",
+    value: function prevStep(e) {
+      var step = this.state.step;
+      this.setState({
+        step: step - 1
+      });
+    }
+  }, {
+    key: "update",
+    value: function update(field) {
+      var _this2 = this;
+
+      return function (e) {
+        _this2.setState(_defineProperty({}, field, e.target.value));
+      };
+    }
+  }, {
+    key: "submitForm",
+    value: function submitForm(e) {
+      e.preventDefault();
+      var user = Object.assign({}, this.state);
+      delete user["step"];
+      var processForm = this.props.processForm;
+      processForm(user);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var step = this.state.step;
+      var _this$state = this.state,
+          email = _this$state.email,
+          password = _this$state.password,
+          age = _this$state.age,
+          username = _this$state.username,
+          first_name = _this$state.first_name,
+          last_name = _this$state.last_name,
+          gender = _this$state.gender,
+          language = _this$state.language,
+          region = _this$state.region;
+      var credVals = {
+        email: email,
+        password: password,
+        age: age
+      };
+      var nameVals = {
+        username: username,
+        first_name: first_name,
+        last_name: last_name
+      };
+      var genVal = {
+        gender: gender
+      };
+      var langAndRegVals = {
+        language: language,
+        region: region
+      };
+
+      switch (step) {
+        case 1:
+          //email, password, age
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_sign_up_details_credentials__WEBPACK_IMPORTED_MODULE_1__["default"], {
+            update: this.update,
+            nextStep: this.nextStep,
+            values: credVals
+          });
+
+        case 2:
+          //username, first_name, last_name
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_sign_up_details_names__WEBPACK_IMPORTED_MODULE_2__["default"], {
+            update: this.update,
+            nextStep: this.nextStep,
+            prevStep: this.prevStep,
+            values: nameVals
+          });
+
+        case 3:
+          //gender
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_sign_up_details_gender__WEBPACK_IMPORTED_MODULE_3__["default"], {
+            update: this.update,
+            nextStep: this.nextStep,
+            prevStep: this.prevStep,
+            values: genVal
+          });
+
+        case 4:
+          //language, region
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_sign_up_details_language_and_region__WEBPACK_IMPORTED_MODULE_4__["default"], {
+            update: this.update,
+            nextStep: this.submitForm,
+            prevStep: this.prevStep,
+            values: langAndRegVals
+          });
+        // case 5: //signup
+      }
+    }
+  }]);
+
+  return SignUpForm;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (SignUpForm);
 
 /***/ }),
 
