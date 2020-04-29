@@ -1396,6 +1396,11 @@ var Welcome = function Welcome(_ref) {
   var openModal = _ref.openModal;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "login-signup"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    id: "logo",
+    className: "fab fa-pinterest"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Welcome to Peridot"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Find new ideas to try"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "buttons"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     onClick: function onClick() {
       return openModal('login');
@@ -1404,7 +1409,7 @@ var Welcome = function Welcome(_ref) {
     onClick: function onClick() {
       return openModal('signup');
     }
-  }, "Sign up"));
+  }, "Sign up")));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Welcome);
