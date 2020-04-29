@@ -29,6 +29,10 @@ class SignUpForm extends React.Component{
         this.showErrors = this.showErrors.bind(this);
     }
 
+    componentWillUnmount() {
+        this.props.clearErrors();
+    }
+
     showErrors(){
         const {errors} = this.state;
         return (<ul>
@@ -47,7 +51,7 @@ class SignUpForm extends React.Component{
 
     prevStep(){
         const {step} = this.state;
-        this.setState({ step: step - 1})
+        this.setState({ step: step - 1, errors: []})
     }
 
     update(field) {

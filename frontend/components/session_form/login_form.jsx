@@ -11,6 +11,10 @@ class LoginForm extends React.Component{
         this.demoUser = this.demoUser.bind(this);
     }
 
+    componentWillUnmount(){
+        this.props.clearErrors();
+    }
+
     showErrors() {
         const { errors } = this.props;
         return (<ul>
