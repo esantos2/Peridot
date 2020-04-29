@@ -10,6 +10,15 @@ class LoginForm extends React.Component{
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    showErrors() {
+        const { errors } = this.props;
+        return (<ul>
+            {errors.map((err, idx) => {
+                return <li key={idx}>{err}</li>
+            })}
+        </ul>)
+    }
+
     update(field){
         return e => this.setState({[field]: e.currentTarget.value});
     }
@@ -17,29 +26,24 @@ class LoginForm extends React.Component{
     handleSubmit(e){
         e.preventDefault();
         const user = Object.assign({}, this.state);
-        this.props.processForm(user);
+        this.props.processForm(user).then(this.props.closeModal);
     }
 
     render(){
-        const {errors, formType} = this.props;
         return (
-            <div className="session-form">
-                <h1>{formType}</h1>
-
-                <ul>
-                    {errors.map( (err, idx) => {
-                        return <li key={idx}>{err}</li>
-                    })}
-                </ul>
-                
+            <div className="login-form-box">
+                <h1>Login</h1>
                 <form onSubmit={this.handleSubmit}>
-                    <label>Email
-                        <input type='text' value={this.state.email} onChange={this.update("email")} />
-                    </label>
-                    <label>Password
-                        <input type='password' value={this.state.password} onChange={this.update("password")} />
-                    </label>
-                    <button>{formType}</button>
+                    {this.showErrors()}
+                    <div className="login-fields">
+                        <label>Email
+                            <input type='text' value={this.state.email} onChange={this.update("email")} />
+                        </label>
+                        <label>Password
+                            <input type='password' value={this.state.password} onChange={this.update("password")} />
+                        </label>
+                    </div>
+                    <button>Log In</button>
                 </form>
             </div>
         )

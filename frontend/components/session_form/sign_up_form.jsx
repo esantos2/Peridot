@@ -65,8 +65,7 @@ class SignUpForm extends React.Component{
         const user = Object.assign({}, this.state);
         delete user["step"];
         delete user["errors"];
-        const { processForm } = this.props;
-        processForm(user);
+        this.props.processForm(user).then(this.props.closeModal);
     }
 
     render(){
