@@ -490,6 +490,7 @@ var LoginForm = /*#__PURE__*/function (_React$Component) {
       password: ''
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.demoUser = _this.demoUser.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -520,6 +521,16 @@ var LoginForm = /*#__PURE__*/function (_React$Component) {
       this.props.processForm(user).then(this.props.closeModal);
     }
   }, {
+    key: "demoUser",
+    value: function demoUser(e) {
+      e.preventDefault();
+      var user = {
+        email: "qween@io",
+        password: "password"
+      };
+      this.props.processForm(user).then(this.props.closeModal);
+    }
+  }, {
     key: "render",
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -528,7 +539,6 @@ var LoginForm = /*#__PURE__*/function (_React$Component) {
         id: "logo",
         className: "fab fa-pinterest"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Welcome to Peridot"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-        onSubmit: this.handleSubmit,
         className: "login-form"
       }, this.showErrors(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "login-fields"
@@ -545,9 +555,11 @@ var LoginForm = /*#__PURE__*/function (_React$Component) {
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "login-form-buttons"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "login-button"
+        className: "login-button",
+        onClick: this.handleSubmit
       }, "Log in"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "OR"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "demo login-button"
+        className: "demo login-button",
+        onClick: this.demoUser
       }, "Demo Login"))));
     }
   }]);
@@ -1437,10 +1449,22 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+var _this = undefined;
+
 
 
 var Welcome = function Welcome(_ref) {
   var openModal = _ref.openModal;
+
+  var demoUser = function demoUser(e) {
+    e.preventDefault();
+    var user = {
+      email: "qween@io",
+      password: "password"
+    };
+    dispatch(login(user)).then(_this.props.closeModal);
+  };
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "login-signup"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
