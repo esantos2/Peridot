@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Greeting = ({currentUser, logout, openModal}) => {
+const NavBar = ({currentUser, logout, openModal}) => {
 
     const loggedin = () =>  {
         return (
@@ -35,4 +35,4 @@ const Greeting = ({currentUser, logout, openModal}) => {
     return currentUser ? loggedin() : notLoggedIn();
 }
 
-export default Greeting;
+export default NavBar;
