@@ -30,7 +30,7 @@
     border-radius: 30px;
 }
 
-.logo{
+#logo{
     color: rgb(47, 180, 47);
     font-size: 24px;
 }
@@ -42,8 +42,8 @@
     border-radius: 50%;
 }
 
-.icon > a{
-    color: black;
+.icon > a, .icon > i{
+    color: rgb(116, 116, 116);
 }
 
 .home-button, .logout-button > button{

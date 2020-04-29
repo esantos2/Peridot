@@ -6,7 +6,7 @@ const Greeting = ({currentUser, logout}) => {
     const loggedin = () =>  {
         return (
             <nav className="header-logout">
-                <div className="icon logo"><i className="fab fa-pinterest"></i></div>
+                <div className="icon"><i id="logo" className="fab fa-pinterest"></i></div>
                 <div className="home-button">Home</div>
                 <div className="search-bar">Peridot!</div>
                 <div className="icon">
