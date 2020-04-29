@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 class Credentials extends React.Component {
 
@@ -27,6 +28,9 @@ class Credentials extends React.Component {
         const { values } = this.props;
         return (
             <div className="modal-background">
+                <div className="side-button">
+                    <Link to='/login'>Log in</Link>
+                </div>
                 <div className="modal-child" onClick={e => e.stopPropagation()}>
                     <div className="login-form-box">
                         <div><i id="logo" className="fab fa-pinterest"></i></div>

@@ -67,3 +67,24 @@
 .login-form-buttons .demo:hover{
     background-color: rgb(94, 218, 135) ;
 }
+
+.side-button a{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 17px;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+    color: black;
+    background-color: white;
+    width: 100px;
+    height: auto;
+    border-radius: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 14px;
+    padding-right: 14px;
+    z-index: 20;
+    position: absolute;
+    top: 50px;
+    left: 20px;
+}
