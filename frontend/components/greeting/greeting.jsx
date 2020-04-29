@@ -25,15 +25,13 @@ const Greeting = ({currentUser, logout, openModal}) => {
     }
 
     const notLoggedIn = () => {
+        //background pic
         return (
-            <div className="login-signup">
-                <button onClick={ () => openModal('login')}>Log in</button>
-                <br></br>
-                <button onClick={ () => openModal('signup')}>Sign up</button>
+            <div className="splash-page">
+                Clod
             </div>
         )
     }
-
     return currentUser ? loggedin() : notLoggedIn();
 }
 
