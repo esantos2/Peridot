@@ -24,7 +24,7 @@ h2{
     width: 100%;
 }
 
-.buttons > button{
+button{
     cursor: pointer;
     font-size: 16px;
     padding: 15px;
@@ -37,20 +37,20 @@ h2{
     font-weight: bold;
 }
 
-.buttons button:first-child{
+.login-button{
     background-color: rgb(18, 165, 55);
     color: white;
 }
 
-.buttons button:last-child{
+.buttons .signup-button{
     background-color: lightgray;
     color: black;
 }
 
-.buttons button:first-child:hover{
+.login-button:hover{
     background-color: rgb(14, 129, 43);
 }
 
-.buttons button:last-child:hover{
+.buttons .signup-button:hover{
     background-color: rgb(182, 182, 182);
 }

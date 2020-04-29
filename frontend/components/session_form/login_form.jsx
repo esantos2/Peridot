@@ -32,18 +32,19 @@ class LoginForm extends React.Component{
     render(){
         return (
             <div className="login-form-box">
-                <h1>Login</h1>
-                <form onSubmit={this.handleSubmit}>
+                <div><i id="logo" className="fab fa-pinterest"></i></div>
+                <h1>Welcome to Peridot</h1>
+                <form onSubmit={this.handleSubmit} className="login-form">
                     {this.showErrors()}
                     <div className="login-fields">
-                        <label>Email
-                            <input type='text' value={this.state.email} onChange={this.update("email")} />
-                        </label>
-                        <label>Password
-                            <input type='password' value={this.state.password} onChange={this.update("password")} />
-                        </label>
+                        <input type='text' placeholder="Email" value={this.state.email} onChange={this.update("email")} />
+                        <input type='password' placeholder="Password" value={this.state.password} onChange={this.update("password")} />
                     </div>
-                    <button>Log In</button>
+                    <div className="login-form-buttons">
+                        <button className="login-button">Log in</button>
+                        <div>OR</div>
+                        <button className="demo login-button">Demo Login</button>
+                    </div>
                 </form>
             </div>
         )

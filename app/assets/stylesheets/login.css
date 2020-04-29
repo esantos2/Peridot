@@ -1,10 +1,69 @@
+.login-form-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    height: auto;
+    padding: 20px;
+    font-size: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-sizing: border-box;
+    color: rgb(48, 48, 48);
+}
+
+.login-form-box div #logo{
+    font-size: 50px;
+}
+
+.login-form-box h1{
+    font-size: 40px;
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+
 .login-fields{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-bottom: 15px;
 }
 
-.login-fields > label{
-    padding: 20px;
+.login-fields > input{
+    border: 2px solid lightgray;
+    border-radius: 15px;
+    width: 250px;
+    height: 45px;
+    padding: 10px;
+    margin-top: 7px;
+    box-sizing: border-box;
+}
+
+.login-form-buttons{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.login-form-buttons button{
+    width: 250px;
+    height: 35px;
+    padding: 5px;
+}
+
+.login-form-buttons div{
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 17px;
+}
+
+.login-form-buttons .demo{
+    background-color: rgb(0, 77, 34);
+}
+
+.login-form-buttons .demo:hover{
+    background-color: rgb(94, 218, 135) ;
 }

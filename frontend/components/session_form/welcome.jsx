@@ -7,8 +7,8 @@ const Welcome = ({openModal}) => {
             <h2>Welcome to Peridot</h2>
             <div>Find new ideas to try</div>
             <div className="buttons">
-                <button onClick={() => openModal('login')}>Log in</button>
-                <button onClick={() => openModal('signup')}>Sign up</button>
+                <button className="login-button" onClick={() => openModal('login')}>Log in</button>
+                <button className="signup-button" onClick={() => openModal('signup')}>Sign up</button>
             </div>
         </div>
     )
