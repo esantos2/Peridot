@@ -1,0 +1,51 @@
+.signup-form-buttons{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.signup-form-buttons button{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.signup-form-buttons button:hover{
+    background-color: rgb(189, 189, 189);
+}
+
+.next-only{
+    justify-content: center;
+}
+
+.radio-fields{
+    width: 250px;
+    padding: 30px;
+    justify-content: flex-start;
+    box-sizing: border-box;
+}
+
+.radio-fields div{
+    padding: 10px;
+}
+
+.radio-fields div input{
+    color: green
+}
+
+.radio-fields div label{
+    padding: 10px;
+}
+
+.dropdown-fields{
+    width: 250px;
+    padding: 30px;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.dropdown-fields div{
+    width: 100%;
+    padding: 15px;
+}

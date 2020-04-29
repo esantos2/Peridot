@@ -26,19 +26,22 @@ class Credentials extends React.Component {
     render(){
         const { values } = this.props;
         return (
-            <form className="sign-up-form" >
-                {this.props.showErrors()}
-                <label>Email
-                    <input type='text' value={values.email} onChange={this.props.update("email")} />
-                </label>
-                <label>Password
-                    <input type='password' value={values.password} onChange={this.props.update("password")} />
-                </label>
-                <label>Age
-                    <input type='text' value={values.age} onChange={this.props.update("age")} />
-                </label>
-                <button onClick={this.handleNext}>{'>'}</button>
-            </form>
+            <div className="login-form-box">
+                <div><i id="logo" className="fab fa-pinterest"></i></div>
+                <h1>Welcome to Peridot</h1>
+                <div>Find new ideas to try</div>
+                <form className="login-form">
+                    {this.props.showErrors()}
+                    <div className="login-fields">
+                        <input type='text' placeholder="Email" value={values.email} onChange={this.props.update("email")} />
+                        <input type='password' placeholder="Create a password" value={values.password} onChange={this.props.update("password")} />
+                        <input type='text' placeholder="Age" value={values.age} onChange={this.props.update("age")} />
+                    </div>
+                    <div className="signup-form-buttons next-only">
+                        <button onClick={this.handleNext}>{'>'}</button>
+                    </div>
+                </form>
+            </div>
         )
     }
 }

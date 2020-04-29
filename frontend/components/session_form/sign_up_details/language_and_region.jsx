@@ -31,24 +31,32 @@ class LanguageAndRegion extends React.Component {
 
     render() {
         return (
-            <form className="sign-up-form">
-                {this.props.showErrors()}
-                <label htmlFor="language">Language</label>
-                <select id="language" onChange={this.props.update("language")}>
-                    <option value="">--Select language--</option>
-                    <option value="English">English</option>
-                    <option value="Spanish">Spanish</option>
-                </select>
-
-                <label htmlFor="region">Region</label>
-                <select id="region" onChange={this.props.update("region")}>
-                    <option value="">--Select Region--</option>
-                    <option value="USA">USA</option>
-                    <option value="Canada">Canada</option>
-                </select>
-                <button onClick={this.handlePrev}>{'<'}</button>
-                <button onClick={this.handleNext}>{'Submit'}</button>
-            </form>
+            <div className="login-form-box">
+                <h1>Pick your language and country/region</h1>
+                <form className="login-form">
+                    {this.props.showErrors()}
+                    <div className="dropdown-fields">
+                        <div>
+                            <select id="language" onChange={this.props.update("language")}>
+                                <option value="">--Select language--</option>
+                                <option value="English">English</option>
+                                <option value="Spanish">Spanish</option>
+                            </select>
+                        </div>
+                        <div>
+                            <select id="region" onChange={this.props.update("region")}>
+                                <option value="">--Select Region--</option>
+                                <option value="USA">USA</option>
+                                <option value="Canada">Canada</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className="signup-form-buttons">
+                        <button onClick={this.handlePrev}>{'<'}</button>
+                        <button onClick={this.handleNext}>{'>'}</button>
+                    </div>
+                </form>
+            </div>
         )
     }
 }

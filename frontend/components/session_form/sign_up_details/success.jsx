@@ -7,10 +7,14 @@ class Success extends React.Component{
 
     render(){
         return (
-            <form>
-                <h1>Now Signed up!</h1>
-                <button onClick={(e) => this.props.submitForm(e)}>Continue</button>
-            </form>
+            <div className="login-form-box">
+                <h1>Success!</h1>
+                <form className="login-form">
+                    <div className="login-form-buttons">
+                        <button onClick={(e) => this.props.submitForm(e)}>Continue</button>
+                    </div>
+                </form>
+            </div>
         )
     }
 }

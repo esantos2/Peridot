@@ -31,18 +31,30 @@ class Gender extends React.Component{
 
     render() {
         return (
-            <form className="sign-up-form">
-                <p>Gender</p>
-                {this.props.showErrors()}
-                <input type="radio" id="male" value="male" onClick={this.props.update("gender")} />
-                <label htmlFor="male">Male</label>
-                <input type="radio" id="female" value="female" onClick={this.props.update("gender")} />
-                <label htmlFor="female">Female</label>
-                <input type="radio" id="other" value="other" onClick={this.props.update("gender")} />
-                <label htmlFor="other">Other</label>
-                <button onClick={this.handlePrev}>{'<'}</button>
-                <button onClick={this.handleNext}>{'>'}</button>
-            </form>
+            <div className="login-form-box">
+                <h1>How do you identify?</h1>
+                <form className="login-form">
+                    {this.props.showErrors()}
+                    <div className="radio-fields">
+                        <div>
+                            <input type="radio" id="male" value="male" onClick={this.props.update("gender")} />
+                            <label htmlFor="male">Male</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="female" value="female" onClick={this.props.update("gender")} />
+                            <label htmlFor="female">Female</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="other" value="other" onClick={this.props.update("gender")} />
+                            <label htmlFor="other">Other</label>
+                        </div>
+                    </div>
+                    <div className="signup-form-buttons">
+                        <button onClick={this.handlePrev}>{'<'}</button>
+                        <button onClick={this.handleNext}>{'>'}</button>
+                    </div>
+                </form>
+            </div>
         )
     }
 }
