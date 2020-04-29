@@ -5,11 +5,23 @@ const Greeting = ({currentUser, logout}) => {
 
     const loggedin = () =>  {
         return (
-            <div className="header-logout">
-                <h1>Peridot!</h1>
-                <h2>{currentUser.username}</h2>
-                <button onClick={logout} >Logout</button>
-            </div>
+            <nav className="header-logout">
+                <div className="icon logo"><i className="fab fa-pinterest"></i></div>
+                <div className="home-button">Home</div>
+                <div className="search-bar">Peridot!</div>
+                <div className="icon">
+                    <a href="https://www.linkedin.com/in/erick-santos2/" target="_blank">
+                        <i className="fab fa-linkedin"></i>
+                    </a>
+                </div>
+                <div className="icon">
+                    <a href="https://github.com/Arctive" target="_blank">
+                        <i className="fab fa-github"></i>
+                    </a>
+                </div>
+                <div className="icon profile"><i className="fas fa-user"></i></div>
+                <div className="logout-button"><button onClick={logout} >Logout</button></div>
+            </nav>
         )
     }
 
