@@ -27,7 +27,7 @@ class LoginForm extends React.Component{
     handleSubmit(e){
         e.preventDefault();
         const user = Object.assign({}, this.state);
-        this.props.processForm(user).then(this.props.closeModal);
+        this.props.processForm(user);
     }
 
     demoUser(e){
@@ -36,26 +36,30 @@ class LoginForm extends React.Component{
             email: "qween@io",
             password: "password"
         }
-        this.props.processForm(user).then(this.props.closeModal);
+        this.props.processForm(user);
     }
 
     render(){
         return (
-            <div className="login-form-box">
-                <div><i id="logo" className="fab fa-pinterest"></i></div>
-                <h1>Welcome to Peridot</h1>
-                <form className="login-form">
-                    {this.showErrors()}
-                    <div className="login-fields">
-                        <input type='text' placeholder="Email" value={this.state.email} onChange={this.update("email")} />
-                        <input type='password' placeholder="Password" value={this.state.password} onChange={this.update("password")} />
+            <div className="modal-background">
+                <div className="modal-child" onClick={e => e.stopPropagation()}>
+                    <div className="login-form-box">
+                        <div><i id="logo" className="fab fa-pinterest"></i></div>
+                        <h1>Welcome to Peridot</h1>
+                        <form className="login-form">
+                            {this.showErrors()}
+                            <div className="login-fields">
+                                <input type='text' placeholder="Email" value={this.state.email} onChange={this.update("email")} />
+                                <input type='password' placeholder="Password" value={this.state.password} onChange={this.update("password")} />
+                            </div>
+                            <div className="login-form-buttons">
+                                <button className="login-button" onClick={this.handleSubmit} >Log in</button>
+                                <div>OR</div>
+                                <button className="demo login-button" onClick={this.demoUser}>Demo Login</button>
+                            </div>
+                        </form>
                     </div>
-                    <div className="login-form-buttons">
-                        <button className="login-button" onClick={this.handleSubmit} >Log in</button>
-                        <div>OR</div>
-                        <button className="demo login-button" onClick={this.demoUser}>Demo Login</button>
-                    </div>
-                </form>
+                </div>
             </div>
         )
     }

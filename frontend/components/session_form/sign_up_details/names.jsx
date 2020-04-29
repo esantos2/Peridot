@@ -32,20 +32,24 @@ class Names extends React.Component {
     render() {
         const { values } = this.props;
         return (
-            <div className="login-form-box">
-                <h1>What's your name?</h1>
-                <form className="login-form">
-                    {this.props.showErrors()}
-                    <div className="login-fields">
-                        <input type='text' placeholder="Username" value={values.username} onChange={this.props.update("username")} />
-                        <input type='text' placeholder="First name" value={values.first_name} onChange={this.props.update("first_name")} />
-                        <input type='text' placeholder="Last name" value={values.last_name} onChange={this.props.update("last_name")} />
+            <div className="modal-background">
+                <div className="modal-child" onClick={e => e.stopPropagation()}>
+                    <div className="login-form-box">
+                        <h1>What's your name?</h1>
+                        <form className="login-form">
+                            {this.props.showErrors()}
+                            <div className="login-fields">
+                                <input type='text' placeholder="Username" value={values.username} onChange={this.props.update("username")} />
+                                <input type='text' placeholder="First name" value={values.first_name} onChange={this.props.update("first_name")} />
+                                <input type='text' placeholder="Last name" value={values.last_name} onChange={this.props.update("last_name")} />
+                            </div>
+                            <div className="signup-form-buttons">
+                                <button onClick={this.handlePrev}>{'<'}</button>
+                                <button onClick={this.handleNext}>{'>'}</button>
+                            </div>
+                        </form>
                     </div>
-                    <div className="signup-form-buttons">
-                        <button onClick={this.handlePrev}>{'<'}</button>
-                        <button onClick={this.handleNext}>{'>'}</button>
-                    </div>
-                </form>
+                </div>
             </div>
         )
     }

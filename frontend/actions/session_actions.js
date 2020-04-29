@@ -1,6 +1,4 @@
 import * as APIUtil from '../util/session_api_util';
-import { openModal } from './modal_actions';
-
 export const RECEIVE_CURRENT_USER = "RECEIVE_CURRENT_USER";
 export const LOGOUT_CURRENT_USER = "LOGOUT_CURRENT_USER";
 export const RECEIVE_ERRORS = "RECEIVE_ERRORS";
@@ -35,5 +33,4 @@ export const logout = () => dispatch => {
     return APIUtil.logout()
         .then( () => dispatch(logoutCurrentUser()),
             error => dispatch(receiveErrors(error.responseJSON)))
-        .then( () => dispatch(openModal('welcome')));
 }

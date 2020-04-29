@@ -1,6 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-const Welcome = ({openModal}) => {
+const Welcome = ({ processForm }) => {
 
     const demoUser = (e) => {
         e.preventDefault();
@@ -8,18 +9,28 @@ const Welcome = ({openModal}) => {
             email: "qween@io",
             password: "password"
         }
-        dispatch(login(user)).then(this.props.closeModal);
+        processForm(user);
     }
 
     return (
-        <div className="login-signup">
-            <div><i id="logo" className="fab fa-pinterest"></i></div>
-            <h2>Welcome to Peridot</h2>
-            <div>Find new ideas to try</div>
-            <div className="buttons">
-                <button className="login-button" onClick={() => openModal('login')}>Log in</button>
-                <button className="signup-button" onClick={() => openModal('signup')}>Sign up</button>
-                {/* <button className="demo login-button" onClick={this.demoUser}>Demo</button> */}
+        <div className="modal-background">
+            <div className="modal-child" onClick={e => e.stopPropagation()}>
+                <div className="login-signup">
+                    <div><i id="logo" className="fab fa-pinterest"></i></div>
+                    <h2>Welcome to Peridot</h2>
+                    <div>Find new ideas to try</div>
+                    <div className="buttons">
+                        <Link to='/login'>
+                            <button className="login-button">Log in</button>
+                        </Link>
+                        <Link to='/signup'>
+                            <button className="signup-button">Sign up</button>
+                        </Link>
+                        <Link to='/feed'>
+                            <button className="demo login-button" onClick={demoUser}>Demo</button>
+                        </Link>
+                    </div>
+                </div>
             </div>
         </div>
     )

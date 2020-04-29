@@ -7,13 +7,17 @@ class Success extends React.Component{
 
     render(){
         return (
-            <div className="login-form-box">
-                <h1>Success!</h1>
-                <form className="login-form">
-                    <div className="login-form-buttons">
-                        <button onClick={(e) => this.props.submitForm(e)}>Continue</button>
+            <div className="modal-background">
+                <div className="modal-child" onClick={e => e.stopPropagation()}>
+                    <div className="login-form-box">
+                        <h1>Success!</h1>
+                        <form className="login-form">
+                            <div className="login-form-buttons">
+                                <button onClick={(e) => this.props.submitForm(e)}>Continue</button>
+                            </div>
+                        </form>
                     </div>
-                </form>
+                </div>
             </div>
         )
     }

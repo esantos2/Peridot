@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
-import { openModal } from '../../actions/modal_actions';
+import { login } from '../../actions/session_actions'
 import Welcome from './welcome';
 
 const mapDispatchToProps = dispatch => ({
-    openModal: modal => dispatch(openModal(modal))
+    processForm: user => dispatch(login(user)),
 })
 
 export default connect(null, mapDispatchToProps)(Welcome);

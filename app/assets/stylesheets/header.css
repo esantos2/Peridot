@@ -47,6 +47,7 @@
 }
 
 .home-button, .logout-button > button{
+    margin-top: 0;
     cursor: pointer;
     color: white;
     background-color: black;
