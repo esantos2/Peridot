@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const NavBar = ({ logout }) => {
 
@@ -8,8 +9,12 @@ const NavBar = ({ logout }) => {
 
     return (
         <nav className="header-logout">
-            <div className="icon"><i id="logo" className="fab fa-pinterest"></i></div>
-            <div className="home-button">Home</div>
+            <div className="icon">
+                <Link to="/"><i id="logo" className="fab fa-pinterest"></i></Link>
+            </div>
+            <div className="home-button">
+                <Link to="/">Home</Link>
+            </div>
             <div className="search-bar">Peridot!</div>
             <div className="icon">
                 <a href="https://www.linkedin.com/in/erick-santos2/" target="_blank">

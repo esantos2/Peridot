@@ -88,3 +88,15 @@
     top: 50px;
     left: 20px;
 }
+
+.error-list{
+    width: auto;
+    height: 50px;
+    list-style: none;
+    padding: 0px;
+    text-align: center;
+}
+
+.error-list li{
+    color: red;
+}

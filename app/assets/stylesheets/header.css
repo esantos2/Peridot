@@ -17,7 +17,7 @@
     box-shadow: 1px 1px 10px #e0e0e0;
     box-sizing: border-box;
     font-size: 25px;
-    font-family: sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: 700;
 }
 
@@ -42,11 +42,12 @@
     border-radius: 50%;
 }
 
-.icon > a, .icon > i{
+.icon > a{
     color: rgb(116, 116, 116);
 }
 
-.home-button{
+.home-button a{
+    text-decoration: none;
     margin-top: 0;
     cursor: pointer;
     color: white;
@@ -88,7 +89,6 @@
     padding-left: 10px;
     padding-right: 10px;
     padding-bottom: 5px;
-    /* box-sizing: border-box; */
     z-index: 5;
 }
 
@@ -117,7 +117,4 @@
     font-size: 20px;
     width: 30px;
     height: 30px;
-}
-
-.options > .icon:hover{
 }

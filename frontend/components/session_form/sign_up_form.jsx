@@ -35,7 +35,7 @@ class SignUpForm extends React.Component{
 
     showErrors(){
         const {errors} = this.state;
-        return (<ul>
+        return (<ul className="error-list">
             {errors.map((err, idx) => {
                 return <li key={idx}>{err}</li>
             })}

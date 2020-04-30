@@ -42,6 +42,15 @@ button{
     color: white;
 }
 
+.demo-login-button{
+    background-color: rgb(8, 71, 24);
+    color: white;
+}
+
+.demo-login-button:hover{
+    background-color: rgb(141, 223, 154);
+}
+
 .buttons .signup-button{
     background-color: lightgray;
     color: black;
