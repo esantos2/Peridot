@@ -37,6 +37,10 @@ button{
     font-weight: bold;
 }
 
+button:focus{
+    outline: none;
+}
+
 .login-button{
     background-color: rgb(18, 165, 55);
     color: white;

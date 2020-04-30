@@ -39,16 +39,18 @@ class Gender extends React.Component{
                             {this.props.showErrors()}
                             <div className="radio-fields">
                                 <div>
-                                    <input type="radio" id="male" value="male" onClick={this.props.update("gender")} />
-                                    <label htmlFor="male">Male</label>
-                                </div>
-                                <div>
-                                    <input type="radio" id="female" value="female" onClick={this.props.update("gender")} />
-                                    <label htmlFor="female">Female</label>
-                                </div>
-                                <div>
-                                    <input type="radio" id="other" value="other" onClick={this.props.update("gender")} />
-                                    <label htmlFor="other">Other</label>
+                                    <div>
+                                        <input name="gender" type="radio" id="male" value="male" onClick={this.props.update("gender")} />
+                                        <label htmlFor="male">Male</label>
+                                    </div>
+                                    <div>
+                                        <input name="gender" type="radio" id="female" value="female" onClick={this.props.update("gender")} />
+                                        <label htmlFor="female">Female</label>
+                                    </div>
+                                    <div>
+                                        <input name="gender" type="radio" id="other" value="other" onClick={this.props.update("gender")} />
+                                        <label htmlFor="other">Other</label>
+                                    </div>
                                 </div>
                             </div>
                             <div className="signup-form-buttons">

@@ -40,6 +40,11 @@
     box-sizing: border-box;
 }
 
+.login-fields > input:focus{
+    outline-style: none;
+    border: 2px solid rgb(0, 223, 0);
+}
+
 .login-form-buttons{
     display: flex;
     flex-direction: column;

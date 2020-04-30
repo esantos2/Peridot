@@ -39,13 +39,33 @@
 }
 
 .dropdown-fields{
-    width: 250px;
+    width: 100%;
     padding: 30px;
     justify-content: center;
     box-sizing: border-box;
 }
 
-.dropdown-fields div{
-    width: 100%;
-    padding: 15px;
+#language, #region{
+    margin: 10px;
+    width: 200px;
+    height: 20px;
+    background-color: white;
+    border-radius: 5px;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+#language:focus, #region:focus{
+    outline: none;
+    border: 2px solid rgb(0, 223, 0);
+}
+
+#language > select{
+    display: inline-block;
+    height: 30px;
+    
+}
+
+option:hover{
+    background-color: rgb(0, 155, 0);
 }

@@ -34,7 +34,8 @@ class LanguageAndRegion extends React.Component {
             <div className="modal-background">
                 <div className="modal-child" onClick={e => e.stopPropagation()}>
                     <div className="login-form-box">
-                        <h1>Pick your language and country/region</h1>
+                        <h1>Pick your language</h1>
+                        <h1>and country/region</h1>
                         <form className="login-form">
                             {this.props.showErrors()}
                             <div className="dropdown-fields">
