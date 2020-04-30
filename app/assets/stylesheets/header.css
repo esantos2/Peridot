@@ -38,7 +38,7 @@
 .icon:hover{
     cursor: pointer;
     width: 48px;
-    background-color: rgb(0, 0, 0, 0.07);
+    background-color: rgba(0, 0, 0, 0.07);
     border-radius: 50%;
 }
 
