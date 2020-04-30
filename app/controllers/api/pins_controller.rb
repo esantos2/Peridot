@@ -30,7 +30,7 @@ class Api::PinsController < ApplicationController
 
     def destroy
         @pin = Pin.find_by(params[:id])
-        @pin.delete
+        @pin.destroy
         render "/api/pins/index"
     end
 

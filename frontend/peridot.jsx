@@ -4,7 +4,8 @@ import configureStore from './store/store';
 import Root from './components/root';
 
 //begin testing
-// import {signup, login, logout} from './util/session_api_util';
+import {fetchPins, fetchPin, createPin, updatePin, removePin} from './util/pin_api_util';
+// import {fetchPins} from './actions/pin_actions'
 //end tetsting
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -26,9 +27,10 @@ document.addEventListener("DOMContentLoaded", () => {
     //begin testing 
     window.getState = store.getState;
     window.dispatch = store.dispatch;
-    // window.signup = signup;
-    // window.login = login;
-    // window.logout = logout;
+    window.fetchPins = fetchPins;
+    // window.fetchPin = fetchPin;
+    // window.createPin = createPin;
+    // window.removePin = removePin;
     //end testing
 
     ReactDOM.render(<Root store={store} />, root);
