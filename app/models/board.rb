@@ -12,7 +12,8 @@
 #  updated_at  :datetime         not null
 #
 class Board < ApplicationRecord
-    validates :user_id, :name, presence: true, uniqueness: true
+    validates :user_id, :name, presence: true
+    validates :name, :uniqueness => {:scope => :user_id}
     belongs_to :user
     has_many :board_pins
     has_many :pins, through: :board_pins

@@ -86,6 +86,106 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./frontend/actions/board_actions.js":
+/*!*******************************************!*\
+  !*** ./frontend/actions/board_actions.js ***!
+  \*******************************************/
+/*! exports provided: RECEIVE_BOARDS, RECEIVE_BOARD, REMOVE_BOARD, RECEIVE_BOARD_ERRORS, receiveBoards, receiveBoard, removeBoard, receiveBoardErrors, fetchBoards, fetchBoard, createBoard, updateBoard, deleteBoard */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_BOARDS", function() { return RECEIVE_BOARDS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_BOARD", function() { return RECEIVE_BOARD; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REMOVE_BOARD", function() { return REMOVE_BOARD; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_BOARD_ERRORS", function() { return RECEIVE_BOARD_ERRORS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveBoards", function() { return receiveBoards; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveBoard", function() { return receiveBoard; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeBoard", function() { return removeBoard; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveBoardErrors", function() { return receiveBoardErrors; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchBoards", function() { return fetchBoards; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchBoard", function() { return fetchBoard; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createBoard", function() { return createBoard; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateBoard", function() { return updateBoard; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteBoard", function() { return deleteBoard; });
+/* harmony import */ var _util_board_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/board_api_util */ "./frontend/util/board_api_util.js");
+
+var RECEIVE_BOARDS = "RECEIVE_BOARDS";
+var RECEIVE_BOARD = "RECEIVE_BOARD";
+var REMOVE_BOARD = "REMOVE_BOARD";
+var RECEIVE_BOARD_ERRORS = "RECEIVE_BOARD_ERRORS";
+var receiveBoards = function receiveBoards(boards) {
+  return {
+    type: RECEIVE_BOARDS,
+    boards: boards
+  };
+};
+var receiveBoard = function receiveBoard(board) {
+  return {
+    type: RECEIVE_BOARD,
+    board: board
+  };
+};
+var removeBoard = function removeBoard(boardId) {
+  return {
+    type: REMOVE_BOARD,
+    boardId: boardId
+  };
+};
+var receiveBoardErrors = function receiveBoardErrors(errors) {
+  return {
+    type: RECEIVE_BOARD_ERRORS,
+    errors: errors
+  };
+};
+var fetchBoards = function fetchBoards(userId) {
+  return function (dispatch) {
+    return _util_board_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchBoards"](userId).then(function (boards) {
+      return dispatch(receiveBoards(boards));
+    }, function (error) {
+      return dispatch(receiveBoardErrors(error.responseJSON));
+    });
+  };
+};
+var fetchBoard = function fetchBoard(userId, boardId) {
+  return function (dispatch) {
+    return _util_board_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchBoard"](userId, boardId).then(function (board) {
+      return dispatch(receiveBoard(board));
+    }, function (error) {
+      return dispatch(receiveBoardErrors(error.responseJSON));
+    });
+  };
+};
+var createBoard = function createBoard(board) {
+  return function (dispatch) {
+    return _util_board_api_util__WEBPACK_IMPORTED_MODULE_0__["createBoard"](board).then(function (board) {
+      return dispatch(receiveBoard(board));
+    }, function (error) {
+      return dispatch(receiveBoardErrors(error.responseJSON));
+    });
+  };
+};
+var updateBoard = function updateBoard(board) {
+  return function (dispatch) {
+    return _util_board_api_util__WEBPACK_IMPORTED_MODULE_0__["updateBoard"](board).then(function (board) {
+      return dispatch(receiveBoard(board));
+    }, function (error) {
+      return dispatch(receiveBoardErrors(error.responseJSON));
+    });
+  };
+};
+var deleteBoard = function deleteBoard(userId, boardId) {
+  return function (dispatch) {
+    return _util_board_api_util__WEBPACK_IMPORTED_MODULE_0__["deleteBoard"](userId, boardId).then(function (board) {
+      return dispatch(removeBoard(board.id));
+    }, function (error) {
+      return dispatch(receiveBoardErrors(error.responseJson));
+    });
+  };
+};
+
+/***/ }),
+
 /***/ "./frontend/actions/pin_actions.js":
 /*!*****************************************!*\
   !*** ./frontend/actions/pin_actions.js ***!
@@ -1600,13 +1700,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _store_store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./store/store */ "./frontend/store/store.js");
 /* harmony import */ var _components_root__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/root */ "./frontend/components/root.jsx");
+/* harmony import */ var _actions_board_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./actions/board_actions */ "./frontend/actions/board_actions.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
 
 
  //begin testing
-//end tetsting
+
+ //end tetsting
 
 document.addEventListener("DOMContentLoaded", function () {
   var root = document.getElementById("root");
@@ -1626,10 +1728,15 @@ document.addEventListener("DOMContentLoaded", function () {
   } else {
     store = Object(_store_store__WEBPACK_IMPORTED_MODULE_2__["default"])();
   } //begin testing 
-  // window.getState = store.getState;
-  // window.dispatch = store.dispatch;
-  //end testing
 
+
+  window.getState = store.getState;
+  window.dispatch = store.dispatch;
+  window.fetchBoards = _actions_board_actions__WEBPACK_IMPORTED_MODULE_4__["fetchBoards"];
+  window.fetchBoard = _actions_board_actions__WEBPACK_IMPORTED_MODULE_4__["fetchBoard"];
+  window.createBoard = _actions_board_actions__WEBPACK_IMPORTED_MODULE_4__["createBoard"];
+  window.updateBoard = _actions_board_actions__WEBPACK_IMPORTED_MODULE_4__["updateBoard"];
+  window.deleteBoard = _actions_board_actions__WEBPACK_IMPORTED_MODULE_4__["deleteBoard"]; //end testing
 
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_root__WEBPACK_IMPORTED_MODULE_3__["default"], {
     store: store
@@ -1913,6 +2020,59 @@ var configureStore = function configureStore() {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (configureStore);
+
+/***/ }),
+
+/***/ "./frontend/util/board_api_util.js":
+/*!*****************************************!*\
+  !*** ./frontend/util/board_api_util.js ***!
+  \*****************************************/
+/*! exports provided: fetchBoards, fetchBoard, createBoard, updateBoard, deleteBoard */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchBoards", function() { return fetchBoards; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchBoard", function() { return fetchBoard; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createBoard", function() { return createBoard; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateBoard", function() { return updateBoard; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteBoard", function() { return deleteBoard; });
+var fetchBoards = function fetchBoards(userId) {
+  return $.ajax({
+    url: "/api/users/".concat(userId, "/boards"),
+    method: "GET"
+  });
+};
+var fetchBoard = function fetchBoard(userId, boardId) {
+  return $.ajax({
+    url: "/api/users/".concat(userId, "/boards/").concat(boardId),
+    method: "GET"
+  });
+};
+var createBoard = function createBoard(board) {
+  return $.ajax({
+    url: "/api/users/".concat(board.user_id, "/boards"),
+    method: "POST",
+    data: {
+      board: board
+    }
+  });
+};
+var updateBoard = function updateBoard(board) {
+  return $.ajax({
+    url: "/api/users/".concat(board.user_id, "/boards/").concat(board.id),
+    method: "PATCH",
+    data: {
+      board: board
+    }
+  });
+};
+var deleteBoard = function deleteBoard(userId, boardId) {
+  return $.ajax({
+    url: "/api/users/".concat(userId, "/boards/").concat(boardId),
+    method: "DELETE"
+  });
+};
 
 /***/ }),
 

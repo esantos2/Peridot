@@ -1,7 +1,7 @@
 class Api::BoardsController < ApplicationController
     
     def index
-        @boards = Board.all
+        @boards = Board.all.where(user_id: params[:user_id])
         render "/api/boards/index"
     end
 
@@ -40,8 +40,8 @@ class Api::BoardsController < ApplicationController
     def destroy
         @board = Board.find_by(id: params[:id])
         if @board && @board.user_id == current_user.id
-            @board.destroy
-            render "/api/boards/index"
+            @board.delete
+            render "/api/boards/show"
         else
             render json: @board.errors.full_messages, status: 422
         end
