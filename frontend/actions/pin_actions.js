@@ -28,6 +28,29 @@ export const receivePinErrors = errors => ({
 export const fetchPins = () => dispatch => {
     return PinAPIUtil.fetchPins()
         .then( pins => dispatch(receivePins(pins)),
-        error => dispatch(receivePinErrors(error.responseJson)))
+        error => dispatch(receivePinErrors(error.responseJSON)))
 }
 
+export const fetchPin = pinId => dispatch => {
+    return PinAPIUtil.fetchPin(pinId)
+        .then( pin => dispatch(receivePin(pin)),
+        error => dispatch(receivePinErrors(error.responseJSON)))
+}
+
+export const createPin = pin => dispatch => {
+    return PinAPIUtil.createPin(pin)
+        .then( pin => dispatch(receivePin(pin)),
+        error => dispatch(receivePinErrors(error.responseJSON)))
+}
+
+export const updatePin = pin => dispatch => {
+    return PinAPIUtil.updatePin(pin)
+        .then( pin => dispatch(receivePin(pin)),
+        error => dispatch(receivePinErrors(error.responseJSON)))
+}
+
+export const deletePin = pinId => dispatch => {
+    return PinAPIUtil.deletePin(pinId)
+        .then( pin => dispatch(removePin(pin.id)),
+        error => dispatch(receivePinErrors(error.responseJson)))
+}

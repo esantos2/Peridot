@@ -6,7 +6,7 @@ class Api::PinsController < ApplicationController
     end
 
     def show
-        @pin = Pin.find_by(params[:id])
+        @pin = Pin.find(params[:id])
         render "/api/pins/show"
     end
 
@@ -20,8 +20,8 @@ class Api::PinsController < ApplicationController
     end
 
     def update
-        @pin = Pin.find_by(params[:id])
-        if @pin.update(pin_params)
+        @pin = Pin.find(params[:id])
+        if @pin && @pin.update(pin_params)
             render "/api/pins/show"
         else
             render json: @pin.errors.full_messages, status: 422
@@ -29,7 +29,7 @@ class Api::PinsController < ApplicationController
     end
 
     def destroy
-        @pin = Pin.find_by(params[:id])
+        @pin = Pin.find(params[:id])
         @pin.destroy
         render "/api/pins/index"
     end

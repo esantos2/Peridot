@@ -4,8 +4,8 @@ import configureStore from './store/store';
 import Root from './components/root';
 
 //begin testing
-import {fetchPins, fetchPin, createPin, updatePin, removePin} from './util/pin_api_util';
-// import {fetchPins} from './actions/pin_actions'
+// import {fetchPins, fetchPin, createPin, updatePin, removePin} from './util/pin_api_util';
+// import {fetchPins, fetchPin, createPin, updatePin, removePin} from './actions/pin_actions'
 //end tetsting
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -27,7 +27,11 @@ document.addEventListener("DOMContentLoaded", () => {
     //begin testing 
     window.getState = store.getState;
     window.dispatch = store.dispatch;
-    window.fetchPins = fetchPins;
+    // window.fetchPins = fetchPins;
+    // window.fetchPin = fetchPin;
+    // window.createPin = createPin;
+    // window.updatePin = updatePin;
+    // window.removePin = removePin;
     // window.fetchPin = fetchPin;
     // window.createPin = createPin;
     // window.removePin = removePin;

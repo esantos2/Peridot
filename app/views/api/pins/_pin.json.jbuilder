@@ -1,1 +1,1 @@
-json.extract! pin, :user_id, :title, :description, :link
+json.extract! pin, :id, :user_id, :title, :description, :link

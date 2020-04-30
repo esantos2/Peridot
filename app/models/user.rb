@@ -12,10 +12,10 @@
 #  password_digest :string           not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
-#  age             :integer          not null
 #  gender          :string           not null
 #  language        :string           not null
 #  region          :string           not null
+#  age             :string           not null
 #
 class User < ApplicationRecord
     validates :username, :email, :session_token, presence: true, uniqueness: true
