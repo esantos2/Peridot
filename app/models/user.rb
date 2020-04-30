@@ -22,6 +22,16 @@ class User < ApplicationRecord
     validates :password_digest, :first_name, :last_name, :age, :gender, :language, :region, presence: true
     validates :password, length: {minimum: 6, allow_nil: true}
 
+    has_many :boards
+
+    has_many :created_pins,
+        foreign_key: :user_id,
+        class_name: :Pin
+
+    has_many :saved_pins,
+        through: :boards,
+        source: :pins
+
     attr_reader :password
 
     after_initialize :ensure_session_token
