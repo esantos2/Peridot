@@ -21,7 +21,7 @@
     font-weight: 700;
 }
 
-.header-logout > div{
+.header-logout > div, .drop-down{
     min-height: 48px;
     min-width: 48px;
     display: flex;
@@ -46,7 +46,7 @@
     color: rgb(116, 116, 116);
 }
 
-.home-button, .logout-button > button{
+.home-button{
     margin-top: 0;
     cursor: pointer;
     color: white;
@@ -66,4 +66,58 @@
     margin-left: 10px;
     margin-right: 10px;
     background-color: rgb(235, 235, 235);
+}
+
+.drop-down{
+    position: relative;
+}
+
+.drop-down-menu{
+    display: none;
+    position: absolute;
+    text-align: left;
+    background-color: white;
+    box-shadow: 1px 1px 10px #e0e0e0;
+    border-radius: 12px;
+    font-size: 17px;
+    right: 0;
+    top: 40px;
+    width: 230px;
+    min-width: 180px;
+    max-width: 360px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 5px;
+    /* box-sizing: border-box; */
+    z-index: 5;
+}
+
+.show-menu{
+    display: block;
+}
+
+.drop-down-menu li{
+    list-style: none;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.drop-down-menu li:hover{
+    cursor: pointer;
+    border-radius: 7px;
+    background-color: rgb(240, 240, 240);
+}
+
+.options > .icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+    font-size: 20px;
+    width: 30px;
+    height: 30px;
+}
+
+.options > .icon:hover{
 }

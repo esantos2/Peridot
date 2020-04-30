@@ -325,6 +325,11 @@ __webpack_require__.r(__webpack_exports__);
 
 var NavBar = function NavBar(_ref) {
   var logout = _ref.logout;
+
+  var showMenu = function showMenu() {
+    document.getElementById("settings").classList.toggle("show-menu");
+  };
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
     className: "header-logout"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -355,10 +360,18 @@ var NavBar = function NavBar(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
     className: "fas fa-user"
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "logout-button"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "options"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "icon",
+    onClick: showMenu
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "drop-down fas fa-chevron-down"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+    id: "settings",
+    className: "drop-down-menu"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     onClick: logout
-  }, "Logout")));
+  }, "Log out"))));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (NavBar);
@@ -1581,8 +1594,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
  //begin testing
-// import {fetchPins, fetchPin, createPin, updatePin, removePin} from './util/pin_api_util';
-// import {fetchPins, fetchPin, createPin, updatePin, removePin} from './actions/pin_actions'
 //end tetsting
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -1603,18 +1614,10 @@ document.addEventListener("DOMContentLoaded", function () {
   } else {
     store = Object(_store_store__WEBPACK_IMPORTED_MODULE_2__["default"])();
   } //begin testing 
-
-
-  window.getState = store.getState;
-  window.dispatch = store.dispatch; // window.fetchPins = fetchPins;
-  // window.fetchPin = fetchPin;
-  // window.createPin = createPin;
-  // window.updatePin = updatePin;
-  // window.removePin = removePin;
-  // window.fetchPin = fetchPin;
-  // window.createPin = createPin;
-  // window.removePin = removePin;
+  // window.getState = store.getState;
+  // window.dispatch = store.dispatch;
   //end testing
+
 
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_root__WEBPACK_IMPORTED_MODULE_3__["default"], {
     store: store
