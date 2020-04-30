@@ -42,4 +42,60 @@ User.create!(
     last_name: "Prince", 
     bio: "Fighting doesn't make you a hero")
 
-    
+Pin.create!(
+    user_id: 1,
+    title: "Nighthawks",
+    description: "Chillin like a villain",
+    link: "www.wheresMyFoodTho.com"
+)
+
+Pin.create!(
+    user_id: 1,
+    title: "Starry Night",
+    description: "Have you ever seen such a beautiful site",
+    link: "www.ohWhatANight.org"
+)
+
+Pin.create!(
+    user_id: 3,
+    title: "Girl with a Pear Earring",
+    description: "I could almost kiss the stars for shining so bright",
+    link: "www.oldSchoolCool.com"
+)
+
+Pin.create!(
+    user_id: 3,
+    title: "The Birth of Venus",
+    description: "Aphrodite rising from the seafoam",
+    link: "www.whyYouDoThis.com"
+)
+
+Pin.create!(
+    user_id: 2,
+    title: "American Gothic",
+    description: "Take me home, country road",
+    link: "www.neverForgetMerlin.com"
+)
+
+Pin.create!(
+    user_id: 1,
+    title: "The Last Supper",
+    description: "Pre-quarantine chilling with the boys",
+    link: "www.whereYouGoinJudas.com"
+)
+
+Board.create!(
+    user_id: 1,
+    name: "Art stuff",
+    description: "Sent from my iphone",
+    date_start: "2001-02-03T12:00:00+00:00",
+    date_end: "2001-02-03T12:00:00+00:00"
+)
+
+Board.create!(
+    user_id: 3,
+    name: "More pics",
+    description: "Sent from my iphone",
+    date_start: "2003-02-03T12:00:00+00:00",
+    date_end: "2004-02-03T12:00:00+00:00"
+)
