@@ -290,7 +290,7 @@ var deletePin = function deletePin(pinId) {
 /*!*********************************************!*\
   !*** ./frontend/actions/session_actions.js ***!
   \*********************************************/
-/*! exports provided: RECEIVE_CURRENT_USER, LOGOUT_CURRENT_USER, RECEIVE_SESSION_ERRORS, CLEAR_ERRORS, receiveCurrentUser, logoutCurrentUser, receiveSessionErrors, clearErrors, signup, login, logout */
+/*! exports provided: RECEIVE_CURRENT_USER, LOGOUT_CURRENT_USER, RECEIVE_SESSION_ERRORS, CLEAR_ERRORS, NEW_USER, receiveCurrentUser, logoutCurrentUser, receiveSessionErrors, clearErrors, newUserDetails, signup, login, logout, createNewUser */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -299,19 +299,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOGOUT_CURRENT_USER", function() { return LOGOUT_CURRENT_USER; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_SESSION_ERRORS", function() { return RECEIVE_SESSION_ERRORS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CLEAR_ERRORS", function() { return CLEAR_ERRORS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NEW_USER", function() { return NEW_USER; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveCurrentUser", function() { return receiveCurrentUser; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "logoutCurrentUser", function() { return logoutCurrentUser; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveSessionErrors", function() { return receiveSessionErrors; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "clearErrors", function() { return clearErrors; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "newUserDetails", function() { return newUserDetails; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "signup", function() { return signup; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "login", function() { return login; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "logout", function() { return logout; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createNewUser", function() { return createNewUser; });
 /* harmony import */ var _util_session_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/session_api_util */ "./frontend/util/session_api_util.js");
 
 var RECEIVE_CURRENT_USER = "RECEIVE_CURRENT_USER";
 var LOGOUT_CURRENT_USER = "LOGOUT_CURRENT_USER";
 var RECEIVE_SESSION_ERRORS = "RECEIVE_SESSION_ERRORS";
 var CLEAR_ERRORS = "CLEAR_ERRORS";
+var NEW_USER = "NEW_USER";
 var receiveCurrentUser = function receiveCurrentUser(currentUser) {
   return {
     type: RECEIVE_CURRENT_USER,
@@ -334,6 +338,12 @@ var clearErrors = function clearErrors() {
     type: CLEAR_ERRORS
   };
 };
+var newUserDetails = function newUserDetails(currentUser) {
+  return {
+    type: NEW_USER,
+    currentUser: currentUser
+  };
+};
 var signup = function signup(user) {
   return function (dispatch) {
     return _util_session_api_util__WEBPACK_IMPORTED_MODULE_0__["signup"](user).then(function (user) {
@@ -348,7 +358,7 @@ var login = function login(user) {
     return _util_session_api_util__WEBPACK_IMPORTED_MODULE_0__["login"](user).then(function (user) {
       return dispatch(receiveCurrentUser(user));
     }, function (error) {
-      return dispatch(receiveSessionErrors(error.responseJSON));
+      return dispatch(receiveSessionErrors(error.responseJSON || []));
     });
   };
 };
@@ -356,6 +366,15 @@ var logout = function logout() {
   return function (dispatch) {
     return _util_session_api_util__WEBPACK_IMPORTED_MODULE_0__["logout"]().then(function () {
       return dispatch(logoutCurrentUser());
+    }, function (error) {
+      return dispatch(receiveSessionErrors(error.responseJSON));
+    });
+  };
+};
+var createNewUser = function createNewUser(user) {
+  return function (dispatch) {
+    return _util_session_api_util__WEBPACK_IMPORTED_MODULE_0__["signup"](user).then(function (user) {
+      return dispatch(newUserDetails(user));
     }, function (error) {
       return dispatch(receiveSessionErrors(error.responseJSON));
     });
@@ -648,6 +667,7 @@ var LoginForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var errors = this.props.errors;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "modal-background"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -661,12 +681,14 @@ var LoginForm = /*#__PURE__*/function (_React$Component) {
         }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "login-form-box"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        className: "login-form"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "login-heading"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         id: "logo",
         className: "fab fa-pinterest"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Welcome to Peridot"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-        className: "login-form"
-      }, this.showErrors(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Welcome to Peridot")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "login-fields"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
@@ -679,6 +701,8 @@ var LoginForm = /*#__PURE__*/function (_React$Component) {
         value: this.state.password,
         onChange: this.update("password")
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "error"
+      }, errors.length > 0 ? errors[0] : ""), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "login-form-buttons"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "login-button",
@@ -686,7 +710,11 @@ var LoginForm = /*#__PURE__*/function (_React$Component) {
       }, "Log in"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "OR"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "demo login-button",
         onClick: this.demoUser
-      }, "Demo Login"))))));
+      }, "Demo Login"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "signup-link"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        to: "/signup"
+      }, "Not on Peridot yet? Sign up")))));
     }
   }]);
 
@@ -1390,12 +1418,12 @@ var SignUpForm = /*#__PURE__*/function (_React$Component) {
       language: '',
       region: ''
     };
-    _this.nextStep = _this.nextStep.bind(_assertThisInitialized(_this));
     _this.prevStep = _this.prevStep.bind(_assertThisInitialized(_this));
     _this.submitForm = _this.submitForm.bind(_assertThisInitialized(_this));
     _this.update = _this.update.bind(_assertThisInitialized(_this));
     _this.addErrors = _this.addErrors.bind(_assertThisInitialized(_this));
     _this.showErrors = _this.showErrors.bind(_assertThisInitialized(_this));
+    _this.goForward = _this.goForward.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1405,25 +1433,44 @@ var SignUpForm = /*#__PURE__*/function (_React$Component) {
       this.props.clearErrors();
     }
   }, {
-    key: "showErrors",
-    value: function showErrors() {
-      var errors = this.state.errors;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "error-list"
-      }, errors.map(function (err, idx) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          key: idx
-        }, err);
-      }));
+    key: "addErrors",
+    value: function addErrors(arr) {
+      var _this2 = this;
+
+      this.setState({
+        errors: arr
+      }, function () {
+        return _this2.nextStep();
+      });
     }
   }, {
     key: "nextStep",
     value: function nextStep() {
       var _this$state = this.state,
-          errors = _this$state.errors,
-          step = _this$state.step;
+          step = _this$state.step,
+          email = _this$state.email,
+          password = _this$state.password,
+          age = _this$state.age;
 
-      if (errors.length === 0) {
+      if (step === 1) {
+        var newUser = {
+          email: email,
+          password: password,
+          age: age
+        };
+        this.props.createNewUser(newUser).then(this.props.clearErrors).then(this.goForward);
+      } else {
+        this.goForward();
+      }
+    }
+  }, {
+    key: "goForward",
+    value: function goForward() {
+      var _this$state2 = this.state,
+          errors = _this$state2.errors,
+          step = _this$state2.step;
+
+      if (errors.length === 0 && this.props.errors.length === 0) {
         this.setState({
           step: step + 1
         });
@@ -1441,22 +1488,11 @@ var SignUpForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "update",
     value: function update(field) {
-      var _this2 = this;
-
-      return function (e) {
-        _this2.setState(_defineProperty({}, field, e.target.value));
-      };
-    }
-  }, {
-    key: "addErrors",
-    value: function addErrors(arr) {
       var _this3 = this;
 
-      this.setState({
-        errors: arr
-      }, function () {
-        return _this3.nextStep();
-      });
+      return function (e) {
+        _this3.setState(_defineProperty({}, field, e.target.value));
+      };
     }
   }, {
     key: "submitForm",
@@ -1468,19 +1504,31 @@ var SignUpForm = /*#__PURE__*/function (_React$Component) {
       this.props.processForm(user);
     }
   }, {
+    key: "showErrors",
+    value: function showErrors() {
+      var errors = this.state.step === 1 ? this.props.errors : this.state.errors;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "error-list"
+      }, errors.map(function (err, idx) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+          key: idx
+        }, err);
+      })));
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this$state2 = this.state,
-          step = _this$state2.step,
-          email = _this$state2.email,
-          password = _this$state2.password,
-          age = _this$state2.age,
-          username = _this$state2.username,
-          first_name = _this$state2.first_name,
-          last_name = _this$state2.last_name,
-          gender = _this$state2.gender,
-          language = _this$state2.language,
-          region = _this$state2.region;
+      var _this$state3 = this.state,
+          step = _this$state3.step,
+          email = _this$state3.email,
+          password = _this$state3.password,
+          age = _this$state3.age,
+          username = _this$state3.username,
+          first_name = _this$state3.first_name,
+          last_name = _this$state3.last_name,
+          gender = _this$state3.gender,
+          language = _this$state3.language,
+          region = _this$state3.region;
       var credVals = {
         email: email,
         password: password,
@@ -1504,9 +1552,10 @@ var SignUpForm = /*#__PURE__*/function (_React$Component) {
           //email, password, age
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_sign_up_details_credentials__WEBPACK_IMPORTED_MODULE_1__["default"], {
             update: this.update,
-            nextStep: this.nextStep,
+            newUserDetails: this.props.newUserDetails,
             addErrors: this.addErrors,
             showErrors: this.showErrors,
+            submitForm: this.submitForm,
             values: credVals
           });
 
@@ -1514,7 +1563,6 @@ var SignUpForm = /*#__PURE__*/function (_React$Component) {
           //username, first_name, last_name
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_sign_up_details_names__WEBPACK_IMPORTED_MODULE_2__["default"], {
             update: this.update,
-            nextStep: this.nextStep,
             prevStep: this.prevStep,
             addErrors: this.addErrors,
             showErrors: this.showErrors,
@@ -1525,7 +1573,6 @@ var SignUpForm = /*#__PURE__*/function (_React$Component) {
           //gender
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_sign_up_details_gender__WEBPACK_IMPORTED_MODULE_3__["default"], {
             update: this.update,
-            nextStep: this.nextStep,
             prevStep: this.prevStep,
             addErrors: this.addErrors,
             showErrors: this.showErrors,
@@ -1536,7 +1583,6 @@ var SignUpForm = /*#__PURE__*/function (_React$Component) {
           //language, region
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_sign_up_details_language_and_region__WEBPACK_IMPORTED_MODULE_4__["default"], {
             update: this.update,
-            nextStep: this.submitForm,
             prevStep: this.prevStep,
             addErrors: this.addErrors,
             showErrors: this.showErrors,
@@ -1586,8 +1632,11 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
     clearErrors: function clearErrors() {
       return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["clearErrors"])());
     },
+    createNewUser: function createNewUser(user) {
+      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["createNewUser"])(user));
+    },
     processForm: function processForm(user) {
-      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["signup"])(user));
+      return dispatch(login(user));
     }
   };
 };
@@ -1645,10 +1694,10 @@ var Welcome = function Welcome(_ref) {
     to: "/signup"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     className: "signup-button"
-  }, "Sign up")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+  }, "Sign up"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
     to: "/"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    className: "demo-login-button",
+    className: "welcome-demo",
     onClick: demoUser
   }, "Demo"))))));
 };
@@ -1700,15 +1749,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _store_store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./store/store */ "./frontend/store/store.js");
 /* harmony import */ var _components_root__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/root */ "./frontend/components/root.jsx");
-/* harmony import */ var _actions_board_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./actions/board_actions */ "./frontend/actions/board_actions.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
 
 
  //begin testing
-
- //end tetsting
+// import {fetchBoards, fetchBoard, createBoard, updateBoard, deleteBoard} from './actions/board_actions'
+//end tetsting
 
 document.addEventListener("DOMContentLoaded", function () {
   var root = document.getElementById("root");
@@ -1728,15 +1776,15 @@ document.addEventListener("DOMContentLoaded", function () {
   } else {
     store = Object(_store_store__WEBPACK_IMPORTED_MODULE_2__["default"])();
   } //begin testing 
+  // window.getState = store.getState;
+  // window.dispatch = store.dispatch;
+  // window.fetchBoards = fetchBoards;
+  // window.fetchBoard = fetchBoard;
+  // window.createBoard = createBoard;
+  // window.updateBoard = updateBoard;
+  // window.deleteBoard = deleteBoard;
+  //end testing
 
-
-  window.getState = store.getState;
-  window.dispatch = store.dispatch;
-  window.fetchBoards = _actions_board_actions__WEBPACK_IMPORTED_MODULE_4__["fetchBoards"];
-  window.fetchBoard = _actions_board_actions__WEBPACK_IMPORTED_MODULE_4__["fetchBoard"];
-  window.createBoard = _actions_board_actions__WEBPACK_IMPORTED_MODULE_4__["createBoard"];
-  window.updateBoard = _actions_board_actions__WEBPACK_IMPORTED_MODULE_4__["updateBoard"];
-  window.deleteBoard = _actions_board_actions__WEBPACK_IMPORTED_MODULE_4__["deleteBoard"]; //end testing
 
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_root__WEBPACK_IMPORTED_MODULE_3__["default"], {
     store: store
@@ -2019,7 +2067,6 @@ var sessionReducer = function sessionReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _nullUser;
   var action = arguments.length > 1 ? arguments[1] : undefined;
   Object.freeze(state);
-  var newState = Object.assign({}, state);
 
   switch (action.type) {
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_CURRENT_USER"]:
@@ -2059,6 +2106,7 @@ var usersReducer = function usersReducer() {
   Object.freeze(state);
 
   switch (action.type) {
+    case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["NEW_USER"]:
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_CURRENT_USER"]:
       return Object.assign({}, state, _defineProperty({}, action.currentUser.id, action.currentUser));
 

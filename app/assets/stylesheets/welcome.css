@@ -3,25 +3,31 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 500px;
-    height: auto;
-    padding: 20px;
-    font-size: 20px;
+    width: 484px;
+    height: 370px;
+    padding-top: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 16px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     box-sizing: border-box;
 }
 
 .login-signup div #logo {
-    font-size: 50px;
+    font-size: 45px;
+    margin-top: 10px;
 }
 
 h2{
+    margin-top: 7px;
     margin-bottom: 7px;
+    font-size: 27px;
 }
 
 .buttons{
-    margin-top: 30px;
-    width: 100%;
+    /* margin-top: 20px; */
+    padding: 15px;
+    width: 85%;
 }
 
 button{
@@ -56,7 +62,7 @@ button:focus{
 }
 
 .buttons .signup-button{
-    background-color: lightgray;
+    background-color: rgb(230, 230, 230);
     color: black;
 }
 
@@ -65,5 +71,23 @@ button:focus{
 }
 
 .buttons .signup-button:hover{
-    background-color: rgb(182, 182, 182);
+    background-color: rgb(212, 212, 212);
+}
+
+.welcome-demo{
+    width: 100%;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: inherit;
+    color: black;
+    padding: 20px;
+    padding-bottom: 20px;
+    margin-top: 20px;
+    width: 484px;
+    border-radius: unset;
+    border-top: 1px solid rgb(235, 235, 235);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-color: white;
+    font-weight: bold;
 }

@@ -45,6 +45,7 @@ class LoginForm extends React.Component{
     }
 
     render(){
+        const {errors} = this.props;
         return (
             <div className="modal-background">
                 <div className="side-button">
@@ -52,13 +53,17 @@ class LoginForm extends React.Component{
                 </div>
                 <div className="modal-child" onClick={e => e.stopPropagation()}>
                     <div className="login-form-box">
-                        <div><i id="logo" className="fab fa-pinterest"></i></div>
-                        <h1>Welcome to Peridot</h1>
                         <form className="login-form">
-                            {this.showErrors()}
+                            <div className="login-heading">
+                                <div><i id="logo" className="fab fa-pinterest"></i></div>
+                                <h1>Welcome to Peridot</h1>
+                            </div>
                             <div className="login-fields">
                                 <input type='text' placeholder="Email" value={this.state.email} onChange={this.update("email")} />
                                 <input type='password' placeholder="Password" value={this.state.password} onChange={this.update("password")} />
+                            </div>
+                            <div className="error">
+                                {errors.length > 0 ? errors[0] : ""}
                             </div>
                             <div className="login-form-buttons">
                                 <button className="login-button" onClick={this.handleSubmit} >Log in</button>
@@ -66,6 +71,9 @@ class LoginForm extends React.Component{
                                 <button className="demo login-button" onClick={this.demoUser}>Demo Login</button>
                             </div>
                         </form>
+                        <div className="signup-link">
+                            <Link to='/signup'>Not on Peridot yet? Sign up</Link>
+                        </div>
                     </div>
                 </div>
             </div>

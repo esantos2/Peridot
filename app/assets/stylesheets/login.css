@@ -1,25 +1,34 @@
 .login-form-box{
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    width: 500px;
-    height: 600px;
-    padding: 20px;
+    width: 484px;
+    height: 566px;
     font-size: 20px;
+    padding-top: 25px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     box-sizing: border-box;
     color: rgb(48, 48, 48);
 }
 
-.login-form-box div #logo{
-    font-size: 50px;
+.login-heading div #logo{
+    font-size: 45px;
+    font-weight: bolder;
 }
 
-.login-form-box h1{
-    font-size: 40px;
+.login-heading h1{
+    font-size: 35px;
     margin-top: 10px;
     margin-bottom: 0;
+}
+
+.login-heading{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
 }
 
 .login-fields{
@@ -27,7 +36,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-bottom: 15px;
+    /* margin-bottom: 15px; */
+    padding: 10px;
 }
 
 .login-fields > input{
@@ -42,7 +52,7 @@
 
 .login-fields > input:focus{
     outline-style: none;
-    border: 2px solid rgb(0, 223, 0);
+    border: 3px solid rgb(0, 223, 0);
 }
 
 .login-form-buttons{
@@ -62,7 +72,7 @@
 .login-form-buttons div{
     margin-top: 10px;
     font-weight: bold;
-    font-size: 17px;
+    font-size: 15px;
 }
 
 .login-form-buttons .demo{
@@ -104,4 +114,23 @@
 
 .error-list li{
     color: red;
+}
+
+.error{
+    color: red;
+    text-align: center;
+    width: auto;
+    height: 20px;
+    font-size: 14px;
+}
+
+.signup-link{
+    padding: 25px;
+}
+
+.signup-link > a{
+    text-decoration: none;
+    color: black;
+    font-size: 14px;
+    font-weight: bold;
 }

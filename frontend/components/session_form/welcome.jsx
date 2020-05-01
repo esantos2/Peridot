@@ -26,8 +26,10 @@ const Welcome = ({ processForm }) => {
                         <Link to='/signup'>
                             <button className="signup-button">Sign up</button>
                         </Link>
+                    </div>
+                    <div>
                         <Link to='/'>
-                            <button className="demo-login-button" onClick={demoUser}>Demo</button>
+                            <button className="welcome-demo" onClick={demoUser}>Demo</button>
                         </Link>
                     </div>
                 </div>

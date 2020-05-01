@@ -3,24 +3,25 @@
 # Table name: users
 #
 #  id              :bigint           not null, primary key
-#  username        :string           not null
-#  first_name      :string           not null
-#  last_name       :string           not null
+#  username        :string
+#  first_name      :string
+#  last_name       :string
 #  email           :string           not null
 #  bio             :text
 #  session_token   :string           not null
 #  password_digest :string           not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
-#  gender          :string           not null
-#  language        :string           not null
-#  region          :string           not null
-#  age             :string           not null
+#  gender          :string
+#  language        :string
+#  region          :string
+#  age             :string
 #
 class User < ApplicationRecord
-    validates :username, :email, :session_token, presence: true, uniqueness: true
-    validates :password_digest, :first_name, :last_name, :age, :gender, :language, :region, presence: true
+    validates :username, :email, :session_token, uniqueness: true
+    validates :password_digest, :session_token, :email, presence: true
     validates :password, length: {minimum: 6, allow_nil: true}
+    validates :age, presence: true
 
     has_many :boards
 

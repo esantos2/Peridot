@@ -21,31 +21,39 @@ class SignUpForm extends React.Component{
             language: '',
             region: ''
         }
-        this.nextStep = this.nextStep.bind(this);
         this.prevStep = this.prevStep.bind(this);
         this.submitForm = this.submitForm.bind(this);
         this.update = this.update.bind(this);
+        
         this.addErrors = this.addErrors.bind(this);
         this.showErrors = this.showErrors.bind(this);
+        this.goForward = this.goForward.bind(this);
     }
 
     componentWillUnmount() {
         this.props.clearErrors();
     }
 
-    showErrors(){
-        const {errors} = this.state;
-        return (<ul className="error-list">
-            {errors.map((err, idx) => {
-                return <li key={idx}>{err}</li>
-            })}
-        </ul>)
+    addErrors(arr) {
+        this.setState({ errors: arr }, () => this.nextStep());
     }
 
     nextStep(){
+        const {step, email, password, age} = this.state;
+        if (step === 1) {
+            let newUser = {email, password, age};
+            this.props.createNewUser(newUser)
+                .then(this.props.clearErrors)
+                .then(this.goForward);
+        } else{
+            this.goForward();
+        }
+    }
+
+    goForward(){
         const {errors, step} = this.state;
-        if (errors.length === 0){
-            this.setState({ step: step + 1})
+        if (errors.length === 0 && this.props.errors.length === 0) {
+            this.setState({ step: step + 1 })
         }
     }
 
@@ -60,16 +68,25 @@ class SignUpForm extends React.Component{
         }
     }
 
-    addErrors(arr){
-        this.setState({errors: arr}, () => this.nextStep());
-    }
-
     submitForm(e){
         e.preventDefault();
         const user = Object.assign({}, this.state);
         delete user["step"];
         delete user["errors"];
         this.props.processForm(user);
+    }
+
+    showErrors() {
+        let errors = (this.state.step === 1) ? this.props.errors : this.state.errors;
+        return (
+            <div>
+                <ul className="error-list">
+                    {errors.map((err, idx) => {
+                        return <li key={idx}>{err}</li>
+                    })}
+                </ul>
+            </div>
+        )
     }
 
     render(){
@@ -81,15 +98,15 @@ class SignUpForm extends React.Component{
         switch(step){
             case 1: //email, password, age
                 return <Credentials 
-                    update={this.update} 
-                    nextStep={this.nextStep}
+                    update={this.update}
+                    newUserDetails={this.props.newUserDetails}
                     addErrors={this.addErrors}
                     showErrors={this.showErrors}
+                    submitForm={this.submitForm}
                     values={credVals}/>;
             case 2: //username, first_name, last_name
                 return <Names 
                     update={this.update} 
-                    nextStep={this.nextStep} 
                     prevStep={this.prevStep} 
                     addErrors={this.addErrors}
                     showErrors={this.showErrors}
@@ -97,7 +114,6 @@ class SignUpForm extends React.Component{
             case 3: //gender
                 return <Gender 
                     update={this.update} 
-                    nextStep={this.nextStep} 
                     prevStep={this.prevStep} 
                     addErrors={this.addErrors}
                     showErrors={this.showErrors}
@@ -105,7 +121,6 @@ class SignUpForm extends React.Component{
             case 4: //language, region
                 return <LanguageAndRegion 
                     update={this.update} 
-                    nextStep={this.submitForm} 
                     prevStep={this.prevStep} 
                     addErrors={this.addErrors}
                     showErrors={this.showErrors}

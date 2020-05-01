@@ -63,7 +63,7 @@
 #language > select{
     display: inline-block;
     height: 30px;
-    
+    font-family: cursive;
 }
 
 option:hover{
