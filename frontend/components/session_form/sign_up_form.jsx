@@ -78,21 +78,14 @@ class SignUpForm extends React.Component{
 
     showErrors() {
         let errors = (this.state.step === 1) ? this.props.errors : this.state.errors;
-        return (
-            <div>
-                <ul className="error-list">
-                    {errors.map((err, idx) => {
-                        return <li key={idx}>{err}</li>
-                    })}
-                </ul>
-            </div>
-        )
+        let error = errors.length > 0 ? errors[0] : "";
+        return error;
     }
 
     render(){
         const {step, email, password, age, username, first_name, last_name, gender, language, region} = this.state;
         const credVals = { email, password, age};
-        const nameVals = { username, first_name, last_name};
+        const nameVals = { email, username, first_name, last_name};
         const genVal = { gender };
         const langAndRegVals = { language, region };
         switch(step){

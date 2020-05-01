@@ -16,15 +16,6 @@ class LoginForm extends React.Component{
         this.props.clearErrors();
     }
 
-    showErrors() {
-        const { errors } = this.props;
-        return (<ul className="error-list">
-            {errors.map((err, idx) => {
-                return <li key={idx}>{err}</li>
-            })}
-        </ul>)
-    }
-
     update(field){
         return e => this.setState({[field]: e.currentTarget.value});
     }

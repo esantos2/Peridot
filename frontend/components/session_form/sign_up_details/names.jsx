@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import {Link} from 'react-router-dom';
 
 class Names extends React.Component {
 
@@ -35,19 +36,39 @@ class Names extends React.Component {
             <div className="modal-background">
                 <div className="modal-child" onClick={e => e.stopPropagation()}>
                     <div className="login-form-box">
-                        <h1>What's your name?</h1>
+                        <div className="email-pic">
+                            <i className="email-pic-icon fas fa-user-alt"></i>
+                            {values.email}
+                        </div>
+                        <h1>Welcome to Peridot</h1>
                         <form className="login-form">
-                            {this.props.showErrors()}
                             <div className="login-fields">
                                 <input type='text' placeholder="Username" value={values.username} onChange={this.props.update("username")} />
-                                <input type='text' placeholder="First name" value={values.first_name} onChange={this.props.update("first_name")} />
-                                <input type='text' placeholder="Last name" value={values.last_name} onChange={this.props.update("last_name")} />
+                                {/* <input type='text' placeholder="First name" value={values.first_name} onChange={this.props.update("first_name")} />
+                                <input type='text' placeholder="Last name" value={values.last_name} onChange={this.props.update("last_name")} /> */}
                             </div>
-                            <div className="signup-form-buttons">
+                            <div className="error">
+                                {this.props.showErrors()}
+                            </div>
+                            {/* <div className="signup-form-buttons">
                                 <button onClick={this.handlePrev}>{'<'}</button>
                                 <button onClick={this.handleNext}>{'>'}</button>
+                            </div> */}
+                            <div className="intro">
+                                <p>Finish setting up your profile to save ideas,</p>
+                                <p>get personalized recommendations and more</p>
+                            </div>
+                            <div className="login-form-buttons">
+                                <button className="login-button" onClick={this.handleNext} >Next</button>
                             </div>
                         </form>
+                        <div className="signup-link">
+                            <Link to='/login'>
+                                <div>
+                                    Already have a Peridot account? Log in instead
+                                </div>
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>
