@@ -32,12 +32,10 @@ class LanguageAndRegion extends React.Component {
     render() {
         return (
             <div className="modal-background">
-                <div className="modal-child" onClick={e => e.stopPropagation()}>
-                    <div className="login-form-box">
-                        <h1>Pick your language</h1>
-                        <h1>and country/region</h1>
+                <div className="modal-child-round-box" onClick={e => e.stopPropagation()}>
+                    <div className="user-details-form-box">
                         <form className="login-form">
-                            {this.props.showErrors()}
+                            <h1 className="form-title">Pick your language and country/region</h1>
                             <div className="dropdown-fields">
                                 <div>
                                     <select id="language" onChange={this.props.update("language")}>
@@ -54,11 +52,17 @@ class LanguageAndRegion extends React.Component {
                                     </select>
                                 </div>
                             </div>
-                            <div className="signup-form-buttons">
+                            <div className="error">
+                                {this.props.showErrors()}
+                            </div>
+                            {/* <div className="signup-form-buttons">
                                 <button onClick={this.handlePrev}>{'<'}</button>
                                 <button onClick={this.handleNext}>{'>'}</button>
-                            </div>
+                            </div> */}
                         </form>
+                        <div className="login-form-buttons">
+                            <button className="next login-button" onClick={this.handleNext} >Next</button>
+                        </div>
                     </div>
                 </div>
             </div>

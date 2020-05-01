@@ -36,7 +36,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* margin-bottom: 15px; */
     padding: 10px;
 }
 
@@ -55,12 +54,17 @@
     border: 3px solid rgb(0, 223, 0);
 }
 
+.login-form{
+    height:70%;
+}
+
 .login-form-buttons{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 10px;
+    height: 40%;
 }
 
 .login-form-buttons button{

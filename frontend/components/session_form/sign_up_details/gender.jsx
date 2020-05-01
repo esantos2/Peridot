@@ -32,11 +32,13 @@ class Gender extends React.Component{
     render() {
         return (
             <div className="modal-background">
-                <div className="modal-child" onClick={e => e.stopPropagation()}>
-                    <div className="login-form-box">
-                        <h1>How do you identify?</h1>
+                <div className="modal-child-round-box" onClick={e => e.stopPropagation()}>
+                    <div className="user-details-form-box">
                         <form className="login-form">
-                            {this.props.showErrors()}
+                            <div className="progress-bar">
+
+                            </div>
+                            <h1 className="form-title">How do you identify?</h1>
                             <div className="radio-fields">
                                 <div>
                                     <div>
@@ -53,11 +55,17 @@ class Gender extends React.Component{
                                     </div>
                                 </div>
                             </div>
-                            <div className="signup-form-buttons">
+                            <div className="error">
+                                {this.props.showErrors()}
+                            </div>
+                            {/* <div className="signup-form-buttons">
                                 <button onClick={this.handlePrev}>{'<'}</button>
                                 <button onClick={this.handleNext}>{'>'}</button>
-                            </div>
+                            </div> */}
                         </form>
+                        <div className="login-form-buttons">
+                            <button className="next login-button" onClick={this.handleNext} >Next</button>
+                        </div>
                     </div>
                 </div>
             </div>
