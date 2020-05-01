@@ -1,0 +1,29 @@
+.all-pins-box{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    margin-top: 80px;
+    padding: 20px;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(179, 240, 179);
+}
+
+.pin-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    background-color: mediumseagreen;
+    height: auto;
+    width: auto;
+    border-radius: 20px;
+}
+
+.pin-box:hover{
+    background-color: rgb(52, 150, 96);
+}

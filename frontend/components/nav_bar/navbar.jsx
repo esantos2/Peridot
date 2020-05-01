@@ -10,10 +10,10 @@ const NavBar = ({ logout }) => {
     return (
         <nav className="header-logout">
             <div className="icon">
-                <Link to="/"><i id="logo" className="fab fa-pinterest"></i></Link>
+                <Link to="/home"><i id="logo" className="fab fa-pinterest"></i></Link>
             </div>
             <div className="home-button">
-                <Link to="/">Home</Link>
+                <Link to="/home">Home</Link>
             </div>
             <div className="search-bar">Peridot!</div>
             <div className="icon">
