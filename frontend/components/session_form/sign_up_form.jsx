@@ -15,8 +15,6 @@ class SignUpForm extends React.Component{
             password: '',
             age: '',
             username: '',
-            first_name: '',
-            last_name: '',
             gender: '',
             language: '',
             region: ''
@@ -83,9 +81,9 @@ class SignUpForm extends React.Component{
     }
 
     render(){
-        const {step, email, password, age, username, first_name, last_name, gender, language, region} = this.state;
+        const {step, email, password, age, username, gender, language, region} = this.state;
         const credVals = { email, password, age};
-        const nameVals = { email, username, first_name, last_name};
+        const nameVals = { email, username};
         const genVal = { gender };
         const langAndRegVals = { language, region };
         switch(step){

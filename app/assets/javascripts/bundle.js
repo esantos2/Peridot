@@ -1215,7 +1215,7 @@ var Names = /*#__PURE__*/function (_React$Component) {
       var newErrors = [];
       Object.keys(values).forEach(function (val) {
         if (values[val] === '') {
-          newErrors.push("".concat(val, " can't be blank!"));
+          newErrors.push("".concat(val[0].toUpperCase().concat(val.slice(1)), " can't be blank!"));
         }
       });
       this.props.addErrors(newErrors);
@@ -1227,17 +1227,17 @@ var Names = /*#__PURE__*/function (_React$Component) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "modal-background"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "modal-child",
+        className: "modal-child-round-box",
         onClick: function onClick(e) {
           return e.stopPropagation();
         }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "login-form-box"
+        className: "user-details-form-box"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "email-pic"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "email-pic-icon fas fa-user-alt"
-      }), values.email), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Welcome to Peridot"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        className: "email-pic-icon fas fa-user"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, values.email)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Welcome to Peridot"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         className: "login-form"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "login-fields"
@@ -1253,13 +1253,17 @@ var Names = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Finish setting up your profile to save ideas,"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "get personalized recommendations and more")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "login-form-buttons"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "login-button",
+        className: "next login-button",
         onClick: this.handleNext
       }, "Next"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "signup-link"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/login"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Already have a Peridot account? Log in instead"))))));
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "intro"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Already have a Peridot account?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "intro-link"
+      }, "Log in instead")))))));
     }
   }]);
 
@@ -1414,8 +1418,6 @@ var SignUpForm = /*#__PURE__*/function (_React$Component) {
       password: '',
       age: '',
       username: '',
-      first_name: '',
-      last_name: '',
       gender: '',
       language: '',
       region: ''
@@ -1521,8 +1523,6 @@ var SignUpForm = /*#__PURE__*/function (_React$Component) {
           password = _this$state3.password,
           age = _this$state3.age,
           username = _this$state3.username,
-          first_name = _this$state3.first_name,
-          last_name = _this$state3.last_name,
           gender = _this$state3.gender,
           language = _this$state3.language,
           region = _this$state3.region;
@@ -1533,9 +1533,7 @@ var SignUpForm = /*#__PURE__*/function (_React$Component) {
       };
       var nameVals = {
         email: email,
-        username: username,
-        first_name: first_name,
-        last_name: last_name
+        username: username
       };
       var genVal = {
         gender: gender

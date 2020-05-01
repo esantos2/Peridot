@@ -18,7 +18,7 @@
 #  age             :string
 #
 class User < ApplicationRecord
-    validates :username, :email, :session_token, uniqueness: true
+    validates :email, :session_token, uniqueness: true
     validates :password_digest, :session_token, :email, presence: true
     validates :password, length: {minimum: 6, allow_nil: true}
     validates :age, presence: true

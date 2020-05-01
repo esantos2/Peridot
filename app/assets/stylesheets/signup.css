@@ -1,3 +1,17 @@
+.user-details-form-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 500px;
+    height: 550px;
+    font-size: 20px;
+    padding-top: 25px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-sizing: border-box;
+    color: rgb(48, 48, 48);
+}
+
 .signup-form-buttons{
     display: flex;
     justify-content: space-between;
@@ -75,7 +89,55 @@ option:hover{
     padding: 7px;
 }
 
+.intro{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .intro p{
     font-size: 14px;
+    font-weight: normal;
+    margin: 0;
+    padding: 2px;
+}
+
+.intro > .intro-link{
+    font-weight: bolder;
+}
+
+.email-pic{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+}
+
+.email-pic div{
+    padding: 15px;
+}
+
+i[class*=fa-times]::before{
+   background:transparent;
+}
+
+.email-pic-icon{
+    margin-top: 20px;
+    font-size: 90px;
+    /* box-shadow: 0 0 40px 20px rgb(0, 255, 42); */
+}
+
+h1{
     margin-top: 0;
+    margin-bottom: 0;
+    padding: 10px;
+    font-size: 35px;
+}
+
+.login-form-buttons .next {
+    width: 400px;
+    height: 40px;
+    padding: 7px;
 }

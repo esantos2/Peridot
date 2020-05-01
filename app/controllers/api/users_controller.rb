@@ -1,7 +1,8 @@
 class Api::UsersController < ApplicationController
     
     def show
-
+        @user = User.find_by(id: params[:id])
+        render "/api/users/show"
     end
 
     def create
@@ -15,7 +16,12 @@ class Api::UsersController < ApplicationController
     end
 
     def update
-
+        @user = User.find_by(id: params[:id])
+        if @user.update(user_params)
+            render "/api/users/show"
+        else
+            render json: @user.errors.full_messages, status: 422
+        end
     end
 
     private
