@@ -119,10 +119,6 @@ option:hover{
     padding: 15px;
 }
 
-i[class*=fa-times]::before{
-   background:transparent;
-}
-
 .email-pic-icon{
     margin-top: 20px;
     font-size: 90px;

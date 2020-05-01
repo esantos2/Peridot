@@ -24,8 +24,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     //begin testing 
-    // window.getState = store.getState;
-    // window.dispatch = store.dispatch;
+    window.getState = store.getState;
+    window.dispatch = store.dispatch;
     // window.fetchBoards = fetchBoards;
     // window.fetchBoard = fetchBoard;
     // window.createBoard = createBoard;

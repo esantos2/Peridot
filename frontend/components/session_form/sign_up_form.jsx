@@ -68,10 +68,9 @@ class SignUpForm extends React.Component{
 
     submitForm(e){
         e.preventDefault();
-        const user = Object.assign({}, this.state);
-        delete user["step"];
-        delete user["errors"];
-        this.props.processForm(user);
+        const {username, gender, language, region} = this.state;
+        let user = {username, gender, language, region}
+        this.props.updateDetails(user);
     }
 
     showErrors() {
