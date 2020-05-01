@@ -21,7 +21,7 @@
     font-weight: 700;
 }
 
-.header-logout > div, .drop-down{
+.header-logout > div, .header-logout > a, .drop-down{
     min-height: 48px;
     min-width: 48px;
     display: flex;
@@ -42,7 +42,7 @@
     border-radius: 50%;
 }
 
-.icon > a{
+.icon > a, .icon > i{
     color: rgb(116, 116, 116);
 }
 

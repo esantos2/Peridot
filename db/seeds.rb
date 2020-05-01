@@ -84,6 +84,41 @@ Pin.create!(
     link: "www.whereYouGoinJudas.com"
 )
 
+Pin.create!(
+    user_id: 2,
+    title: "The Great Wave of Kanagawa",
+    description: "Surf's up bruh",
+    link: "www.waterYouWaitingFor.com"
+)
+
+Pin.create!(
+    user_id: 2,
+    title: "Starry Night Over the Rhone",
+    description: "Longing, Homecoming, Benign",
+    link: "www.aintGotTimeForThis.com"
+)
+
+Pin.create!(
+    user_id: 3,
+    title: "Almond Blossoms",
+    description: "It's not weird to talk to trees",
+    link: "www.happyLilSomething.com"
+)
+
+Pin.create!(
+    user_id: 1,
+    title: "Olympia",
+    description: "Is it a mountain?",
+    link: "www.whereWeDroppin.com"
+)
+
+Pin.create!(
+    user_id: 1,
+    title: "The Yellow House",
+    description: "It used to be white",
+    link: "www.whatGoesAroundComesAround.com"
+)
+
 Board.create!(
     user_id: 1,
     name: "Art stuff",

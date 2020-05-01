@@ -17,7 +17,10 @@ const App = () => (
             <AuthRoute path="/login" component={LoginFormContainer} />
             <AuthRoute path="/signup" component={SignupFormContainer} />
             <AuthRoute exact path="/" component={WelcomeContainer} />
-            <ProtectedRoute path="/home" component={PinIndexContainer} />
+            {/* user profile */}
+            <ProtectedRoute path="/users/:userId" component={PinIndexContainer} />
+            <ProtectedRoute path="/" component={PinIndexContainer} />
+            {/* 404 page not found */}
         </Switch>
 
         

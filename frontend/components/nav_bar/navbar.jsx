@@ -1,7 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
-const NavBar = ({ logout }) => {
+const NavBar = ({ currentUserId, logout }) => {
 
     const showMenu = () => {
         document.getElementById("settings").classList.toggle("show-menu")
@@ -26,7 +26,9 @@ const NavBar = ({ logout }) => {
                     <i className="fab fa-github"></i>
                 </a>
             </div>
-            <div className="icon profile"><i className="fas fa-user"></i></div>
+            <NavLink to={`/users/${currentUserId}`} className="icon profile">
+                <i className="fas fa-user"></i>
+            </NavLink>
             <div className="options">
                 <div className="icon" onClick={showMenu}><i className="drop-down fas fa-chevron-down"></i></div>
                 <ul id="settings" className="drop-down-menu">

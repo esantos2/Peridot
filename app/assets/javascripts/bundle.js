@@ -310,8 +310,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "logout", function() { return logout; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createNewUser", function() { return createNewUser; });
 /* harmony import */ var _util_session_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/session_api_util */ "./frontend/util/session_api_util.js");
-/* harmony import */ var _actions_pin_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/pin_actions */ "./frontend/actions/pin_actions.js");
-
 
 var RECEIVE_CURRENT_USER = "RECEIVE_CURRENT_USER";
 var LOGOUT_CURRENT_USER = "LOGOUT_CURRENT_USER";
@@ -462,7 +460,10 @@ var App = function App() {
     path: "/",
     component: _session_form_welcome_container__WEBPACK_IMPORTED_MODULE_6__["default"]
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_2__["ProtectedRoute"], {
-    path: "/home",
+    path: "/users/:userId",
+    component: _pins_pin_index_container__WEBPACK_IMPORTED_MODULE_7__["default"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_2__["ProtectedRoute"], {
+    path: "/",
     component: _pins_pin_index_container__WEBPACK_IMPORTED_MODULE_7__["default"]
   })));
 };
@@ -487,7 +488,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var NavBar = function NavBar(_ref) {
-  var logout = _ref.logout;
+  var currentUserId = _ref.currentUserId,
+      logout = _ref.logout;
 
   var showMenu = function showMenu() {
     document.getElementById("settings").classList.toggle("show-menu");
@@ -522,7 +524,8 @@ var NavBar = function NavBar(_ref) {
     target: "_blank"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
     className: "fab fa-github"
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["NavLink"], {
+    to: "/users/".concat(currentUserId),
     className: "icon profile"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
     className: "fas fa-user"
@@ -559,9 +562,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _navbar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./navbar */ "./frontend/components/nav_bar/navbar.jsx");
 
 
- // const mapStateToProps = state => ({
-//     currentUser: state.entities.users[state.session.currentUserId]
-// })
+
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    currentUserId: state.session.currentUserId
+  };
+};
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
@@ -571,7 +578,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(null, mapDispatchToProps)(_navbar__WEBPACK_IMPORTED_MODULE_2__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_navbar__WEBPACK_IMPORTED_MODULE_2__["default"]));
 
 /***/ }),
 
@@ -636,7 +643,7 @@ var PinIndex = /*#__PURE__*/function (_React$Component) {
       if (!this.props.pins) return null;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "all-pins-box"
-      }, Object.values(this.props.pins).map(function (pin, idx) {
+      }, this.props.pins.map(function (pin, idx) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_pin_index_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
           key: idx,
           pin: pin,
@@ -665,13 +672,31 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_pin_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/pin_actions */ "./frontend/actions/pin_actions.js");
 /* harmony import */ var _pin_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./pin_index */ "./frontend/components/pins/pin_index.jsx");
+/* harmony import */ var _reducers_selectors__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../reducers/selectors */ "./frontend/reducers/selectors.js");
 
 
 
 
-var mapStateToProps = function mapStateToProps(state) {
+
+var mapStateToProps = function mapStateToProps(_ref, _ref2) {
+  var entities = _ref.entities,
+      session = _ref.session;
+  var match = _ref2.match;
+  var pins;
+
+  if (match.params.boardId) {
+    var _match$params = match.params,
+        userId = _match$params.userId,
+        boardId = _match$params.boardId;
+    pins = selectBoardPins(entities.pins, userId, boardId);
+  } else if (match.params.userId) {
+    pins = Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["selectUserPins"])(entities.pins, session.currentUserId);
+  } else {
+    pins = Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["selectSuggestedPins"])(entities.pins, session.currentUserId);
+  }
+
   return {
-    pins: state.entities.pins
+    pins: pins
   };
 };
 
@@ -2249,6 +2274,38 @@ var rootReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])(
   errors: _errors_reducer__WEBPACK_IMPORTED_MODULE_3__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (rootReducer);
+
+/***/ }),
+
+/***/ "./frontend/reducers/selectors.js":
+/*!****************************************!*\
+  !*** ./frontend/reducers/selectors.js ***!
+  \****************************************/
+/*! exports provided: selectUserPins, selectBoardPins, selectSuggestedPins */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "selectUserPins", function() { return selectUserPins; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "selectBoardPins", function() { return selectBoardPins; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "selectSuggestedPins", function() { return selectSuggestedPins; });
+var selectUserPins = function selectUserPins(pins, userId) {
+  var userPins = [];
+  Object.values(pins).forEach(function (pin) {
+    if (pin.userId === userId) userPins.push(pin);
+  });
+  return userPins;
+};
+var selectBoardPins = function selectBoardPins(pins, userId, boardId) {
+  var boardPins = [];
+};
+var selectSuggestedPins = function selectSuggestedPins(pins, userId) {
+  var suggestedPins = [];
+  Object.values(pins).forEach(function (pin) {
+    if (pin.userId !== userId) suggestedPins.push(pin);
+  });
+  return suggestedPins;
+};
 
 /***/ }),
 
