@@ -5,8 +5,13 @@ class PinShow extends React.Component{
         super(props)
     }
 
+    componentDidMount(){
+        this.props.fetchPin(this.props.match.params.pinId);
+    }
+
     render(){
-        const {pin} = this.props
+        const {pin} = this.props;
+        if (!pin) return null;
         return (
             <div className="pin-show-page">
                 <div className="pin-show-box">

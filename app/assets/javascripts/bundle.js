@@ -836,9 +836,15 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
   }
 
   _createClass(PinShow, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.props.fetchPin(this.props.match.params.pinId);
+    }
+  }, {
     key: "render",
     value: function render() {
       var pin = this.props.pin;
+      if (!pin) return null;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-show-page"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -875,6 +881,8 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _pin_show__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pin_show */ "./frontend/components/pins/pin_show.jsx");
+/* harmony import */ var _actions_pin_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/pin_actions */ "./frontend/actions/pin_actions.js");
+
 
 
 
@@ -885,7 +893,11 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {};
+  return {
+    fetchPin: function fetchPin(pinId) {
+      return dispatch(Object(_actions_pin_actions__WEBPACK_IMPORTED_MODULE_2__["fetchPin"])(pinId));
+    }
+  };
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_pin_show__WEBPACK_IMPORTED_MODULE_1__["default"]));
