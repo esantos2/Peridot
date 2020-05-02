@@ -9,23 +9,19 @@ const NavBar = ({ currentUserId, logout }) => {
 
     return (
         <nav className="header-logout">
-            <div className="icon">
-                <Link to="/home"><i id="logo" className="fab fa-pinterest"></i></Link>
-            </div>
+            <NavLink to="/home" className="icon">
+                <i id="logo" className="fab fa-pinterest"></i>
+            </NavLink>
             <div className="home-button">
                 <Link to="/home">Home</Link>
             </div>
             <div className="search-bar">Peridot!</div>
-            <div className="icon">
-                <a href="https://www.linkedin.com/in/erick-santos2/" target="_blank">
-                    <i className="fab fa-linkedin"></i>
-                </a>
-            </div>
-            <div className="icon">
-                <a href="https://github.com/Arctive" target="_blank">
-                    <i className="fab fa-github"></i>
-                </a>
-            </div>
+            <a className="icon" href="https://www.linkedin.com/in/erick-santos2/" target="_blank">
+                <i className="fab fa-linkedin"></i>
+            </a>
+            <a className="icon" href="https://github.com/Arctive" target="_blank">
+                <i className="fab fa-github"></i>
+            </a>
             <NavLink to={`/users/${currentUserId}`} className="icon profile">
                 <i className="fas fa-user"></i>
             </NavLink>

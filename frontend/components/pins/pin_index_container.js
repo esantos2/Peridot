@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import { fetchPins, fetchPin } from '../../actions/pin_actions';
+import { fetchPins } from '../../actions/pin_actions';
 import PinIndex from './pin_index';
 import { selectUserPins, selectSuggestedPins } from '../../reducers/selectors';
 
@@ -17,8 +17,7 @@ const mapStateToProps = ({entities, session}, {match}) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    fetchPins: () => dispatch(fetchPins()),
-    fetchPin: pinId => dispatch(fetchPin(pinId))
+    fetchPins: () => dispatch(fetchPins())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PinIndex);

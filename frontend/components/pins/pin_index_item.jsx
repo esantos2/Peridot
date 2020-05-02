@@ -1,14 +1,24 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 
 class PinIndexItem extends React.Component{
     constructor(props){
         super(props);
+        this.showPinDetails = this.showPinDetails.bind(this);
+    }
+
+    showPinDetails(){
+        const pinId = this.props.pin.id;
+        this.props.history.push(`/pins/${pinId}`);
     }
 
     render(){
-        const {pin, fetchPin} = this.props;
+        const {pin} = this.props;
         return (
-            <div className="pin-box">
+            <div className="pin-box" onClick={this.showPinDetails}>
+                <div className="hover-details">
+                        
+                </div>
                 <h3>This is a pin lol</h3>
                 <h1>{pin.title}</h1>
                 <p>{pin.description}</p>
@@ -18,4 +28,4 @@ class PinIndexItem extends React.Component{
     }
 }
 
-export default PinIndexItem;
+export default withRouter(PinIndexItem);

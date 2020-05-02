@@ -15,9 +15,7 @@ class PinIndex extends React.Component{
         return (
             <div className="all-pins-box">
                 {(this.props.pins).map((pin, idx) => {
-                    return (
-                        <PinIndexItem key={idx} pin={pin} fetchPin={this.props.fetchPin} />
-                    )
+                    return <PinIndexItem key={idx} pin={pin}/>;
                 })}
             </div>
         )

@@ -18,12 +18,50 @@
     margin-left: 10px;
     margin-right: 10px;
     margin-bottom: 20px;
-    background-color: mediumseagreen;
+    background-color: rgb(183, 236, 207);
     height: auto;
     width: auto;
     border-radius: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 .pin-box:hover{
-    background-color: rgb(52, 150, 96);
+    background-color: rgb(106, 243, 168);
+}
+
+.pin-show-page{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px;
+    padding-top: 80px;
+    box-sizing: border-box;
+}
+
+.pin-show-box{
+    height: 600px;
+    width: 600px;
+    background-color: rgb(167, 231, 207);
+    display: flex;
+    border-radius: 20px;
+}
+
+.pin-image{
+    width: 50%;
+    margin: 20px;
+    border-radius: 20px;
+    background: linear-gradient( #e66465, #9198e5);
+}
+
+.pin-content{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.pin-content{
+
 }
