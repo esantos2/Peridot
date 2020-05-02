@@ -1,12 +1,15 @@
 import {connect} from 'react-redux';
-import PinForm from './pin_form';
+import CreatePinForm from './pin_create_form';
+import { createPin } from '../../actions/pin_actions';
 
-const mapStateToProps = state => ({
-    
+const mapStateToProps = ({entities, session}) => ({
+    owner: entities.users[session.currentUserId]
+    //board names
 })
 
 const mapDispatchToProps = dispatch => ({
-
+    createPin: pin => dispatch(createPin(pin))
+    //edit boards
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(PinForm);
+export default connect(mapStateToProps, mapDispatchToProps)(CreatePinForm);

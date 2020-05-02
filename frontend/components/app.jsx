@@ -7,6 +7,8 @@ import SignupFormContainer from './session_form/signup_form_container';
 import WelcomeContainer from './session_form/welcome_container';
 import PinIndexContainer from './pins/pin_index_container';
 import PinShowContainer from './pins/pin_show_container';
+import PinCreateContainer from './pins/pin_create_form_container';
+import UserProfileContainer from './user/user_profile_container';
 
 const App = () => (
     <div>
@@ -14,14 +16,25 @@ const App = () => (
             <ProtectedRoute path="/" component={NavBarContainer} />
         </header>
 
+        <ProtectedRoute path="/users/:userId" component={UserProfileContainer} />
+
         <Switch>
+            {/* auth */}
             <AuthRoute path="/login" component={LoginFormContainer} />
             <AuthRoute path="/signup" component={SignupFormContainer} />
             <AuthRoute exact path="/" component={WelcomeContainer} />
-            {/* user profile */}
-            <ProtectedRoute path="/users/:userId" component={PinIndexContainer} />
+            {/* pins */}
             <ProtectedRoute path="/pins/:pinId" component={PinShowContainer} />
+            <ProtectedRoute path="/users/:userId/pins" component={PinIndexContainer} />
+            {/* boards */}
+            {/* <ProtectedRoute path="/boards" component={BoardIndexContainer} /> */}
+            
+
+            <ProtectedRoute path="/pin-builder" component={PinCreateContainer} />
+            
+            {/* discover feed */}
             <ProtectedRoute path="/" component={PinIndexContainer} />
+
             {/* 404 page not found */}
         </Switch>
 

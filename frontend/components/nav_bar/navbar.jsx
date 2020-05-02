@@ -22,7 +22,7 @@ const NavBar = ({ currentUserId, logout }) => {
             <a className="icon" href="https://github.com/Arctive" target="_blank">
                 <i className="fab fa-github"></i>
             </a>
-            <NavLink to={`/users/${currentUserId}`} className="icon profile">
+            <NavLink to={`/users/${currentUserId}/pins`} className="icon profile">
                 <i className="fas fa-user"></i>
             </NavLink>
             <div className="options">
