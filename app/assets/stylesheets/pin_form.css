@@ -111,3 +111,91 @@
 
     color: black;
 }
+
+.pin-edit-form-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 900px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.edit-pin-board{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 0 16px;
+    box-sizing: border-box;
+}
+
+.modal-child-round-box > h1{
+    margin: 0;
+    padding: 32px;
+}
+
+.edit-pin-board .content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 66%;
+    box-sizing: border-box;
+    padding: 12px 16px;
+}
+
+.edit-details, .board-selection{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 600px;
+    padding: 12px 16px;
+    box-sizing: border-box;
+}
+
+.edit-details > div, .board-selection > div{
+    padding: 0px 16px 16px 12px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    width: 100%;
+    color: rgb(59, 59, 59);
+}
+
+.edit-details > div{
+    border-top: 1px solid rgb(190, 190, 190);
+}
+
+.edit-details textarea, .edit-details input{
+    box-sizing: border-box;
+    margin: 10px;
+    padding: 10px;
+    resize: none;
+    border-radius: 10px;
+    border: 2px solid gray;
+}
+
+.edit-details input:focus, .edit-details textarea:focus{
+    outline-style: none;
+    border: 3px solid rgb(0, 223, 0);
+    margin: 9px;
+}
+
+.edit-pin-board .image{
+    width: 33%;
+    height: 400px;
+    max-height: 400px;
+    padding: 12px 16px;
+}
+
+.bottom-options{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 32px;
+    box-sizing: border-box;
+}

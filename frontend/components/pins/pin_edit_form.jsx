@@ -36,15 +36,18 @@ class EditPinForm extends React.Component {
         const {title, description, link} = this.state
         return (
             <div className="edit-details">
-                <label>Title
+                <div>
+                    <p>Title</p>
                     <input type="text" value={title} onChange={this.update("title")}/>
-                </label>
-                <label>Description
-                    <textarea value={description} onChange={this.update("description")}/>
-                </label>
-                <label>Website
+                </div>
+                <div>
+                    <p>Description</p>
+                    <textarea rows="3" value={description} onChange={this.update("description")}/>
+                </div>
+                <div>
+                    <p>Website</p>
                     <input type="text" value={link} onChange={this.update("link")}/>
-                </label>
+                </div>
             </div>
         )
     }
@@ -52,18 +55,24 @@ class EditPinForm extends React.Component {
     render() {
         return (
             <div className="modal-background" onClick={this.props.closeEditForm}>
-                <div className="modal-child" onClick={e => e.stopPropagation()}>
+                <div className="modal-child-round-box" onClick={e => e.stopPropagation()}>
+                    <h1>Edit this pin</h1>
                     <div className="pin-edit-form-box">
                         <div className="edit-pin-board">
                             <div className="content">
-                                <select >
-                                    <option value="">--Select Board--</option>
-                                    <option value="USA">USA</option>
-                                    <option value="Canada">Canada</option>
-                                    <option value="China">China</option>
-                                    <option value="Mexico">Mexico</option>
-                                    <option value="Japan">Japan</option>
-                                </select>
+                                <div className="board-selection">
+                                    <div>
+                                        <p>Board</p>
+                                        <select >
+                                            <option value="">--Select Board--</option>
+                                            <option value="USA">USA</option>
+                                            <option value="Canada">Canada</option>
+                                            <option value="China">China</option>
+                                            <option value="Mexico">Mexico</option>
+                                            <option value="Japan">Japan</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 {this.editDetails()}
                             </div>
                             <div className="image">
