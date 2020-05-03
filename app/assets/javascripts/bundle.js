@@ -605,6 +605,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -631,6 +632,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var CreatePinForm = /*#__PURE__*/function (_React$Component) {
   _inherits(CreatePinForm, _React$Component);
 
@@ -647,7 +649,8 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
       title: '',
       description: '',
       link: '',
-      confirm: false
+      confirm: false,
+      errors: _this.props.errors
     };
     _this.update = _this.update.bind(_assertThisInitialized(_this));
     _this.selectBoard = _this.selectBoard.bind(_assertThisInitialized(_this));
@@ -656,6 +659,11 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
   }
 
   _createClass(CreatePinForm, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.props.clearErrors();
+    }
+  }, {
     key: "update",
     value: function update(field) {
       var _this2 = this;
@@ -672,6 +680,8 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
+      var _this3 = this;
+
       e.preventDefault();
       var _this$state = this.state,
           user_id = _this$state.user_id,
@@ -684,9 +694,11 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
         description: description,
         link: link
       };
-      this.props.createPin(newUser).then(this.setState({
-        confirm: true
-      })); //spin animation while loading
+      this.props.createPin(newUser).then(function () {
+        return _this3.setState({
+          confirm: true
+        });
+      });
     }
   }, {
     key: "displayConfirmation",
@@ -701,7 +713,22 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
           }
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "pin-confirmation-box"
-        })));
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "confirm-image"
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Success"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Go to ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["NavLink"], {
+          to: "/users/".concat(this.state.user_id, "/pins")
+        }, "Profile")))));
+      }
+    }
+  }, {
+    key: "displayErrors",
+    value: function displayErrors() {
+      var errors = this.props.errors;
+
+      if (errors.length > 0) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "error"
+        }, errors[0]);
       }
     }
   }, {
@@ -742,7 +769,7 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
         className: "pin-details"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-add-title"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, this.displayErrors(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         placeholder: "Add your title",
         value: title,
@@ -785,15 +812,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _pin_create_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pin_create_form */ "./frontend/components/pins/pin_create_form.jsx");
 /* harmony import */ var _actions_pin_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/pin_actions */ "./frontend/actions/pin_actions.js");
+/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
+
 
 
 
 
 var mapStateToProps = function mapStateToProps(_ref) {
   var entities = _ref.entities,
+      errors = _ref.errors,
       session = _ref.session;
   return {
-    owner: entities.users[session.currentUserId] //board names
+    owner: entities.users[session.currentUserId],
+    errors: errors.pins //board names
 
   };
 };
@@ -802,6 +833,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     createPin: function createPin(pin) {
       return dispatch(Object(_actions_pin_actions__WEBPACK_IMPORTED_MODULE_2__["createPin"])(pin));
+    },
+    clearErrors: function clearErrors() {
+      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_3__["clearErrors"])());
     } //edit boards
 
   };
@@ -2670,6 +2704,8 @@ var errorsReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"]
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_pin_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/pin_actions */ "./frontend/actions/pin_actions.js");
+/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/session_actions */ "./frontend/actions/session_actions.js");
+
 
 
 var pinsErrorsReducer = function pinsErrorsReducer() {
@@ -2680,6 +2716,9 @@ var pinsErrorsReducer = function pinsErrorsReducer() {
   switch (action.type) {
     case _actions_pin_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_PIN_ERRORS"]:
       return action.errors;
+
+    case _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["CLEAR_ERRORS"]:
+      return [];
 
     default:
       return state;

@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom';
 
 class CreatePinForm extends React.Component{
     constructor(props){
@@ -8,11 +9,16 @@ class CreatePinForm extends React.Component{
             title: '',
             description: '',
             link: '',
-            confirm: false
+            confirm: false,
+            errors: this.props.errors
         }
         this.update = this.update.bind(this);
         this.selectBoard = this.selectBoard.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    componentDidMount(){
+        this.props.clearErrors();
     }
 
     update(field){
@@ -28,8 +34,7 @@ class CreatePinForm extends React.Component{
         const {user_id, title, description, link} = this.state;
         let newUser = {user_id, title, description, link} ;
         this.props.createPin(newUser)
-            .then(this.setState({confirm: true}))
-        //spin animation while loading
+            .then( () => this.setState({confirm: true}))
     }
 
     displayConfirmation(){
@@ -38,11 +43,20 @@ class CreatePinForm extends React.Component{
                 <div className="modal-background">
                     <div className="modal-child" onClick={e => e.stopPropagation()}>
                         <div className="pin-confirmation-box">
-
+                            <div className="confirm-image"></div>
+                            <h1>Success</h1>
+                            <p>Go to <NavLink to={`/users/${this.state.user_id}/pins`}>Profile</NavLink></p>
                         </div>
                     </div>
                 </div>
             )
+        }
+    }
+
+    displayErrors(){
+        const {errors} = this.props
+        if (errors.length > 0){
+            return <div className="error">{errors[0]}</div>
         }
     }
 
@@ -69,6 +83,7 @@ class CreatePinForm extends React.Component{
                             <div className="pin-create-inputs">
                                 <div className="pin-details">
                                     <div className="pin-add-title">
+                                        {this.displayErrors()}
                                         <input 
                                             type="text" 
                                             placeholder="Add your title" 
