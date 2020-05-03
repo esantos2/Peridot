@@ -13,7 +13,7 @@ class Success extends React.Component{
                         <form className="final-login-form">
                             <h1>Success!</h1>
                             <div className="login-form-buttons">
-                                <button className="next login-button" onClick={(e) => this.props.submitForm(e)}>Continue</button>
+                                <button className="next login-button button" onClick={(e) => this.props.submitForm(e)}>Continue</button>
                             </div>
                         </form>
                     </div>

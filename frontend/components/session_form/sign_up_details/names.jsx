@@ -53,7 +53,7 @@ class Names extends React.Component {
                                 <p>get personalized recommendations and more</p>
                             </div>
                             <div className="login-form-buttons">
-                                <button className="next login-button" onClick={this.handleNext} >Next</button>
+                                <button className="next login-button button" onClick={this.handleNext} >Next</button>
                             </div>
                         </form>
                         <div className="signup-link">

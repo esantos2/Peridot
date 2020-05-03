@@ -61,7 +61,7 @@ class LanguageAndRegion extends React.Component {
                             </div> */}
                         </form>
                         <div className="login-form-buttons">
-                            <button className="next login-button" onClick={this.handleNext} >Next</button>
+                            <button className="next login-button button" onClick={this.handleNext} >Next</button>
                         </div>
                     </div>
                 </div>

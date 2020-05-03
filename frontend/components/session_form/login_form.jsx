@@ -57,9 +57,9 @@ class LoginForm extends React.Component{
                                 {errors.length > 0 ? errors[0] : ""}
                             </div>
                             <div className="login-form-buttons">
-                                <button className="login-button" onClick={this.handleSubmit} >Log in</button>
+                                <button className="login-button button" onClick={this.handleSubmit} >Log in</button>
                                 <div>OR</div>
-                                <button className="demo login-button" onClick={this.demoUser}>Demo Login</button>
+                                <button className="demo login-button button" onClick={this.demoUser}>Demo Login</button>
                             </div>
                         </form>
                         <div className="signup-link">

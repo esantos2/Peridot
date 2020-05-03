@@ -30,7 +30,7 @@ h2{
     width: 85%;
 }
 
-button{
+.button{
     cursor: pointer;
     font-size: 16px;
     padding: 15px;
@@ -43,7 +43,7 @@ button{
     font-weight: bold;
 }
 
-button:focus{
+.button:focus{
     outline: none;
 }
 

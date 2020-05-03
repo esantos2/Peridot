@@ -21,15 +21,15 @@ const Welcome = ({ processForm }) => {
                     <div>Find new ideas to try</div>
                     <div className="buttons">
                         <Link to='/login'>
-                            <button className="login-button">Log in</button>
+                            <button className="login-button button">Log in</button>
                         </Link>
                         <Link to='/signup'>
-                            <button className="signup-button">Sign up</button>
+                            <button className="signup-button button">Sign up</button>
                         </Link>
                     </div>
                     <div>
                         <Link to='/'>
-                            <button className="welcome-demo" onClick={demoUser}>Demo</button>
+                            <button className="welcome-demo button" onClick={demoUser}>Demo</button>
                         </Link>
                     </div>
                 </div>

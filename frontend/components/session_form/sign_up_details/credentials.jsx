@@ -48,7 +48,7 @@ class Credentials extends React.Component {
                                 {this.props.showErrors()}
                             </div>
                             <div className="login-form-buttons">
-                                <button className="login-button" onClick={this.handleNext} >Continue</button>
+                                <button className="login-button button" onClick={this.handleNext} >Continue</button>
                             </div>
                         </form>
                         <div className="signup-link">

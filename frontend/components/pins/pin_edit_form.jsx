@@ -1,19 +1,90 @@
 import React from 'react'
+import { withRouter } from 'react-router-dom';
 
 class EditPinForm extends React.Component {
     constructor(props) {
         super(props)
+        this.state = this.props.pin;
+        this.update = this.update.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
+    }
 
+    update(field){
+        return e => this.setState({[field]: e.currentTarget.value});
+    }
+
+    handleSubmit(e){
+        e.preventDefault();
+        this.props.updatePin(this.state)
+            .then( () => this.props.closeEditForm())
+    }
+
+    handleDelete(e){
+        e.preventDefault();
+        const {pin, currentUserId, deletePin} = this.props;
+        // delete from board
+        if (currentUserId === pin.userId){
+            deletePin(pin.id)
+                .then( () => this.props.closeEditForm())
+                .then( () => this.props.history.push(`/users/${currentUserId}/pins`));
+        }
+    }
+
+    editDetails(){
+        if (this.props.currentUserId !== this.props.pin.userId) return null;
+        const {title, description, link} = this.state
+        return (
+            <div className="edit-details">
+                <label>Title
+                    <input type="text" value={title} onChange={this.update("title")}/>
+                </label>
+                <label>Description
+                    <textarea value={description} onChange={this.update("description")}/>
+                </label>
+                <label>Website
+                    <input type="text" value={link} onChange={this.update("link")}/>
+                </label>
+            </div>
+        )
     }
 
     render() {
         return (
-            <div className="pin-form-box">
-                {/* general: change board, category */}
-                {/* user owned, allow changes to title / description / link */}
+            <div className="modal-background" onClick={this.props.closeEditForm}>
+                <div className="modal-child" onClick={e => e.stopPropagation()}>
+                    <div className="pin-edit-form-box">
+                        <div className="edit-pin-board">
+                            <div className="content">
+                                <select >
+                                    <option value="">--Select Board--</option>
+                                    <option value="USA">USA</option>
+                                    <option value="Canada">Canada</option>
+                                    <option value="China">China</option>
+                                    <option value="Mexico">Mexico</option>
+                                    <option value="Japan">Japan</option>
+                                </select>
+                                {this.editDetails()}
+                            </div>
+                            <div className="image">
+                                <div className="profile-pic"></div>
+                            </div>
+                        </div>
+                        <div className="bottom-options">
+                            <div className="delete-button">
+                                <button className="delete-pin" onClick={this.handleDelete}>Delete</button>
+                            </div>
+                            <div className="save-or-cancel">
+                                <button className="cancel-edit" onClick={this.props.closeEditForm}>Cancel</button>
+                                <button className="save-edit" onClick={this.handleSubmit}>Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
         )
     }
 }
 
-export default EditPinForm;
+export default withRouter(EditPinForm);
