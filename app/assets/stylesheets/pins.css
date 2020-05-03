@@ -18,7 +18,8 @@
     margin-left: 10px;
     margin-right: 10px;
     margin-bottom: 20px;
-    background-color: rgb(183, 236, 207);
+    /* background-color: rgb(183, 236, 207); */
+    background: linear-gradient(rgb(176, 255, 209), rgb(155, 255, 217));
     height: auto;
     width: auto;
     border-radius: 20px;

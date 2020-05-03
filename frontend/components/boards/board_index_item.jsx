@@ -9,9 +9,9 @@ class BoardIndexItem extends React.Component{
     render(){
         const {board} = this.props;
         return (
-            <div>
+            <div className="board-index-item">
                 <h2>{board.name}</h2>
-                <h2>{board.description}</h2>
+                <p>{board.description}</p>
                 <Link to={`/users/${board.userId}/boards/${board.id}`}>Show details</Link>
             </div>
         )

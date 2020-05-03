@@ -1,22 +1,28 @@
 import React from 'react';
+import PinIndex from '../pins/pin_index';
 
 class BoardShow extends React.Component{
     constructor(props){
         super(props)
+
     }
 
-    // componentDidMount(){
-    //     this.props.fetchBoard();
-    // }
+    componentDidMount(){
+        this.props.fetchBoard();
+    }
 
     render(){
         const {board} = this.props;
         return (
-            <div>
-                <h2>Board show page</h2>
-                <h1>{board.name}</h1>
-                <h3>{board.description}</h3>
-                <p>{board.pins}</p>
+            <div className="board-show-box">
+                <div className="board-info">
+                    <h2>Board show page</h2>
+                    <h1>{board.name}</h1>
+                    <h3>{board.description}</h3>
+                </div>
+                <div className="board-show-pins">
+                    <PinIndex  />
+                </div>
             </div>
         )
     }
