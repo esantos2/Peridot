@@ -15,6 +15,6 @@ class Board < ApplicationRecord
     validates :user_id, :name, presence: true
     validates :name, :uniqueness => {:scope => :user_id}
     belongs_to :user
-    has_many :board_pins
+    has_many :board_pins, dependent: :destroy
     has_many :pins, through: :board_pins
 end

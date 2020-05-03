@@ -1,4 +1,5 @@
 import React from 'react';
+import {NavLink} from 'react-router-dom';
 
 class UserProfile extends React.Component{
     constructor(props){
@@ -26,8 +27,8 @@ class UserProfile extends React.Component{
                         </div>
                     </div>
                     <div className="user-selection">
-                        <div>Boards</div>
-                        <div>Pins</div>
+                        <NavLink className="button" to={`/users/${user.id}/boards`}>Boards</NavLink>
+                        <NavLink className="button" to={`/users/${user.id}/pins`}>Pins</NavLink>
                     </div>
                 </div>
             </div>

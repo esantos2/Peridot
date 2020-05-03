@@ -134,3 +134,104 @@ Board.create!(
     date_start: "2003-02-03T12:00:00+00:00",
     date_end: "2004-02-03T12:00:00+00:00"
 )
+
+Board.create!(
+    user_id: 3,
+    name: "Random pics",
+    description: "Sent from my iphone",
+    date_start: "2003-02-03T12:00:00+00:00",
+    date_end: "2004-02-03T12:00:00+00:00"
+)
+
+Board.create!(
+    user_id: 3,
+    name: "Even more pics",
+    description: "Sent from my iphone",
+    date_start: "2003-02-03T12:00:00+00:00",
+    date_end: "2004-02-03T12:00:00+00:00"
+)
+
+Board.create!(
+    user_id: 3,
+    name: "Other pics",
+    description: "Sent from my iphone",
+    date_start: "2003-02-03T12:00:00+00:00",
+    date_end: "2004-02-03T12:00:00+00:00"
+)
+
+Board.create!(
+    user_id: 1,
+    name: "Cool pics",
+    description: "Sent from my iphone",
+    date_start: "2003-02-03T12:00:00+00:00",
+    date_end: "2004-02-03T12:00:00+00:00"
+)
+
+Board.create!(
+    user_id: 2,
+    name: "Stuff from my iphone",
+    description: "Sent from my iphone",
+    date_start: "2003-02-03T12:00:00+00:00",
+    date_end: "2004-02-03T12:00:00+00:00"
+)
+
+Board.create!(
+    user_id: 1,
+    name: "Farm pics",
+    description: "Sent from my iphone",
+    date_start: "2003-02-03T12:00:00+00:00",
+    date_end: "2004-02-03T12:00:00+00:00"
+)
+
+Board.create!(
+    user_id: 3,
+    name: "Cool beans",
+    description: "Sent from my iphone",
+    date_start: "2003-02-03T12:00:00+00:00",
+    date_end: "2004-02-03T12:00:00+00:00"
+)
+
+BoardPin.create!(
+    board_id: 3,
+    pin_id: 3
+)
+
+BoardPin.create!(
+    board_id: 2,
+    pin_id: 9
+)
+
+BoardPin.create!(
+    board_id: 2,
+    pin_id: 1
+)
+
+BoardPin.create!(
+    board_id: 2,
+    pin_id: 2
+)
+
+BoardPin.create!(
+    board_id: 2,
+    pin_id: 7
+)
+
+BoardPin.create!(
+    board_id: 3,
+    pin_id: 1
+)
+
+BoardPin.create!(
+    board_id: 1,
+    pin_id: 4
+)
+
+BoardPin.create!(
+    board_id: 1,
+    pin_id: 2
+)
+
+BoardPin.create!(
+    board_id: 2,
+    pin_id: 3
+)
