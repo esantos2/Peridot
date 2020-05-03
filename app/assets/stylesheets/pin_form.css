@@ -1,0 +1,92 @@
+.pin-modal{
+    margin-top: 120px;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.pin-form-box{
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    padding: 20px;
+    padding-bottom: 40px;
+    width: 840px;
+    margin-left: 20px;
+    margin-right: 20px;
+    box-shadow: 1px 1px 10px #e0e0e0;
+}
+
+.pin-top-buttons{
+    display: flex;
+    flex-direction: row-reverse;
+    width: 100%;
+    justify-content: end;
+}
+
+.pin-top-buttons > button{
+    width: 100px;
+    font-size: 18px;
+    padding-right: 15px;
+    padding-left: 15px;
+    font-family: inherit;
+    border-radius: 10px;
+    border: none;
+    box-sizing: border-box;
+    font-weight: bold;
+    background-color: lightgrey;
+}
+
+.pin-top-buttons > button .select-board{
+    width: 150px;
+    color: rgb(0, 87, 6);
+    padding: 15px;
+}
+
+.pin-top-buttons > button .save-pin{
+    background-color: limegreen;
+    color: white;
+    padding: 15px;
+}
+
+.pin-main-content{
+    display: flex;
+    justify-content: center;
+}
+
+.pin-main-content .pin-image-box{
+    width: 50%;
+    height: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+    
+}
+
+.pin-image-back{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 340px;
+    height: 454px;
+    border-radius: 10px;
+    background-color: rgb(233, 233, 233);
+}
+
+.pin-image-box i{
+    font-size: 40px;
+    color: rgb(107, 107, 107);
+}
+
+.save-from-site{
+    width: 340px;
+    height: 48px;
+}
+
+.pin-main-content .pin-create-fields{
+    width: 50%;
+    padding-left: 20px;
+    padding-right: 20px;
+}

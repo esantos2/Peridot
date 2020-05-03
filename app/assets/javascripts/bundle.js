@@ -646,7 +646,8 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
       user_id: _this.props.owner.id,
       title: '',
       description: '',
-      link: ''
+      link: '',
+      confirm: false
     };
     _this.update = _this.update.bind(_assertThisInitialized(_this));
     _this.selectBoard = _this.selectBoard.bind(_assertThisInitialized(_this));
@@ -655,11 +656,6 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
   }
 
   _createClass(CreatePinForm, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      console.log("New form");
-    }
-  }, {
     key: "update",
     value: function update(field) {
       var _this2 = this;
@@ -677,35 +673,68 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       e.preventDefault();
-      this.props.createPin(this.state); // .then( () => displayConfirmation());
-      //spin animation while loading
+      var _this$state = this.state,
+          user_id = _this$state.user_id,
+          title = _this$state.title,
+          description = _this$state.description,
+          link = _this$state.link;
+      var newUser = {
+        user_id: user_id,
+        title: title,
+        description: description,
+        link: link
+      };
+      this.props.createPin(newUser).then(this.setState({
+        confirm: true
+      })); //spin animation while loading
     }
   }, {
-    key: "displarConfirmation",
-    value: function displarConfirmation() {}
+    key: "displayConfirmation",
+    value: function displayConfirmation() {
+      if (this.state.confirm) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "modal-background"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "modal-child",
+          onClick: function onClick(e) {
+            return e.stopPropagation();
+          }
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "pin-confirmation-box"
+        })));
+      }
+    }
   }, {
     key: "render",
     value: function render() {
       var owner = this.props.owner;
-      var _this$state = this.state,
-          title = _this$state.title,
-          description = _this$state.description,
-          link = _this$state.link;
+      var _this$state2 = this.state,
+          title = _this$state2.title,
+          description = _this$state2.description,
+          link = _this$state2.link;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "pin-form-box"
+        className: "pin-modal"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "pin-form-box"
+      }, this.displayConfirmation(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-top-buttons"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "select-board",
-        onClick: this.selectBoard
-      }, "Select"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "save-pin",
         onClick: this.handleSubmit
-      }, "Save")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Save"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "select-board",
+        onClick: this.selectBoard
+      }, "Select")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-main-content"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "pin-image"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "pin-image-box"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "pin-image-back"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-arrow-alt-circle-up"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Click to upload")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "save-from-site"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-create-fields"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-create-inputs"
@@ -733,7 +762,7 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
         placeholder: "Add a destination link",
         value: link,
         onChange: this.update("link")
-      }))))));
+      })))))));
     }
   }]);
 

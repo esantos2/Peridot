@@ -7,15 +7,12 @@ class CreatePinForm extends React.Component{
             user_id: this.props.owner.id,
             title: '',
             description: '',
-            link: ''
+            link: '',
+            confirm: false
         }
         this.update = this.update.bind(this);
         this.selectBoard = this.selectBoard.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    componentDidMount(){
-        console.log("New form");
     }
 
     update(field){
@@ -24,59 +21,77 @@ class CreatePinForm extends React.Component{
 
     selectBoard(e){
         e.preventDefault();
-
     }
 
     handleSubmit(e){
         e.preventDefault();
-        this.props.createPin(this.state)
-            // .then( () => displayConfirmation());
+        const {user_id, title, description, link} = this.state;
+        let newUser = {user_id, title, description, link} ;
+        this.props.createPin(newUser)
+            .then(this.setState({confirm: true}))
         //spin animation while loading
     }
 
-    displarConfirmation(){
-        
+    displayConfirmation(){
+        if (this.state.confirm){
+            return (
+                <div className="modal-background">
+                    <div className="modal-child" onClick={e => e.stopPropagation()}>
+                        <div className="pin-confirmation-box">
+
+                        </div>
+                    </div>
+                </div>
+            )
+        }
     }
 
     render(){
         const {owner} = this.props;
         const {title, description, link} = this.state;
         return (
-            <div className="pin-form-box">
-                <div className="pin-top-buttons">
-                    <button className="select-board" onClick={this.selectBoard}>Select</button>
-                    <button className="save-pin" onClick={this.handleSubmit}>Save</button>
-                </div>
-                <div className="pin-main-content">
-                    <div className="pin-image">
-
+            <div className="pin-modal">
+                <div className="pin-form-box">
+                    {this.displayConfirmation()}
+                    <div className="pin-top-buttons">
+                        <button className="save-pin" onClick={this.handleSubmit}>Save</button>
+                        <button className="select-board" onClick={this.selectBoard}>Select</button>
                     </div>
-                    <div className="pin-create-fields">
-                        <div className="pin-create-inputs">
-                            <div className="pin-details">
-                                <div className="pin-add-title">
-                                    <input 
-                                        type="text" 
-                                        placeholder="Add your title" 
-                                        value={title} 
-                                        onChange={this.update("title")}/>
-                                </div>
-                                <div className="pin-owner">
-                                    {owner.username}
-                                </div>
-                                <div className="pin-add-description">
-                                    <textarea 
-                                        placeholder="Tell everyone what your Pin is about" 
-                                        value={description} 
-                                        onChange={this.update("description")}></textarea>
-                                </div>
+                    <div className="pin-main-content">
+                        <div className="pin-image-box">
+                            <div className="pin-image-back">
+                                <i className="fas fa-arrow-alt-circle-up"></i>
+                                <p>Click to upload</p>
                             </div>
-                            <div className="pin-link">
-                                <input 
-                                    type="text"
-                                    placeholder="Add a destination link"
-                                    value={link}
-                                    onChange={this.update("link")}/>
+                            <div className="save-from-site"></div>
+                        </div>
+                        <div className="pin-create-fields">
+                            <div className="pin-create-inputs">
+                                <div className="pin-details">
+                                    <div className="pin-add-title">
+                                        <input 
+                                            type="text" 
+                                            placeholder="Add your title" 
+                                            value={title} 
+                                            onChange={this.update("title")}/>
+                                    </div>
+                                    <div className="pin-owner">
+                                        {owner.username}
+                                    </div>
+                                    <div className="pin-add-description">
+                                        <textarea 
+                                            placeholder="Tell everyone what your Pin is about" 
+                                            value={description} 
+                                            onChange={this.update("description")}></textarea>
+                                    </div>
+                                </div>
+                                <div className="pin-link">
+                                    <input 
+                                        type="text"
+                                        placeholder="Add a destination link"
+                                        value={link}
+                                        onChange={this.update("link")}/>
+                                </div>
                             </div>
                         </div>
                     </div>
