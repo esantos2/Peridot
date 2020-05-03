@@ -18,7 +18,7 @@ const mapStateToProps = ({entities, session}, {match: {params}}) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    fetchPins: () => dispatch(fetchPins())
+    getInfo: () => dispatch(fetchPins())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PinIndex);

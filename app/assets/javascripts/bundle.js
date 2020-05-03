@@ -733,14 +733,19 @@ var BoardShow = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var board = this.props.board;
+      var _this$props = this.props,
+          board = _this$props.board,
+          fetchBoard = _this$props.fetchBoard;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "board-show-box"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "board-info"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Board show page"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, board.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, board.description)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "board-show-pins"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_pins_pin_index__WEBPACK_IMPORTED_MODULE_1__["default"], null)));
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_pins_pin_index__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        getInfo: fetchBoard,
+        pins: board.pins
+      })));
     }
   }]);
 
@@ -1385,7 +1390,7 @@ var PinIndex = /*#__PURE__*/function (_React$Component) {
   _createClass(PinIndex, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.fetchPins();
+      this.props.getInfo();
     }
   }, {
     key: "addCreatePin",
@@ -1467,7 +1472,7 @@ var mapStateToProps = function mapStateToProps(_ref, _ref2) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    fetchPins: function fetchPins() {
+    getInfo: function getInfo() {
       return dispatch(Object(_actions_pin_actions__WEBPACK_IMPORTED_MODULE_1__["fetchPins"])());
     }
   };
