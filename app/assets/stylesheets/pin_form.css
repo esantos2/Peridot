@@ -132,6 +132,8 @@
 .modal-child-round-box > h1{
     margin: 0;
     padding: 32px;
+    font-family: "Noto Sans";
+    /* font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
 }
 
 .edit-pin-board .content{
@@ -152,6 +154,7 @@
     width: 600px;
     padding: 12px 16px;
     box-sizing: border-box;
+    font-size: 14px;
 }
 
 .edit-details > div, .board-selection > div{
@@ -159,7 +162,6 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
     box-sizing: border-box;
     width: 100%;
     color: rgb(59, 59, 59);
@@ -169,19 +171,53 @@
     border-top: 1px solid rgb(190, 190, 190);
 }
 
-.edit-details textarea, .edit-details input{
+.edit-details textarea, 
+.edit-details input, 
+.board-selection select{
     box-sizing: border-box;
     margin: 10px;
     padding: 10px;
     resize: none;
     border-radius: 10px;
-    border: 2px solid gray;
+    border: 2px solid rgb(199, 199, 199);
+    width: 350px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 16px;
 }
 
-.edit-details input:focus, .edit-details textarea:focus{
+.board-selection select{
+    border: none;
+    background-color: rgb(235, 235, 235);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.board-selection select:hover{
+    cursor: pointer;
+}
+
+.drop-down-arrow{
+    position: absolute;
+    right: 40%;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    cursor: pointer;
+    pointer-events: none;
+}
+
+.edit-details input:focus, 
+.edit-details textarea:focus{
     outline-style: none;
     border: 3px solid rgb(0, 223, 0);
     margin: 9px;
+}
+
+.board-selection select:focus{
+    outline-style: none;
+    border: 3px solid rgb(0, 233, 0);
+    margin: 7px;
 }
 
 .edit-pin-board .image{
@@ -198,4 +234,33 @@
     width: 100%;
     padding: 32px;
     box-sizing: border-box;
+}
+
+.bottom-options button{
+    height: 40px;
+    width: auto;
+    margin: 10px;
+    box-sizing: border-box;
+    padding: 8px 12px;
+    border: inherit;
+    border-radius: 30px;
+    background-color: rgb(231, 231, 231);
+    color: black;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.bottom-options button:hover{
+    background-color: rgb(199, 199, 199);
+}
+
+.save-or-cancel > .save-edit{
+    background-color: rgb(24, 187, 35);
+    color: rgb(255, 255, 255);
+}
+
+.save-or-cancel > .save-edit:hover{
+    background-color: rgb(28, 143, 36);
 }

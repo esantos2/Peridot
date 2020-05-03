@@ -2,7 +2,7 @@ import React from 'react'
 import { withRouter } from 'react-router-dom';
 
 class EditPinForm extends React.Component {
-    constructor(props) {
+    constructor(props){
         super(props)
         this.state = this.props.pin;
         this.update = this.update.bind(this);
@@ -56,7 +56,7 @@ class EditPinForm extends React.Component {
         return (
             <div className="modal-background" onClick={this.props.closeEditForm}>
                 <div className="modal-child-round-box" onClick={e => e.stopPropagation()}>
-                    <h1>Edit this pin</h1>
+                    <h1>Edit this Pin</h1>
                     <div className="pin-edit-form-box">
                         <div className="edit-pin-board">
                             <div className="content">
@@ -71,6 +71,9 @@ class EditPinForm extends React.Component {
                                             <option value="Mexico">Mexico</option>
                                             <option value="Japan">Japan</option>
                                         </select>
+                                        <div className="drop-down-arrow">
+                                            <i className="fas fa-chevron-down"></i>
+                                        </div>
                                     </div>
                                 </div>
                                 {this.editDetails()}
