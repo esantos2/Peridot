@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import PinShow from './pin_show';
-import { updatePin, fetchPins, deletePin } from '../../actions/pin_actions';
+import { updatePin, fetchPins, deletePin, saveToBoard } from '../../actions/pin_actions';
 import { fetchBoards } from '../../actions/board_actions';
 import { clearErrors } from '../../actions/session_actions';
 
@@ -17,8 +17,8 @@ const mapDispatchToProps = dispatch => ({
     fetchBoards: (userId) => dispatch(fetchBoards(userId)),
     clearErrors: () => dispatch(clearErrors()),
     updatePin: pin => dispatch(updatePin(pin)),
-    deletePin: pinId => dispatch(deletePin(pinId))
-    //edit board
+    deletePin: pinId => dispatch(deletePin(pinId)),
+    saveToBoard: (boardPin) => dispatch(saveToBoard(boardPin))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(PinShow);

@@ -5,6 +5,13 @@ class EditPinForm extends React.Component {
     constructor(props){
         super(props)
         this.state = this.props.pin;
+        const { title, description, link } = this.props.pin
+        this.state = {
+            title,
+            description,
+            link,
+            chosenBoardId: ''
+        }
         this.update = this.update.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
@@ -16,7 +23,16 @@ class EditPinForm extends React.Component {
 
     handleSubmit(e){
         e.preventDefault();
-        this.props.updatePin(this.state)
+        const { user_id, title, description, link, chosenBoardId } = this.state;
+        const { pin } = this.props;
+        let newUser = { 
+            id: pin.id,
+            user_id, 
+            title, 
+            description, 
+            link };
+        this.props.updatePin(newUser)
+            .then(pin => this.props.saveToBoard({ board_id: parseInt(chosenBoardId), pin_id: pin.pin.id }))
             .then( () => this.props.closeEditForm())
     }
 
@@ -52,14 +68,15 @@ class EditPinForm extends React.Component {
         )
     }
 
-    boardNames(){
-        const {boards} = this.props;
+    boardNames() {
+        const { boards } = this.props;
+        if (!boards) return null;
         return (
-            <select> 
-                <option value="" defaultValue>--Select board--</option>
-                {boards.map( (board, idx) => {
+            <select id="board-names" className="board-names" onChange={this.update("chosenBoardId")}>
+                <option value="">--Select board--</option>
+                {boards.map((board, idx) => {
                     return (
-                        <option key={idx} value={board.name}>{board.name}</option>
+                        <option key={idx} value={board.id}>{board.name}</option>
                     )
                 })}
             </select>

@@ -1375,7 +1375,7 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
         link: link
       };
       this.props.createPin(newUser).then(function (pin) {
-        _this3.props.saveToBoard({
+        return _this3.props.saveToBoard({
           board_id: parseInt(chosenBoardId),
           pin_id: pin.pin.id
         });
@@ -1616,6 +1616,16 @@ var EditPinForm = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = _this.props.pin;
+    var _this$props$pin = _this.props.pin,
+        title = _this$props$pin.title,
+        description = _this$props$pin.description,
+        link = _this$props$pin.link;
+    _this.state = {
+      title: title,
+      description: description,
+      link: link,
+      chosenBoardId: ''
+    };
     _this.update = _this.update.bind(_assertThisInitialized(_this));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     _this.handleDelete = _this.handleDelete.bind(_assertThisInitialized(_this));
@@ -1637,7 +1647,26 @@ var EditPinForm = /*#__PURE__*/function (_React$Component) {
       var _this3 = this;
 
       e.preventDefault();
-      this.props.updatePin(this.state).then(function () {
+      var _this$state = this.state,
+          user_id = _this$state.user_id,
+          title = _this$state.title,
+          description = _this$state.description,
+          link = _this$state.link,
+          chosenBoardId = _this$state.chosenBoardId;
+      var pin = this.props.pin;
+      var newUser = {
+        id: pin.id,
+        user_id: user_id,
+        title: title,
+        description: description,
+        link: link
+      };
+      this.props.updatePin(newUser).then(function (pin) {
+        return _this3.props.saveToBoard({
+          board_id: parseInt(chosenBoardId),
+          pin_id: pin.pin.id
+        });
+      }).then(function () {
         return _this3.props.closeEditForm();
       });
     }
@@ -1661,10 +1690,10 @@ var EditPinForm = /*#__PURE__*/function (_React$Component) {
     key: "editDetails",
     value: function editDetails() {
       if (this.props.currentUserId !== this.props.pin.userId) return null;
-      var _this$state = this.state,
-          title = _this$state.title,
-          description = _this$state.description,
-          link = _this$state.link;
+      var _this$state2 = this.state,
+          title = _this$state2.title,
+          description = _this$state2.description,
+          link = _this$state2.link;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "edit-details"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Title"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -1685,13 +1714,17 @@ var EditPinForm = /*#__PURE__*/function (_React$Component) {
     key: "boardNames",
     value: function boardNames() {
       var boards = this.props.boards;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "",
-        defaultValue: true
+      if (!boards) return null;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        id: "board-names",
+        className: "board-names",
+        onChange: this.update("chosenBoardId")
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: ""
       }, "--Select board--"), boards.map(function (board, idx) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
           key: idx,
-          value: board.name
+          value: board.id
         }, board.name);
       }));
     }
@@ -2094,7 +2127,8 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
             errors = _this$props3.errors,
             currentUserId = _this$props3.currentUserId,
             updatePin = _this$props3.updatePin,
-            deletePin = _this$props3.deletePin;
+            deletePin = _this$props3.deletePin,
+            saveToBoard = _this$props3.saveToBoard;
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_pin_edit_form__WEBPACK_IMPORTED_MODULE_1__["default"], {
           pin: pins[chosenPinId],
           boards: boards,
@@ -2102,10 +2136,24 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
           currentUserId: currentUserId,
           updatePin: updatePin,
           deletePin: deletePin,
+          saveToBoard: saveToBoard,
           closeEditForm: this.closeEditForm
         });
       }
-    }
+    } // boardNames() {
+    //     const { boards } = this.props;
+    //     return (
+    //         <select>
+    //             <option value="">--Select board--</option>
+    //             {boards.map((board, idx) => {
+    //                 return (
+    //                     <option key={idx} value={board.name}>{board.name}</option>
+    //                 )
+    //             })}
+    //         </select>
+    //     )
+    // }
+
   }, {
     key: "render",
     value: function render() {
@@ -2207,8 +2255,10 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     deletePin: function deletePin(pinId) {
       return dispatch(Object(_actions_pin_actions__WEBPACK_IMPORTED_MODULE_2__["deletePin"])(pinId));
-    } //edit board
-
+    },
+    saveToBoard: function saveToBoard(boardPin) {
+      return dispatch(Object(_actions_pin_actions__WEBPACK_IMPORTED_MODULE_2__["saveToBoard"])(boardPin));
+    }
   };
 };
 

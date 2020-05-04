@@ -26,6 +26,7 @@ class Api::PinsController < ApplicationController
 
     def update
         @pin = Pin.find_by(id: params[:id])
+        debugger
         if @pin && @pin.user_id == current_user.id
             if @pin.update(pin_params)
                 render "/api/pins/show"

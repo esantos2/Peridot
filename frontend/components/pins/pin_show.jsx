@@ -45,7 +45,7 @@ class PinShow extends React.Component{
 
     renderEditForm(){
         if (this.state.edit){
-            const {pins, boards, chosenPinId, errors, currentUserId, updatePin, deletePin} = this.props;
+            const {pins, boards, chosenPinId, errors, currentUserId, updatePin, deletePin, saveToBoard} = this.props;
             return (
                 <EditPinForm 
                     pin={pins[chosenPinId]}
@@ -54,10 +54,25 @@ class PinShow extends React.Component{
                     currentUserId={currentUserId}
                     updatePin={updatePin}
                     deletePin={deletePin}
+                    saveToBoard={saveToBoard}
                     closeEditForm={this.closeEditForm}
                 />)
         }
     }
+
+    // boardNames() {
+    //     const { boards } = this.props;
+    //     return (
+    //         <select>
+    //             <option value="">--Select board--</option>
+    //             {boards.map((board, idx) => {
+    //                 return (
+    //                     <option key={idx} value={board.name}>{board.name}</option>
+    //                 )
+    //             })}
+    //         </select>
+    //     )
+    // }
 
     render() {
         window.scrollTo(0,0);
@@ -81,7 +96,7 @@ class PinShow extends React.Component{
                                 </div>
                             </div>
                             <div className="save-to-board">
-
+                                {/* {this.boardNames()} */}
                             </div>
                         </div>
                         <h1>{pins[chosenPinId].title}</h1>
