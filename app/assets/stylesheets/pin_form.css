@@ -22,6 +22,7 @@
     flex-direction: row-reverse;
     width: 100%;
     justify-content: end;
+    position: relative;
 }
 
 .pin-top-buttons > button{
@@ -263,4 +264,12 @@
 
 .save-or-cancel > .save-edit:hover{
     background-color: rgb(28, 143, 36);
+}
+
+.board-names{
+    /* display: none; */
+    /* position: absolute; */
+    /* top: 100px; */
+    z-index: 5;
+    top:500px;
 }

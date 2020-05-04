@@ -52,6 +52,20 @@ class EditPinForm extends React.Component {
         )
     }
 
+    boardNames(){
+        const {boards} = this.props;
+        return (
+            <select> 
+                <option value="" defaultValue>--Select board--</option>
+                {boards.map( (board, idx) => {
+                    return (
+                        <option key={idx} value={board.name}>{board.name}</option>
+                    )
+                })}
+            </select>
+        )
+    }
+
     render() {
         if (!this.props.pin) return null;
         return (
@@ -64,14 +78,7 @@ class EditPinForm extends React.Component {
                                 <div className="board-selection">
                                     <div>
                                         <p>Board</p>
-                                        <select >
-                                            <option value="">--Select Board--</option>
-                                            <option value="USA">USA</option>
-                                            <option value="Canada">Canada</option>
-                                            <option value="China">China</option>
-                                            <option value="Mexico">Mexico</option>
-                                            <option value="Japan">Japan</option>
-                                        </select>
+                                        {this.boardNames()}
                                         <div className="drop-down-arrow">
                                             <i className="fas fa-chevron-down"></i>
                                         </div>

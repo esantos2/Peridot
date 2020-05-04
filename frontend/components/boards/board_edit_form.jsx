@@ -31,13 +31,14 @@ class BoardEditForm extends React.Component{
 
     render(){
         const {name, description} = this.state;
+        const {closeEditForm} = this.props;
         return (
-            <div className="modal-background" onClick={this.props.closeEditForm}>
+            <div className="modal-background" onClick={closeEditForm}>
                 <div className="modal-child-round-box" onClick={e => e.stopPropagation()}>
                     <div className="board-edit-form">
                         <div className="form-header">
                             <h2>Edit your board</h2>
-                            <div className="close-form">X</div>
+                            <div className="close-form" onClick={closeEditForm}>X</div>
                         </div>
                         <div>
                             <p>Name</p>
@@ -45,18 +46,25 @@ class BoardEditForm extends React.Component{
                         </div>
                         <div>
                             <p>Description</p>
-                            <textarea rows="3" value={description} onChange={this.update("description")} />
+                            <textarea rows="3" placeholder="What's your board about?" value={description || ''} onChange={this.update("description")} />
                         </div>
                         <div>
                             <p>Add dates (optional - this can help you plan!)</p>
-                            <input type="date" />
+                            <div className="start-end-date">
+                                <label>Start
+                                    <input type="date" placeholder="Start date"/>
+                                </label>
+                                <label>End
+                                    <input type="date" placeholder="End date"/>
+                                </label>
+                            </div>
                         </div>
                         <div className="bottom-options">
                             <div className="delete-button">
                                 <button className="delete-pin" onClick={this.handleDelete}>Delete</button>
                             </div>
                             <div className="save-or-cancel">
-                                <button className="cancel-edit" onClick={this.props.closeEditForm}>Cancel</button>
+                                <button className="cancel-edit" onClick={closeEditForm}>Cancel</button>
                                 <button className="save-edit" onClick={this.handleSubmit}>Save</button>
                             </div>
                         </div>

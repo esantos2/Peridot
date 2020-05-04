@@ -22,7 +22,9 @@ class PinShow extends React.Component{
     }
 
     componentDidMount(){
-        this.props.fetchPins();
+        const { fetchPins, fetchBoards, currentUserId} = this.props;
+        fetchPins();
+        fetchBoards(currentUserId);
     }
 
     openEditForm(e){
@@ -43,10 +45,11 @@ class PinShow extends React.Component{
 
     renderEditForm(){
         if (this.state.edit){
-            const {pins, chosenPinId, errors, currentUserId, updatePin, deletePin} = this.props;
+            const {pins, boards, chosenPinId, errors, currentUserId, updatePin, deletePin} = this.props;
             return (
                 <EditPinForm 
                     pin={pins[chosenPinId]}
+                    boards={boards}
                     errors={errors}
                     currentUserId={currentUserId}
                     updatePin={updatePin}

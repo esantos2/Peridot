@@ -21,7 +21,6 @@ export const createPin = pin => {
 }
 
 export const updatePin = pin => {
-    debugger
     return $.ajax({
         url: `/api/pins/${pin.id}`,
         method: "PATCH",
@@ -33,5 +32,13 @@ export const deletePin = pinId => {
     return $.ajax({
         url: `/api/pins/${pinId}`,
         method: "DELETE"
+    })
+}
+
+export const saveToBoard = (board_pin) => {
+    return $.ajax({
+        url: `/api/board_pins`,
+        method: "POST",
+        data: {board_pin}
     })
 }

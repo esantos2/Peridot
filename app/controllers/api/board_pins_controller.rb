@@ -1,10 +1,11 @@
 class Api::BoardPinsController < ApplicationController
     def create
+        debugger
         @board_pin = BoardPin.create(board_pin_params)
-        @board_pin.board_id = params[:board_pin][:board_id]
-        @board_pin.pin_id = params[:board_pin][:pin_id]
+        # @board_pin.board_id = params[:board_pin][:board_id]
+        # @board_pin.pin_id = params[:board_pin][:pin_id]
         if @board_pin.save
-            render json: "/api/boards/index"
+            render json: @board_pin.pin_id
         else
             render json: @board_pin.errors.full_messages, status: 422
         end

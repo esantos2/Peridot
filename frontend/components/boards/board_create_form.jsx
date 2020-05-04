@@ -23,9 +23,9 @@ class CreateBoardForm extends React.Component{
         const {createBoard, closeBoardForm, currentUserId} = this.props;
         const {name} = this.state;
         let newBoard = {name};
-        createBoard(newBoard);
         closeBoardForm();
-        this.props.history.push(`/users/${currentUserId}/boards/`);
+        createBoard(newBoard)
+            .then(board => this.props.history.push(`/users/${currentUserId}/boards/${board.id}`));
     }
 
     render(){
