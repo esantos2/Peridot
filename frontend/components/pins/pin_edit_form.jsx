@@ -22,12 +22,12 @@ class EditPinForm extends React.Component {
 
     handleDelete(e){
         e.preventDefault();
-        const {pin, currentUserId, deletePin} = this.props;
+        const {pin, currentUserId, deletePin, closeEditForm} = this.props;
         // delete from board
         if (currentUserId === pin.userId){
-            deletePin(pin.id)
-                .then( () => this.props.closeEditForm())
-                .then( () => this.props.history.push(`/users/${currentUserId}/pins`));
+            closeEditForm();
+            deletePin(pin.id);
+            this.props.history.push(`/users/${currentUserId}/pins`);
         }
     }
 
@@ -53,6 +53,7 @@ class EditPinForm extends React.Component {
     }
 
     render() {
+        if (!this.props.pin) return null;
         return (
             <div className="modal-background" onClick={this.props.closeEditForm}>
                 <div className="modal-child-round-box" onClick={e => e.stopPropagation()}>

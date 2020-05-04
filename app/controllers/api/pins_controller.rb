@@ -41,7 +41,7 @@ class Api::PinsController < ApplicationController
         @pin = Pin.find_by(id: params[:id])
         if @pin && @pin.user_id == current_user.id
             if @pin.destroy
-                render "/api/pins/index"
+                render json: @pin.id
             else 
                 render json: @pin.errors.full_messages, status: 422
             end

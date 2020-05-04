@@ -276,8 +276,8 @@ var updatePin = function updatePin(pin) {
 };
 var deletePin = function deletePin(pinId) {
   return function (dispatch) {
-    return _util_pin_api_util__WEBPACK_IMPORTED_MODULE_0__["deletePin"](pinId).then(function (pin) {
-      return dispatch(removePin(pin.id));
+    return _util_pin_api_util__WEBPACK_IMPORTED_MODULE_0__["deletePin"](pinId).then(function (pinId) {
+      return dispatch(removePin(pinId));
     }, function (error) {
       return dispatch(receivePinErrors(error.responseJson));
     });
@@ -1233,20 +1233,17 @@ var EditPinForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleDelete",
     value: function handleDelete(e) {
-      var _this4 = this;
-
       e.preventDefault();
       var _this$props = this.props,
           pin = _this$props.pin,
           currentUserId = _this$props.currentUserId,
-          deletePin = _this$props.deletePin; // delete from board
+          deletePin = _this$props.deletePin,
+          closeEditForm = _this$props.closeEditForm; // delete from board
 
       if (currentUserId === pin.userId) {
-        deletePin(pin.id).then(function () {
-          return _this4.props.closeEditForm();
-        }).then(function () {
-          return _this4.props.history.push("/users/".concat(currentUserId, "/pins"));
-        });
+        closeEditForm();
+        deletePin(pin.id);
+        this.props.history.push("/users/".concat(currentUserId, "/pins"));
       }
     }
   }, {
@@ -1276,6 +1273,7 @@ var EditPinForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      if (!this.props.pin) return null;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "modal-background",
         onClick: this.props.closeEditForm
@@ -1663,12 +1661,8 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
           currentUserId = _this$props.currentUserId,
           chosenPinId = _this$props.chosenPinId;
       var suggested = Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_4__["selectSuggestedPins"])(pins, currentUserId);
-      delete suggested[chosenPinId + 1]; //not deleting pin for suggested pins
-      //scroll to top when:
-      //click on pin
-      //clicking back button
-
-      return Object.values(suggested);
+      delete suggested[chosenPinId + 1];
+      return suggested;
     }
   }, {
     key: "renderEditForm",

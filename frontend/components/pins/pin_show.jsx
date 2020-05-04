@@ -32,18 +32,14 @@ class PinShow extends React.Component{
     }
 
     closeEditForm(){
-        this.setState({edit: false})
+        this.setState({ edit: false });
     }
 
     getSuggested(){
         const {pins, currentUserId, chosenPinId} = this.props;
         let suggested = selectSuggestedPins(pins, currentUserId);
         delete suggested[chosenPinId+1];
-        //not deleting pin for suggested pins
-        //scroll to top when:
-            //click on pin
-            //clicking back button
-        return Object.values(suggested);
+        return suggested;
     }
 
     renderEditForm(){
