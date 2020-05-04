@@ -1,19 +1,47 @@
 import React from 'react';
-import {NavLink} from 'react-router-dom';
+import {NavLink, Link} from 'react-router-dom';
+import CreateBoardForm from '../boards/board_create_form';
 
 class UserProfile extends React.Component{
     constructor(props){
         super(props)
+        this.state = {
+            boardForm: false
+        }
+        this.openBoardForm = this.openBoardForm.bind(this);
+        this.closeBoardForm = this.closeBoardForm.bind(this);
+    }
+
+    openBoardForm(){
+        this.setState({boardForm: true});
+    }
+
+    showBoardForm(){
+        if (this.state.boardForm){
+            const {createBoard, clearErrors, user} = this.props;
+            return (<CreateBoardForm 
+                createBoard={createBoard}
+                clearErrors={clearErrors}
+                closeBoardForm={this.closeBoardForm}
+                currentUserId={user.id}
+            />)
+        }
+    }
+
+    closeBoardForm(){
+        this.setState({boardForm: false});
     }
 
     render(){
         const {user} = this.props;
         return (
             <div className="user-profile-box">
+                {this.showBoardForm()}
                 <div className="header">
                     <div className="top-buttons">
                         {/* create board, pin */}
-                        <div>Create stuff</div>
+                        <a onClick={this.openBoardForm}>Create Board</a>
+                        <Link to="/pin-builder">Create Pin</Link>
                         <div>Edit profile</div>
                         {/* edit profile */}
                     </div>
