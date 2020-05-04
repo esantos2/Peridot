@@ -37,8 +37,12 @@ class PinShow extends React.Component{
 
     getSuggested(){
         const {pins, currentUserId, chosenPinId} = this.props;
-        let suggested = Object.assign({}, selectSuggestedPins(pins, currentUserId));
-        delete suggested[chosenPinId-1];
+        let suggested = selectSuggestedPins(pins, currentUserId);
+        delete suggested[chosenPinId+1];
+        //not deleting pin for suggested pins
+        //scroll to top when:
+            //click on pin
+            //clicking back button
         return Object.values(suggested);
     }
 
@@ -47,7 +51,7 @@ class PinShow extends React.Component{
             const {pins, chosenPinId, errors, currentUserId, updatePin, deletePin} = this.props;
             return (
                 <EditPinForm 
-                    pin={pins[chosenPinId-1]}
+                    pin={pins[chosenPinId]}
                     errors={errors}
                     currentUserId={currentUserId}
                     updatePin={updatePin}
@@ -81,9 +85,9 @@ class PinShow extends React.Component{
 
                             </div>
                         </div>
-                        <h1>{pins[chosenPinId-1].title}</h1>
-                        <h3>{pins[chosenPinId-1].description}</h3>
-                        <p>{pins[chosenPinId-1].link}</p>
+                        <h1>{pins[chosenPinId].title}</h1>
+                        <h3>{pins[chosenPinId].description}</h3>
+                        <p>{pins[chosenPinId].link}</p>
                     </div>
                 </div>
                 <div className="related-pins">

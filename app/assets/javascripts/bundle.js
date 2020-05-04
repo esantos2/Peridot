@@ -1662,8 +1662,12 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
           pins = _this$props.pins,
           currentUserId = _this$props.currentUserId,
           chosenPinId = _this$props.chosenPinId;
-      var suggested = Object.assign({}, Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_4__["selectSuggestedPins"])(pins, currentUserId));
-      delete suggested[chosenPinId - 1];
+      var suggested = Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_4__["selectSuggestedPins"])(pins, currentUserId);
+      delete suggested[chosenPinId + 1]; //not deleting pin for suggested pins
+      //scroll to top when:
+      //click on pin
+      //clicking back button
+
       return Object.values(suggested);
     }
   }, {
@@ -1678,7 +1682,7 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
             updatePin = _this$props2.updatePin,
             deletePin = _this$props2.deletePin;
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_pin_edit_form__WEBPACK_IMPORTED_MODULE_1__["default"], {
-          pin: pins[chosenPinId - 1],
+          pin: pins[chosenPinId],
           errors: errors,
           currentUserId: currentUserId,
           updatePin: updatePin,
@@ -1719,7 +1723,7 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
         className: "fas fa-pencil-alt"
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "save-to-board"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, pins[chosenPinId - 1].title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, pins[chosenPinId - 1].description), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, pins[chosenPinId - 1].link))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, pins[chosenPinId].title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, pins[chosenPinId].description), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, pins[chosenPinId].link))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "related-pins"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_pin_index__WEBPACK_IMPORTED_MODULE_3__["default"], {
         pins: this.getSuggested(),
@@ -1759,7 +1763,7 @@ var mapStateToProps = function mapStateToProps(_ref, _ref2) {
       errors = _ref.errors;
   var params = _ref2.match.params;
   return {
-    pins: Object.values(pins),
+    pins: pins,
     chosenPinId: params.pinId,
     errors: errors,
     currentUserId: currentUserId //board names
@@ -1777,6 +1781,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     updatePin: function updatePin(pin) {
       return dispatch(Object(_actions_pin_actions__WEBPACK_IMPORTED_MODULE_2__["updatePin"])(pin));
+    },
+    deletePin: function deletePin(pinId) {
+      return dispatch(Object(_actions_pin_actions__WEBPACK_IMPORTED_MODULE_2__["deletePin"])(pinId));
     } //edit board
 
   };
