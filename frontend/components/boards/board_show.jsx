@@ -4,7 +4,6 @@ import PinIndex from '../pins/pin_index';
 class BoardShow extends React.Component{
     constructor(props){
         super(props)
-
     }
 
     componentDidMount(){
@@ -13,6 +12,7 @@ class BoardShow extends React.Component{
 
     render(){
         const {board, fetchBoard} = this.props;
+        if (!board) return null;
         return (
             <div className="board-show-box">
                 <div className="board-info">

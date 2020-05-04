@@ -736,6 +736,7 @@ var BoardShow = /*#__PURE__*/function (_React$Component) {
       var _this$props = this.props,
           board = _this$props.board,
           fetchBoard = _this$props.fetchBoard;
+      if (!board) return null;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "board-show-box"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1411,7 +1412,7 @@ var PinIndex = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      if (!this.props.pins) return null;
+      if (this.props.pins.length === 0) return null;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "all-pins-box"
       }, this.addCreatePin(), this.props.pins.map(function (pin, idx) {
@@ -1548,8 +1549,12 @@ var PinIndexItem = /*#__PURE__*/function (_React$Component) {
         className: "pin-box",
         onClick: this.showPinDetails
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "pin-box-details"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "hover-details"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "This is a pin lol"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, pin.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, pin.description), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, pin.link));
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "This is a pin lol"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, pin.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, pin.description), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, pin.link)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "pin-space"
+      }));
     }
   }]);
 
@@ -1572,6 +1577,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _pin_edit_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pin_edit_form */ "./frontend/components/pins/pin_edit_form.jsx");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _pin_index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./pin_index */ "./frontend/components/pins/pin_index.jsx");
+/* harmony import */ var _reducers_selectors__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../reducers/selectors */ "./frontend/reducers/selectors.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1597,6 +1605,9 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
+
+
 var PinShow = /*#__PURE__*/function (_React$Component) {
   _inherits(PinShow, _React$Component);
 
@@ -1613,13 +1624,21 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
     };
     _this.openEditForm = _this.openEditForm.bind(_assertThisInitialized(_this));
     _this.closeEditForm = _this.closeEditForm.bind(_assertThisInitialized(_this));
+    _this.goBack = _this.goBack.bind(_assertThisInitialized(_this));
+    _this.getSuggested = _this.getSuggested.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(PinShow, [{
+    key: "goBack",
+    value: function goBack(e) {
+      e.stopPropagation();
+      this.props.history.goBack();
+    }
+  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.fetchPin(this.props.match.params.pinId);
+      this.props.fetchPins(); // this.props.fetchPin(this.props.match.params.pinId);
     }
   }, {
     key: "openEditForm",
@@ -1637,17 +1656,29 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "getSuggested",
+    value: function getSuggested() {
+      var _this$props = this.props,
+          pins = _this$props.pins,
+          currentUserId = _this$props.currentUserId,
+          chosenPinId = _this$props.chosenPinId;
+      var suggested = Object.assign({}, Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_4__["selectSuggestedPins"])(pins, currentUserId));
+      delete suggested[chosenPinId - 1];
+      return Object.values(suggested);
+    }
+  }, {
     key: "renderEditForm",
     value: function renderEditForm() {
       if (this.state.edit) {
-        var _this$props = this.props,
-            pin = _this$props.pin,
-            errors = _this$props.errors,
-            currentUserId = _this$props.currentUserId,
-            updatePin = _this$props.updatePin,
-            deletePin = _this$props.deletePin;
+        var _this$props2 = this.props,
+            pins = _this$props2.pins,
+            chosenPinId = _this$props2.chosenPinId,
+            errors = _this$props2.errors,
+            currentUserId = _this$props2.currentUserId,
+            updatePin = _this$props2.updatePin,
+            deletePin = _this$props2.deletePin;
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_pin_edit_form__WEBPACK_IMPORTED_MODULE_1__["default"], {
-          pin: pin,
+          pin: pins[chosenPinId - 1],
           errors: errors,
           currentUserId: currentUserId,
           updatePin: updatePin,
@@ -1659,11 +1690,19 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var pin = this.props.pin;
-      if (!pin) return null;
+      var _this$props3 = this.props,
+          pins = _this$props3.pins,
+          chosenPinId = _this$props3.chosenPinId,
+          fetchPins = _this$props3.fetchPins;
+      if (pins.length === 0) return null;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-show-page"
       }, this.renderEditForm(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "back-button",
+        onClick: this.goBack
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-arrow-left"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-show-box"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-image"
@@ -1680,16 +1719,19 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
         className: "fas fa-pencil-alt"
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "save-to-board"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, pin.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, pin.description), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, pin.link))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, pins[chosenPinId - 1].title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, pins[chosenPinId - 1].description), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, pins[chosenPinId - 1].link))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "related-pins"
-      }));
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_pin_index__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        pins: this.getSuggested(),
+        getInfo: fetchPins
+      })));
     }
   }]);
 
   return PinShow;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-/* harmony default export */ __webpack_exports__["default"] = (PinShow);
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["withRouter"])(PinShow));
 
 /***/ }),
 
@@ -1717,7 +1759,8 @@ var mapStateToProps = function mapStateToProps(_ref, _ref2) {
       errors = _ref.errors;
   var params = _ref2.match.params;
   return {
-    pin: pins[params.pinId],
+    pins: Object.values(pins),
+    chosenPinId: params.pinId,
     errors: errors,
     currentUserId: currentUserId //board names
 
@@ -1726,17 +1769,14 @@ var mapStateToProps = function mapStateToProps(_ref, _ref2) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    fetchPin: function fetchPin(pinId) {
-      return dispatch(Object(_actions_pin_actions__WEBPACK_IMPORTED_MODULE_2__["fetchPin"])(pinId));
+    fetchPins: function fetchPins() {
+      return dispatch(Object(_actions_pin_actions__WEBPACK_IMPORTED_MODULE_2__["fetchPins"])());
     },
     clearErrors: function clearErrors() {
       return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_3__["clearErrors"])());
     },
     updatePin: function updatePin(pin) {
       return dispatch(Object(_actions_pin_actions__WEBPACK_IMPORTED_MODULE_2__["updatePin"])(pin));
-    },
-    deletePin: function deletePin(pinId) {
-      return dispatch(Object(_actions_pin_actions__WEBPACK_IMPORTED_MODULE_2__["deletePin"])(pinId));
     } //edit board
 
   };

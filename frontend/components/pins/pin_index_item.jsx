@@ -16,13 +16,16 @@ class PinIndexItem extends React.Component{
         const {pin} = this.props;
         return (
             <div className="pin-box" onClick={this.showPinDetails}>
-                <div className="hover-details">
-                        
+                <div className="pin-box-details">
+                    <div className="hover-details">
+                            
+                    </div>
+                    <h3>This is a pin lol</h3>
+                    <h1>{pin.title}</h1>
+                    <p>{pin.description}</p>
+                    <h5>{pin.link}</h5>
                 </div>
-                <h3>This is a pin lol</h3>
-                <h1>{pin.title}</h1>
-                <p>{pin.description}</p>
-                <h5>{pin.link}</h5>
+                <div className="pin-space"></div>
             </div>
         )
     }

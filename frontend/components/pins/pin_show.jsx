@@ -1,5 +1,8 @@
 import React from 'react';
 import EditPinForm from './pin_edit_form';
+import { withRouter } from 'react-router-dom';
+import PinIndex from './pin_index';
+import { selectSuggestedPins } from '../../reducers/selectors';
 
 class PinShow extends React.Component{
     constructor(props){
@@ -9,10 +12,18 @@ class PinShow extends React.Component{
         }
         this.openEditForm = this.openEditForm.bind(this);
         this.closeEditForm = this.closeEditForm.bind(this);
+        this.goBack = this.goBack.bind(this);
+        this.getSuggested = this.getSuggested.bind(this);
+    }
+
+    goBack(e){
+        e.stopPropagation();
+        this.props.history.goBack();
     }
 
     componentDidMount(){
-        this.props.fetchPin(this.props.match.params.pinId);
+        this.props.fetchPins();
+        // this.props.fetchPin(this.props.match.params.pinId);
     }
 
     openEditForm(e){
@@ -24,12 +35,19 @@ class PinShow extends React.Component{
         this.setState({edit: false})
     }
 
+    getSuggested(){
+        const {pins, currentUserId, chosenPinId} = this.props;
+        let suggested = Object.assign({}, selectSuggestedPins(pins, currentUserId));
+        delete suggested[chosenPinId-1];
+        return Object.values(suggested);
+    }
+
     renderEditForm(){
         if (this.state.edit){
-            const {pin, errors, currentUserId, updatePin, deletePin} = this.props;
+            const {pins, chosenPinId, errors, currentUserId, updatePin, deletePin} = this.props;
             return (
                 <EditPinForm 
-                    pin={pin}
+                    pin={pins[chosenPinId-1]}
                     errors={errors}
                     currentUserId={currentUserId}
                     updatePin={updatePin}
@@ -40,11 +58,14 @@ class PinShow extends React.Component{
     }
 
     render(){
-        const {pin} = this.props;
-        if (!pin) return null;
+        const { pins, chosenPinId, fetchPins} = this.props;
+        if (pins.length === 0) return null;
         return (
             <div className="pin-show-page">
                 {this.renderEditForm()}
+                <div className="back-button" onClick={this.goBack}>
+                    <i className="fas fa-arrow-left"></i>
+                </div>
                 <div className="pin-show-box">
                     <div className="pin-image">
                         
@@ -60,17 +81,17 @@ class PinShow extends React.Component{
 
                             </div>
                         </div>
-                        <h1>{pin.title}</h1>
-                        <h3>{pin.description}</h3>
-                        <p>{pin.link}</p>
+                        <h1>{pins[chosenPinId-1].title}</h1>
+                        <h3>{pins[chosenPinId-1].description}</h3>
+                        <p>{pins[chosenPinId-1].link}</p>
                     </div>
                 </div>
                 <div className="related-pins">
-
+                    <PinIndex pins={this.getSuggested()} getInfo={fetchPins}/>
                 </div>
             </div>
         )
     }
 }
 
-export default PinShow;
+export default withRouter(PinShow);
