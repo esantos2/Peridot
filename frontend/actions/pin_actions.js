@@ -52,5 +52,5 @@ export const updatePin = pin => dispatch => {
 export const deletePin = pinId => dispatch => {
     return PinAPIUtil.deletePin(pinId)
         .then( pinId => dispatch(removePin(pinId)),
-        error => dispatch(receivePinErrors(error.responseJson)))
+        error => dispatch(receivePinErrors(error.responseJSON)))
 }

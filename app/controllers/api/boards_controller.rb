@@ -40,8 +40,11 @@ class Api::BoardsController < ApplicationController
     def destroy
         @board = Board.find_by(id: params[:id])
         if @board && @board.user_id == current_user.id
-            @board.delete
-            render "/api/boards/show"
+            if @board.destroy
+                render json: @board.id
+            else
+                render json: @board.errors.full_messages, status: 422
+            end
         else
             render json: @board.errors.full_messages, status: 422
         end

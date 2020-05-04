@@ -23,7 +23,6 @@ class PinShow extends React.Component{
 
     componentDidMount(){
         this.props.fetchPins();
-        // this.props.fetchPin(this.props.match.params.pinId);
     }
 
     openEditForm(e){
@@ -57,7 +56,8 @@ class PinShow extends React.Component{
         }
     }
 
-    render(){
+    render() {
+        window.scrollTo(0,0);
         const { pins, chosenPinId, fetchPins} = this.props;
         if (pins.length === 0) return null;
         return (

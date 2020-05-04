@@ -33,7 +33,7 @@ class EditPinForm extends React.Component {
 
     editDetails(){
         if (this.props.currentUserId !== this.props.pin.userId) return null;
-        const {title, description, link} = this.state
+        const {title, description, link} = this.state;
         return (
             <div className="edit-details">
                 <div>
