@@ -1,9 +1,6 @@
 class Api::BoardPinsController < ApplicationController
     def create
-        debugger
         @board_pin = BoardPin.create(board_pin_params)
-        # @board_pin.board_id = params[:board_pin][:board_id]
-        # @board_pin.pin_id = params[:board_pin][:pin_id]
         if @board_pin.save
             render json: @board_pin.pin_id
         else

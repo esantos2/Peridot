@@ -34,12 +34,9 @@ class CreatePinForm extends React.Component{
         const {user_id, title, description, link, chosenBoardId} = this.state;
         let newUser = {user_id, title, description, link};
         this.props.createPin(newUser)
-            .then( pin => this.props.saveToBoard(
-                {
-                    boardId: chosenBoardId,
-                    pinId: pin.id
-                }
-            ))
+            .then( pin => {
+                this.props.saveToBoard({board_id: parseInt(chosenBoardId), pin_id: pin.pin.id})}
+            )
             .then( () => this.setState({confirm: true}))
     }
 

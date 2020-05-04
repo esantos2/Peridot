@@ -1375,9 +1375,9 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
         link: link
       };
       this.props.createPin(newUser).then(function (pin) {
-        return _this3.props.saveToBoard({
-          boardId: chosenBoardId,
-          pinId: pin.id
+        _this3.props.saveToBoard({
+          board_id: parseInt(chosenBoardId),
+          pin_id: pin.pin.id
         });
       }).then(function () {
         return _this3.setState({
