@@ -1330,12 +1330,15 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
       link: '',
       confirm: false,
       errors: _this.props.errors,
-      chosenBoardId: ''
+      chosenBoardId: '',
+      photoFile: null,
+      photoUrl: null
     };
     _this.update = _this.update.bind(_assertThisInitialized(_this));
     _this.selectBoard = _this.selectBoard.bind(_assertThisInitialized(_this));
     _this.boardNames = _this.boardNames.bind(_assertThisInitialized(_this));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.handleFile = _this.handleFile.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1369,14 +1372,16 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
           title = _this$state.title,
           description = _this$state.description,
           link = _this$state.link,
-          chosenBoardId = _this$state.chosenBoardId;
-      var newUser = {
-        user_id: user_id,
-        title: title,
-        description: description,
-        link: link
-      };
-      this.props.createPin(newUser).then(function (pin) {
+          chosenBoardId = _this$state.chosenBoardId,
+          photoFile = _this$state.photoFile;
+      var formData = new FormData();
+      formData.append('pin[title]', title);
+      formData.append('pin[photo]', photoFile);
+      formData.append('pin[description]', description);
+      formData.append('pin[link]', link);
+      formData.append('pin[user_id]', user_id); // let newUser = {user_id, title, description, link};
+
+      this.props.createPin(formData).then(function (pin) {
         return _this3.props.saveToBoard({
           board_id: parseInt(chosenBoardId),
           pin_id: pin.pin.id
@@ -1386,6 +1391,30 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
           confirm: true
         });
       });
+    }
+  }, {
+    key: "showImage",
+    value: function showImage() {
+      document.getElementById("image-preview").classList.toggle("image-load");
+    }
+  }, {
+    key: "handleFile",
+    value: function handleFile(e) {
+      var _this4 = this;
+
+      var file = e.currentTarget.files[0];
+      var fileReader = new FileReader();
+
+      fileReader.onloadend = function () {
+        _this4.setState({
+          photoFile: file,
+          photoUrl: fileReader.result
+        });
+
+        _this4.showImage();
+      };
+
+      if (file) fileReader.readAsDataURL(file);
     }
   }, {
     key: "displayConfirmation",
@@ -1440,8 +1469,7 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "selectBoard",
     value: function selectBoard(e) {
-      e.preventDefault(); // this.boardNames();
-
+      e.preventDefault();
       document.getElementById("board-names").classList.toggle("show-menu");
     }
   }, {
@@ -1451,7 +1479,12 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
       var _this$state2 = this.state,
           title = _this$state2.title,
           description = _this$state2.description,
-          link = _this$state2.link;
+          link = _this$state2.link,
+          photoUrl = _this$state2.photoUrl;
+      var preview = photoUrl ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        id: "image-preview",
+        src: photoUrl
+      }) : null;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-modal"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1472,7 +1505,12 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
         className: "pin-image-back"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-arrow-alt-circle-up"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Click to upload")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Click to upload"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "file",
+        onChange: this.handleFile
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "image-preview"
+      }, preview)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "save-from-site"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-create-fields"
@@ -2025,7 +2063,9 @@ var PinIndexItem = /*#__PURE__*/function (_React$Component) {
         className: "pin-box-details"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "hover-details"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "This is a pin lol"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, pin.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, pin.description), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, pin.link)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "pin-image"
+      }, pin.photo)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-space"
       }));
     }
@@ -4302,9 +4342,9 @@ var createPin = function createPin(pin) {
   return $.ajax({
     url: "/api/pins",
     method: "POST",
-    data: {
-      pin: pin
-    }
+    data: pin,
+    contentType: false,
+    processData: false
   });
 };
 var updatePin = function updatePin(pin) {

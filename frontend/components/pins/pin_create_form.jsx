@@ -11,12 +11,15 @@ class CreatePinForm extends React.Component{
             link: '',
             confirm: false,
             errors: this.props.errors,
-            chosenBoardId: ''
+            chosenBoardId: '',
+            photoFile: null,
+            photoUrl: null
         }
         this.update = this.update.bind(this);
         this.selectBoard = this.selectBoard.bind(this);
         this.boardNames = this.boardNames.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleFile = this.handleFile.bind(this);
     }
 
     componentDidMount(){
@@ -31,11 +34,36 @@ class CreatePinForm extends React.Component{
 
     handleSubmit(e){
         e.preventDefault();
-        const {user_id, title, description, link, chosenBoardId} = this.state;
-        let newUser = {user_id, title, description, link};
-        this.props.createPin(newUser)
+        const {user_id, title, description, link, chosenBoardId, photoFile} = this.state;
+
+        const formData = new FormData();
+        formData.append('pin[title]', title)
+        formData.append('pin[photo]', photoFile)
+        formData.append('pin[description]', description)
+        formData.append('pin[link]', link)
+        formData.append('pin[user_id]', user_id)
+
+        // let newUser = {user_id, title, description, link};
+        this.props.createPin(formData)
             .then( pin => this.props.saveToBoard({board_id: parseInt(chosenBoardId), pin_id: pin.pin.id}))
             .then( () => this.setState({confirm: true}))
+    }
+
+    showImage() {
+        document.getElementById("image-preview").classList.toggle("image-load")
+    }
+
+    handleFile(e){
+        const file = e.currentTarget.files[0];
+        const fileReader = new FileReader();
+        fileReader.onloadend = () => {
+            this.setState({ 
+                photoFile: file, 
+                photoUrl: fileReader.result
+            });
+            this.showImage();
+        }
+        if (file) fileReader.readAsDataURL(file);
     }
 
     displayConfirmation(){
@@ -78,13 +106,13 @@ class CreatePinForm extends React.Component{
 
     selectBoard(e) {
         e.preventDefault();
-        // this.boardNames();
         document.getElementById("board-names").classList.toggle("show-menu")
     }
 
     render(){
         const {owner} = this.props;
-        const {title, description, link} = this.state;
+        const {title, description, link, photoUrl} = this.state;
+        const preview = photoUrl ? <img id="image-preview" src={photoUrl} /> : null;
         return (
             <div className="pin-modal">
                 <div className="pin-form-box">
@@ -99,6 +127,10 @@ class CreatePinForm extends React.Component{
                             <div className="pin-image-back">
                                 <i className="fas fa-arrow-alt-circle-up"></i>
                                 <p>Click to upload</p>
+                                <input type="file" onChange={this.handleFile} />
+                                <div className="image-preview">
+                                    {preview}
+                                </div>
                             </div>
                             <div className="save-from-site"></div>
                         </div>
