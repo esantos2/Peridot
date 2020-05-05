@@ -1624,7 +1624,8 @@ var EditPinForm = /*#__PURE__*/function (_React$Component) {
       title: title,
       description: description,
       link: link,
-      chosenBoardId: ''
+      chosenBoardId: '',
+      confirm: false
     };
     _this.update = _this.update.bind(_assertThisInitialized(_this));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
@@ -1648,44 +1649,69 @@ var EditPinForm = /*#__PURE__*/function (_React$Component) {
 
       e.preventDefault();
       var _this$state = this.state,
-          user_id = _this$state.user_id,
           title = _this$state.title,
           description = _this$state.description,
           link = _this$state.link,
           chosenBoardId = _this$state.chosenBoardId;
-      var pin = this.props.pin;
-      var newUser = {
-        id: pin.id,
-        user_id: user_id,
-        title: title,
-        description: description,
-        link: link
-      };
-      this.props.updatePin(newUser).then(function (pin) {
-        return _this3.props.saveToBoard({
-          board_id: parseInt(chosenBoardId),
-          pin_id: pin.pin.id
+      var _this$props = this.props,
+          pin = _this$props.pin,
+          currentUserId = _this$props.currentUserId;
+
+      if (pin.user_id === currentUserId) {
+        var newUser = {
+          id: pin.id,
+          user_id: currentUserId,
+          title: title,
+          description: description,
+          link: link
+        };
+        this.props.updatePin(newUser).then(function (pin) {
+          return _this3.props.saveToBoard({
+            board_id: parseInt(chosenBoardId),
+            pin_id: pin.pin.id
+          });
         });
-      }).then(function () {
-        return _this3.props.closeEditForm();
-      });
+      } else {
+        this.props.saveToBoard({
+          board_id: parseInt(chosenBoardId),
+          pin_id: pin.id
+        });
+      }
+
+      this.props.closeEditForm();
     }
   }, {
     key: "handleDelete",
     value: function handleDelete(e) {
       e.preventDefault();
-      var _this$props = this.props,
-          pin = _this$props.pin,
-          currentUserId = _this$props.currentUserId,
-          deletePin = _this$props.deletePin,
-          closeEditForm = _this$props.closeEditForm; // delete from board
+      var _this$props2 = this.props,
+          pin = _this$props2.pin,
+          currentUserId = _this$props2.currentUserId,
+          deletePin = _this$props2.deletePin,
+          closeEditForm = _this$props2.closeEditForm;
 
       if (currentUserId === pin.userId) {
         closeEditForm();
         deletePin(pin.id);
         this.props.history.push("/users/".concat(currentUserId, "/pins"));
       }
-    }
+    } // displayConfirmation() {
+    //     const { currentUserId, pin} = this.props;
+    //     if (this.state.confirm) {
+    //         return (
+    //             <div className="modal-background">
+    //                 <div className="modal-child" onClick={e => e.stopPropagation()}>
+    //                     <div className="pin-confirmation-box">
+    //                         <div className="confirm-image"></div>
+    //                         <h1>Success</h1>
+    //                         <p><NavLink to={`/users/${currentUserId}/pins/${pin.id}`}>Continue</NavLink></p>
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //         )
+    //     }
+    // }
+
   }, {
     key: "editDetails",
     value: function editDetails() {
@@ -2027,6 +2053,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _reducers_selectors__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../reducers/selectors */ "./frontend/reducers/selectors.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -2065,12 +2093,15 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      edit: false
+      edit: false,
+      chosenBoard: ''
     };
     _this.openEditForm = _this.openEditForm.bind(_assertThisInitialized(_this));
     _this.closeEditForm = _this.closeEditForm.bind(_assertThisInitialized(_this));
     _this.goBack = _this.goBack.bind(_assertThisInitialized(_this));
     _this.getSuggested = _this.getSuggested.bind(_assertThisInitialized(_this));
+    _this.update = _this.update.bind(_assertThisInitialized(_this));
+    _this.handleSaveToBoard = _this.handleSaveToBoard.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -2140,20 +2171,44 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
           closeEditForm: this.closeEditForm
         });
       }
-    } // boardNames() {
-    //     const { boards } = this.props;
-    //     return (
-    //         <select>
-    //             <option value="">--Select board--</option>
-    //             {boards.map((board, idx) => {
-    //                 return (
-    //                     <option key={idx} value={board.name}>{board.name}</option>
-    //                 )
-    //             })}
-    //         </select>
-    //     )
-    // }
+    }
+  }, {
+    key: "boardNames",
+    value: function boardNames() {
+      var boards = this.props.boards;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "board-name-list",
+        onChange: this.update("chosenBoard")
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: ""
+      }, "--Select board--"), boards.map(function (board, idx) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+          key: idx,
+          value: board.id
+        }, board.name);
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.handleSaveToBoard
+      }, "Save"));
+    }
+  }, {
+    key: "update",
+    value: function update(field) {
+      var _this2 = this;
 
+      return function (e) {
+        _this2.setState(_defineProperty({}, field, e.target.value));
+      };
+    }
+  }, {
+    key: "handleSaveToBoard",
+    value: function handleSaveToBoard(e) {
+      e.preventDefault();
+      var boardPin = {
+        board_id: parseInt(this.state.chosenBoard),
+        pin_id: parseInt(this.props.chosenPinId)
+      };
+      this.props.saveToBoard(boardPin);
+    }
   }, {
     key: "render",
     value: function render() {
@@ -2187,7 +2242,7 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
         className: "fas fa-pencil-alt"
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "save-to-board"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, pins[chosenPinId].title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, pins[chosenPinId].description), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, pins[chosenPinId].link))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.boardNames())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, pins[chosenPinId].title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, pins[chosenPinId].description), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, pins[chosenPinId].link))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "related-pins"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_pin_index__WEBPACK_IMPORTED_MODULE_3__["default"], {
         pins: this.getSuggested(),

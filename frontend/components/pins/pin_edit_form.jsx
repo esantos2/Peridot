@@ -1,5 +1,5 @@
 import React from 'react'
-import { withRouter } from 'react-router-dom';
+import { withRouter, NavLink } from 'react-router-dom';
 
 class EditPinForm extends React.Component {
     constructor(props){
@@ -10,7 +10,8 @@ class EditPinForm extends React.Component {
             title,
             description,
             link,
-            chosenBoardId: ''
+            chosenBoardId: '',
+            confirm: false
         }
         this.update = this.update.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -23,23 +24,26 @@ class EditPinForm extends React.Component {
 
     handleSubmit(e){
         e.preventDefault();
-        const { user_id, title, description, link, chosenBoardId } = this.state;
-        const { pin } = this.props;
-        let newUser = { 
-            id: pin.id,
-            user_id, 
-            title, 
-            description, 
-            link };
-        this.props.updatePin(newUser)
-            .then(pin => this.props.saveToBoard({ board_id: parseInt(chosenBoardId), pin_id: pin.pin.id }))
-            .then( () => this.props.closeEditForm())
+        const { title, description, link, chosenBoardId } = this.state;
+        const { pin, currentUserId } = this.props;
+        if (pin.user_id === currentUserId){
+            let newUser = { 
+                id: pin.id,
+                user_id: currentUserId, 
+                title, 
+                description, 
+                link };
+            this.props.updatePin(newUser)
+                .then(pin => this.props.saveToBoard({ board_id: parseInt(chosenBoardId), pin_id: pin.pin.id }));
+        } else {
+            this.props.saveToBoard({ board_id: parseInt(chosenBoardId), pin_id: pin.id });
+        }
+        this.props.closeEditForm();
     }
 
     handleDelete(e){
         e.preventDefault();
         const {pin, currentUserId, deletePin, closeEditForm} = this.props;
-        // delete from board
         if (currentUserId === pin.userId){
             closeEditForm();
             deletePin(pin.id);
@@ -47,11 +51,29 @@ class EditPinForm extends React.Component {
         }
     }
 
+    // displayConfirmation() {
+    //     const { currentUserId, pin} = this.props;
+    //     if (this.state.confirm) {
+    //         return (
+    //             <div className="modal-background">
+    //                 <div className="modal-child" onClick={e => e.stopPropagation()}>
+    //                     <div className="pin-confirmation-box">
+    //                         <div className="confirm-image"></div>
+    //                         <h1>Success</h1>
+    //                         <p><NavLink to={`/users/${currentUserId}/pins/${pin.id}`}>Continue</NavLink></p>
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //         )
+    //     }
+    // }
+
     editDetails(){
         if (this.props.currentUserId !== this.props.pin.userId) return null;
         const {title, description, link} = this.state;
         return (
             <div className="edit-details">
+                {/* {this.displayConfirmation()} */}
                 <div>
                     <p>Title</p>
                     <input type="text" value={title} onChange={this.update("title")}/>

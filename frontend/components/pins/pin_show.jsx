@@ -8,12 +8,15 @@ class PinShow extends React.Component{
     constructor(props){
         super(props)
         this.state={
-            edit: false
+            edit: false,
+            chosenBoard: ''
         }
         this.openEditForm = this.openEditForm.bind(this);
         this.closeEditForm = this.closeEditForm.bind(this);
         this.goBack = this.goBack.bind(this);
         this.getSuggested = this.getSuggested.bind(this);
+        this.update = this.update.bind(this);
+        this.handleSaveToBoard = this.handleSaveToBoard.bind(this);
     }
 
     goBack(e){
@@ -60,19 +63,36 @@ class PinShow extends React.Component{
         }
     }
 
-    // boardNames() {
-    //     const { boards } = this.props;
-    //     return (
-    //         <select>
-    //             <option value="">--Select board--</option>
-    //             {boards.map((board, idx) => {
-    //                 return (
-    //                     <option key={idx} value={board.name}>{board.name}</option>
-    //                 )
-    //             })}
-    //         </select>
-    //     )
-    // }
+    boardNames() {
+        const { boards } = this.props;
+        return (
+            <div className="board-name-list" onChange={this.update("chosenBoard")}>
+                <select>
+                    <option value="">--Select board--</option>
+                    {boards.map((board, idx) => {
+                        return (
+                            <option key={idx} value={board.id}>{board.name}</option>
+                        )
+                    })}
+                </select>
+                <button onClick={this.handleSaveToBoard}>Save</button>
+            </div>
+        )
+    }
+
+    update(field){
+        return e => {
+            this.setState({[field]: e.target.value})}
+    }
+
+    handleSaveToBoard(e){
+        e.preventDefault();
+        let boardPin = {
+            board_id: parseInt(this.state.chosenBoard),
+            pin_id: parseInt(this.props.chosenPinId)
+        }
+        this.props.saveToBoard(boardPin);
+    }
 
     render() {
         window.scrollTo(0,0);
@@ -96,7 +116,7 @@ class PinShow extends React.Component{
                                 </div>
                             </div>
                             <div className="save-to-board">
-                                {/* {this.boardNames()} */}
+                                {this.boardNames()}
                             </div>
                         </div>
                         <h1>{pins[chosenPinId].title}</h1>
