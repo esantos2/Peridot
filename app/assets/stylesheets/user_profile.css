@@ -7,7 +7,7 @@
 
 .user-profile-box .header{
     width: 800px;
-    margin-top: 80px;
+    /* margin-top: 80px; */
     display: flex;
     flex-direction: column;
 }

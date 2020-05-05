@@ -1187,7 +1187,7 @@ var NavBar = function NavBar(_ref) {
     document.getElementById("settings").classList.toggle("show-menu");
   };
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
     className: "header-logout"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["NavLink"], {
     to: "/home",
@@ -1230,7 +1230,9 @@ var NavBar = function NavBar(_ref) {
     className: "drop-down-menu"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     onClick: logout
-  }, "Log out"))));
+  }, "Log out")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "nav-space"
+  }));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (NavBar);
