@@ -5,6 +5,7 @@ import Root from './components/root';
 
 //begin testing
 // import {fetchBoards, fetchBoard, createBoard, updateBoard, deleteBoard} from './actions/board_actions'
+// import {fetchBoard, fetchBoards} from './util/board_api_util';
 //end tetsting
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -24,8 +25,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     //begin testing 
-    window.getState = store.getState;
-    window.dispatch = store.dispatch;
+    // window.getState = store.getState;
+    // window.dispatch = store.dispatch;
     // window.fetchBoards = fetchBoards;
     // window.fetchBoard = fetchBoard;
     // window.createBoard = createBoard;

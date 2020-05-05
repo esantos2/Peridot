@@ -176,10 +176,10 @@ var updateBoard = function updateBoard(board) {
 };
 var deleteBoard = function deleteBoard(userId, boardId) {
   return function (dispatch) {
-    return _util_board_api_util__WEBPACK_IMPORTED_MODULE_0__["deleteBoard"](userId, boardId).then(function (board) {
-      return dispatch(removeBoard(board.id));
+    return _util_board_api_util__WEBPACK_IMPORTED_MODULE_0__["deleteBoard"](userId, boardId).then(function (boardId) {
+      return dispatch(removeBoard(boardId));
     }, function (error) {
-      return dispatch(receiveBoardErrors(error.responseJson));
+      return dispatch(receiveBoardErrors(error.responseJSON));
     });
   };
 };
@@ -190,7 +190,7 @@ var deleteBoard = function deleteBoard(userId, boardId) {
 /*!*****************************************!*\
   !*** ./frontend/actions/pin_actions.js ***!
   \*****************************************/
-/*! exports provided: RECEIVE_PINS, RECEIVE_PIN, REMOVE_PIN, RECEIVE_PIN_ERRORS, receivePins, receivePin, removePin, receivePinErrors, fetchPins, fetchPin, createPin, updatePin, deletePin */
+/*! exports provided: RECEIVE_PINS, RECEIVE_PIN, REMOVE_PIN, RECEIVE_PIN_ERRORS, receivePins, receivePin, removePin, receivePinErrors, fetchPins, fetchPin, createPin, updatePin, deletePin, saveToBoard */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -208,6 +208,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createPin", function() { return createPin; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updatePin", function() { return updatePin; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deletePin", function() { return deletePin; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveToBoard", function() { return saveToBoard; });
 /* harmony import */ var _util_pin_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/pin_api_util */ "./frontend/util/pin_api_util.js");
 
 var RECEIVE_PINS = "RECEIVE_PINS";
@@ -276,10 +277,19 @@ var updatePin = function updatePin(pin) {
 };
 var deletePin = function deletePin(pinId) {
   return function (dispatch) {
-    return _util_pin_api_util__WEBPACK_IMPORTED_MODULE_0__["deletePin"](pinId).then(function (pin) {
-      return dispatch(removePin(pin.id));
+    return _util_pin_api_util__WEBPACK_IMPORTED_MODULE_0__["deletePin"](pinId).then(function (pinId) {
+      return dispatch(removePin(pinId));
     }, function (error) {
-      return dispatch(receivePinErrors(error.responseJson));
+      return dispatch(receivePinErrors(error.responseJSON));
+    });
+  };
+};
+var saveToBoard = function saveToBoard(boardPin) {
+  return function (dispatch) {
+    return _util_pin_api_util__WEBPACK_IMPORTED_MODULE_0__["saveToBoard"](boardPin).then(function (pinId) {
+      return dispatch(fetchPin(pinId));
+    }, function (error) {
+      return dispatch(receivePinErrors(error.responseJSON));
     });
   };
 };
@@ -438,7 +448,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pins_pin_index_container__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./pins/pin_index_container */ "./frontend/components/pins/pin_index_container.js");
 /* harmony import */ var _pins_pin_show_container__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./pins/pin_show_container */ "./frontend/components/pins/pin_show_container.js");
 /* harmony import */ var _pins_pin_create_form_container__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./pins/pin_create_form_container */ "./frontend/components/pins/pin_create_form_container.js");
-/* harmony import */ var _user_user_profile_container__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./user/user_profile_container */ "./frontend/components/user/user_profile_container.js");
+/* harmony import */ var _boards_board_index_container__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./boards/board_index_container */ "./frontend/components/boards/board_index_container.js");
+/* harmony import */ var _user_user_profile_container__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./user/user_profile_container */ "./frontend/components/user/user_profile_container.js");
+/* harmony import */ var _boards_board_show_container__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./boards/board_show_container */ "./frontend/components/boards/board_show_container.js");
+
+
 
 
 
@@ -457,7 +471,7 @@ var App = function App() {
     component: _nav_bar_navbar_container__WEBPACK_IMPORTED_MODULE_3__["default"]
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_2__["ProtectedRoute"], {
     path: "/users/:userId",
-    component: _user_user_profile_container__WEBPACK_IMPORTED_MODULE_10__["default"]
+    component: _user_user_profile_container__WEBPACK_IMPORTED_MODULE_11__["default"]
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_2__["AuthRoute"], {
     path: "/login",
     component: _session_form_login_form_container__WEBPACK_IMPORTED_MODULE_4__["default"]
@@ -475,15 +489,678 @@ var App = function App() {
     path: "/users/:userId/pins",
     component: _pins_pin_index_container__WEBPACK_IMPORTED_MODULE_7__["default"]
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_2__["ProtectedRoute"], {
+    path: "/users/:userId/boards/:boardId",
+    component: _boards_board_show_container__WEBPACK_IMPORTED_MODULE_12__["default"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_2__["ProtectedRoute"], {
+    path: "/users/:userId/boards",
+    component: _boards_board_index_container__WEBPACK_IMPORTED_MODULE_10__["default"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_2__["ProtectedRoute"], {
     path: "/pin-builder",
     component: _pins_pin_create_form_container__WEBPACK_IMPORTED_MODULE_9__["default"]
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_2__["ProtectedRoute"], {
-    path: "/",
+    path: "/home",
     component: _pins_pin_index_container__WEBPACK_IMPORTED_MODULE_7__["default"]
   })));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (App);
+
+/***/ }),
+
+/***/ "./frontend/components/boards/board_create_form.jsx":
+/*!**********************************************************!*\
+  !*** ./frontend/components/boards/board_create_form.jsx ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+var CreateBoardForm = /*#__PURE__*/function (_React$Component) {
+  _inherits(CreateBoardForm, _React$Component);
+
+  var _super = _createSuper(CreateBoardForm);
+
+  function CreateBoardForm(props) {
+    var _this;
+
+    _classCallCheck(this, CreateBoardForm);
+
+    _this = _super.call(this, props);
+    _this.state = {
+      name: ''
+    };
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(CreateBoardForm, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.props.clearErrors();
+    }
+  }, {
+    key: "update",
+    value: function update(field) {
+      var _this2 = this;
+
+      return function (e) {
+        _this2.setState(_defineProperty({}, field, e.currentTarget.value));
+      };
+    }
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(e) {
+      var _this3 = this;
+
+      e.preventDefault();
+      var _this$props = this.props,
+          createBoard = _this$props.createBoard,
+          closeBoardForm = _this$props.closeBoardForm,
+          currentUserId = _this$props.currentUserId;
+      var name = this.state.name;
+      var newBoard = {
+        name: name
+      };
+      closeBoardForm();
+      createBoard(newBoard).then(function (board) {
+        return _this3.props.history.push("/users/".concat(currentUserId, "/boards/").concat(board.id));
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var closeBoardForm = this.props.closeBoardForm;
+      var name = this.state.name;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-background",
+        onClick: closeBoardForm
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-child-round-box",
+        onClick: function onClick(e) {
+          return e.stopPropagation();
+        }
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "board-form-box"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Create board"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "edit-details"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        placeholder: "Like \"Places to Go\" or \"Recipes to Make\"",
+        value: name,
+        onChange: this.update("name")
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Visibility"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "checkbox"
+      }, "checkbox")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Add dates (optional - this can help you plan!)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "date"
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "bottom-options"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "save-or-cancel"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "cancel-edit",
+        onClick: closeBoardForm
+      }, "Cancel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "save-edit",
+        onClick: this.handleSubmit
+      }, "Create"))))));
+    }
+  }]);
+
+  return CreateBoardForm;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(CreateBoardForm));
+
+/***/ }),
+
+/***/ "./frontend/components/boards/board_edit_form.jsx":
+/*!********************************************************!*\
+  !*** ./frontend/components/boards/board_edit_form.jsx ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+var BoardEditForm = /*#__PURE__*/function (_React$Component) {
+  _inherits(BoardEditForm, _React$Component);
+
+  var _super = _createSuper(BoardEditForm);
+
+  function BoardEditForm(props) {
+    var _this;
+
+    _classCallCheck(this, BoardEditForm);
+
+    _this = _super.call(this, props);
+    _this.state = _this.props.board;
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.handleDelete = _this.handleDelete.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(BoardEditForm, [{
+    key: "update",
+    value: function update(field) {
+      var _this2 = this;
+
+      return function (e) {
+        return _this2.setState(_defineProperty({}, field, e.currentTarget.value));
+      };
+    }
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(e) {
+      var _this3 = this;
+
+      e.preventDefault();
+      this.props.updateBoard(this.state).then(function () {
+        return _this3.props.closeEditForm();
+      });
+    }
+  }, {
+    key: "handleDelete",
+    value: function handleDelete(e) {
+      e.preventDefault();
+      var _this$props = this.props,
+          board = _this$props.board,
+          deleteBoard = _this$props.deleteBoard,
+          closeEditForm = _this$props.closeEditForm,
+          currentUserId = _this$props.currentUserId;
+
+      if (currentUserId === board.userId) {
+        closeEditForm();
+        deleteBoard(currentUserId, board.id); // this.props.history.push(`/users/${currentUserId}/boards`);
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this$state = this.state,
+          name = _this$state.name,
+          description = _this$state.description;
+      var closeEditForm = this.props.closeEditForm;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-background",
+        onClick: closeEditForm
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-child-round-box",
+        onClick: function onClick(e) {
+          return e.stopPropagation();
+        }
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "board-edit-form"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-header"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Edit your board"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "close-form",
+        onClick: closeEditForm
+      }, "X")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        value: name,
+        onChange: this.update("name")
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Description"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+        rows: "3",
+        placeholder: "What's your board about?",
+        value: description || '',
+        onChange: this.update("description")
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Add dates (optional - this can help you plan!)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "start-end-date"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Start", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "date",
+        placeholder: "Start date"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "End", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "date",
+        placeholder: "End date"
+      })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "bottom-options"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "delete-button"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "delete-pin",
+        onClick: this.handleDelete
+      }, "Delete")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "save-or-cancel"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "cancel-edit",
+        onClick: closeEditForm
+      }, "Cancel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "save-edit",
+        onClick: this.handleSubmit
+      }, "Save"))))));
+    }
+  }]);
+
+  return BoardEditForm;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(BoardEditForm));
+
+/***/ }),
+
+/***/ "./frontend/components/boards/board_index.jsx":
+/*!****************************************************!*\
+  !*** ./frontend/components/boards/board_index.jsx ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _board_index_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./board_index_item */ "./frontend/components/boards/board_index_item.jsx");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+var BoardIndex = /*#__PURE__*/function (_React$Component) {
+  _inherits(BoardIndex, _React$Component);
+
+  var _super = _createSuper(BoardIndex);
+
+  function BoardIndex(props) {
+    _classCallCheck(this, BoardIndex);
+
+    return _super.call(this, props);
+  }
+
+  _createClass(BoardIndex, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.props.fetchBoards();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          boards = _this$props.boards,
+          updateBoard = _this$props.updateBoard,
+          deleteBoard = _this$props.deleteBoard,
+          currentUserId = _this$props.currentUserId;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "board-index-box"
+      }, boards.map(function (board, idx) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_board_index_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
+          key: idx,
+          currentUserId: currentUserId,
+          board: board,
+          updateBoard: updateBoard,
+          deleteBoard: deleteBoard
+        });
+      }));
+    }
+  }]);
+
+  return BoardIndex;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (BoardIndex);
+
+/***/ }),
+
+/***/ "./frontend/components/boards/board_index_container.js":
+/*!*************************************************************!*\
+  !*** ./frontend/components/boards/board_index_container.js ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_board_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/board_actions */ "./frontend/actions/board_actions.js");
+/* harmony import */ var _board_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./board_index */ "./frontend/components/boards/board_index.jsx");
+/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
+
+
+
+
+
+var mapStateToProps = function mapStateToProps(_ref) {
+  var boards = _ref.entities.boards,
+      currentUserId = _ref.session.currentUserId,
+      errors = _ref.errors;
+  return {
+    boards: Object.values(boards),
+    currentUserId: currentUserId,
+    errors: errors.boards
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch, _ref2) {
+  var params = _ref2.match.params;
+  return {
+    fetchBoards: function fetchBoards() {
+      return dispatch(Object(_actions_board_actions__WEBPACK_IMPORTED_MODULE_1__["fetchBoards"])(params.userId));
+    },
+    clearErrors: function clearErrors() {
+      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_3__["clearErrors"])());
+    },
+    updateBoard: function updateBoard(board) {
+      return dispatch(Object(_actions_board_actions__WEBPACK_IMPORTED_MODULE_1__["updateBoard"])(board));
+    },
+    deleteBoard: function deleteBoard(userId, boardId) {
+      return dispatch(Object(_actions_board_actions__WEBPACK_IMPORTED_MODULE_1__["deleteBoard"])(userId, boardId));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_board_index__WEBPACK_IMPORTED_MODULE_2__["default"]));
+
+/***/ }),
+
+/***/ "./frontend/components/boards/board_index_item.jsx":
+/*!*********************************************************!*\
+  !*** ./frontend/components/boards/board_index_item.jsx ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _board_edit_form__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./board_edit_form */ "./frontend/components/boards/board_edit_form.jsx");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+
+var BoardIndexItem = /*#__PURE__*/function (_React$Component) {
+  _inherits(BoardIndexItem, _React$Component);
+
+  var _super = _createSuper(BoardIndexItem);
+
+  function BoardIndexItem(props) {
+    var _this;
+
+    _classCallCheck(this, BoardIndexItem);
+
+    _this = _super.call(this, props);
+    _this.state = {
+      edit: false
+    };
+    _this.openForm = _this.openForm.bind(_assertThisInitialized(_this));
+    _this.closeEditForm = _this.closeEditForm.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(BoardIndexItem, [{
+    key: "openForm",
+    value: function openForm(e) {
+      e.preventDefault();
+      this.setState({
+        edit: true
+      });
+    }
+  }, {
+    key: "showEditForm",
+    value: function showEditForm() {
+      if (this.state.edit) {
+        var _this$props = this.props,
+            board = _this$props.board,
+            updateBoard = _this$props.updateBoard,
+            deleteBoard = _this$props.deleteBoard,
+            currentUserId = _this$props.currentUserId;
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_board_edit_form__WEBPACK_IMPORTED_MODULE_2__["default"], {
+          board: board,
+          currentUserId: currentUserId,
+          updateBoard: updateBoard,
+          deleteBoard: deleteBoard,
+          closeEditForm: this.closeEditForm
+        });
+      }
+    }
+  }, {
+    key: "closeEditForm",
+    value: function closeEditForm() {
+      this.setState({
+        edit: false
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var board = this.props.board;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "board-index-item"
+      }, this.showEditForm(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, board.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, board.description), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        to: "/users/".concat(board.userId, "/boards/").concat(board.id)
+      }, "Show details"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "board-edit-button",
+        onClick: this.openForm
+      }, "Edit board"));
+    }
+  }]);
+
+  return BoardIndexItem;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (BoardIndexItem);
+
+/***/ }),
+
+/***/ "./frontend/components/boards/board_show.jsx":
+/*!***************************************************!*\
+  !*** ./frontend/components/boards/board_show.jsx ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _pins_pin_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../pins/pin_index */ "./frontend/components/pins/pin_index.jsx");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+var BoardShow = /*#__PURE__*/function (_React$Component) {
+  _inherits(BoardShow, _React$Component);
+
+  var _super = _createSuper(BoardShow);
+
+  function BoardShow(props) {
+    _classCallCheck(this, BoardShow);
+
+    return _super.call(this, props);
+  }
+
+  _createClass(BoardShow, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.props.fetchBoard();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          board = _this$props.board,
+          fetchBoard = _this$props.fetchBoard;
+      if (!board) return null;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "board-show-box"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "board-info"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Board show page"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, board.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, board.description)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "board-show-pins"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_pins_pin_index__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        getInfo: fetchBoard,
+        pins: board.pins
+      })));
+    }
+  }]);
+
+  return BoardShow;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (BoardShow);
+
+/***/ }),
+
+/***/ "./frontend/components/boards/board_show_container.js":
+/*!************************************************************!*\
+  !*** ./frontend/components/boards/board_show_container.js ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_board_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/board_actions */ "./frontend/actions/board_actions.js");
+/* harmony import */ var _board_show__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./board_show */ "./frontend/components/boards/board_show.jsx");
+
+
+
+
+var mapStateToProps = function mapStateToProps(_ref, _ref2) {
+  var boards = _ref.entities.boards,
+      errors = _ref.errors;
+  var params = _ref2.match.params;
+  return {
+    board: boards[params.boardId],
+    errors: errors
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch, _ref3) {
+  var params = _ref3.match.params;
+  return {
+    fetchBoard: function fetchBoard() {
+      return dispatch(Object(_actions_board_actions__WEBPACK_IMPORTED_MODULE_1__["fetchBoard"])(params.userId, params.boardId));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_board_show__WEBPACK_IMPORTED_MODULE_2__["default"]));
 
 /***/ }),
 
@@ -510,7 +1187,7 @@ var NavBar = function NavBar(_ref) {
     document.getElementById("settings").classList.toggle("show-menu");
   };
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
     className: "header-logout"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["NavLink"], {
     to: "/home",
@@ -553,7 +1230,9 @@ var NavBar = function NavBar(_ref) {
     className: "drop-down-menu"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     onClick: logout
-  }, "Log out"))));
+  }, "Log out")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "nav-space"
+  }));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (NavBar);
@@ -650,10 +1329,12 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
       description: '',
       link: '',
       confirm: false,
-      errors: _this.props.errors
+      errors: _this.props.errors,
+      chosenBoardId: ''
     };
     _this.update = _this.update.bind(_assertThisInitialized(_this));
     _this.selectBoard = _this.selectBoard.bind(_assertThisInitialized(_this));
+    _this.boardNames = _this.boardNames.bind(_assertThisInitialized(_this));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     return _this;
   }
@@ -661,7 +1342,12 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
   _createClass(CreatePinForm, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.clearErrors();
+      var _this$props = this.props,
+          owner = _this$props.owner,
+          fetchBoards = _this$props.fetchBoards,
+          clearErrors = _this$props.clearErrors;
+      fetchBoards(owner.id);
+      clearErrors();
     }
   }, {
     key: "update",
@@ -673,11 +1359,6 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
       };
     }
   }, {
-    key: "selectBoard",
-    value: function selectBoard(e) {
-      e.preventDefault();
-    }
-  }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       var _this3 = this;
@@ -687,14 +1368,20 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
           user_id = _this$state.user_id,
           title = _this$state.title,
           description = _this$state.description,
-          link = _this$state.link;
+          link = _this$state.link,
+          chosenBoardId = _this$state.chosenBoardId;
       var newUser = {
         user_id: user_id,
         title: title,
         description: description,
         link: link
       };
-      this.props.createPin(newUser).then(function () {
+      this.props.createPin(newUser).then(function (pin) {
+        return _this3.props.saveToBoard({
+          board_id: parseInt(chosenBoardId),
+          pin_id: pin.pin.id
+        });
+      }).then(function () {
         return _this3.setState({
           confirm: true
         });
@@ -732,6 +1419,32 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
       }
     }
   }, {
+    key: "boardNames",
+    value: function boardNames() {
+      var boards = this.props.boards;
+      if (!boards) return null;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        id: "board-names",
+        className: "board-names",
+        onChange: this.update("chosenBoardId")
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "",
+        defaultValue: true
+      }, "--Select board--"), boards.map(function (board, idx) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+          key: idx,
+          value: board.id
+        }, board.name);
+      }));
+    }
+  }, {
+    key: "selectBoard",
+    value: function selectBoard(e) {
+      e.preventDefault(); // this.boardNames();
+
+      document.getElementById("board-names").classList.toggle("show-menu");
+    }
+  }, {
     key: "render",
     value: function render() {
       var owner = this.props.owner;
@@ -751,7 +1464,7 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
       }, "Save"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "select-board",
         onClick: this.selectBoard
-      }, "Select")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Select"), this.boardNames()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-main-content"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-image-box"
@@ -813,31 +1526,40 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pin_create_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pin_create_form */ "./frontend/components/pins/pin_create_form.jsx");
 /* harmony import */ var _actions_pin_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/pin_actions */ "./frontend/actions/pin_actions.js");
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
+/* harmony import */ var _actions_board_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/board_actions */ "./frontend/actions/board_actions.js");
+
 
 
 
 
 
 var mapStateToProps = function mapStateToProps(_ref) {
-  var entities = _ref.entities,
+  var _ref$entities = _ref.entities,
+      users = _ref$entities.users,
+      boards = _ref$entities.boards,
       errors = _ref.errors,
       session = _ref.session;
   return {
-    owner: entities.users[session.currentUserId],
-    errors: errors.pins //board names
-
+    owner: users[session.currentUserId],
+    boards: Object.values(boards),
+    errors: errors.pins
   };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
+    fetchBoards: function fetchBoards(userId) {
+      return dispatch(Object(_actions_board_actions__WEBPACK_IMPORTED_MODULE_4__["fetchBoards"])(userId));
+    },
     createPin: function createPin(pin) {
       return dispatch(Object(_actions_pin_actions__WEBPACK_IMPORTED_MODULE_2__["createPin"])(pin));
     },
     clearErrors: function clearErrors() {
       return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_3__["clearErrors"])());
-    } //edit boards
-
+    },
+    saveToBoard: function saveToBoard(boardPin) {
+      return dispatch(Object(_actions_pin_actions__WEBPACK_IMPORTED_MODULE_2__["saveToBoard"])(boardPin));
+    }
   };
 };
 
@@ -896,6 +1618,17 @@ var EditPinForm = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = _this.props.pin;
+    var _this$props$pin = _this.props.pin,
+        title = _this$props$pin.title,
+        description = _this$props$pin.description,
+        link = _this$props$pin.link;
+    _this.state = {
+      title: title,
+      description: description,
+      link: link,
+      chosenBoardId: '',
+      confirm: false
+    };
     _this.update = _this.update.bind(_assertThisInitialized(_this));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     _this.handleDelete = _this.handleDelete.bind(_assertThisInitialized(_this));
@@ -917,37 +1650,78 @@ var EditPinForm = /*#__PURE__*/function (_React$Component) {
       var _this3 = this;
 
       e.preventDefault();
-      this.props.updatePin(this.state).then(function () {
-        return _this3.props.closeEditForm();
-      });
+      var _this$state = this.state,
+          title = _this$state.title,
+          description = _this$state.description,
+          link = _this$state.link,
+          chosenBoardId = _this$state.chosenBoardId;
+      var _this$props = this.props,
+          pin = _this$props.pin,
+          currentUserId = _this$props.currentUserId;
+
+      if (pin.user_id === currentUserId) {
+        var newUser = {
+          id: pin.id,
+          user_id: currentUserId,
+          title: title,
+          description: description,
+          link: link
+        };
+        this.props.updatePin(newUser).then(function (pin) {
+          return _this3.props.saveToBoard({
+            board_id: parseInt(chosenBoardId),
+            pin_id: pin.pin.id
+          });
+        });
+      } else {
+        this.props.saveToBoard({
+          board_id: parseInt(chosenBoardId),
+          pin_id: pin.id
+        });
+      }
+
+      this.props.closeEditForm();
     }
   }, {
     key: "handleDelete",
     value: function handleDelete(e) {
-      var _this4 = this;
-
       e.preventDefault();
-      var _this$props = this.props,
-          pin = _this$props.pin,
-          currentUserId = _this$props.currentUserId,
-          deletePin = _this$props.deletePin; // delete from board
+      var _this$props2 = this.props,
+          pin = _this$props2.pin,
+          currentUserId = _this$props2.currentUserId,
+          deletePin = _this$props2.deletePin,
+          closeEditForm = _this$props2.closeEditForm;
 
       if (currentUserId === pin.userId) {
-        deletePin(pin.id).then(function () {
-          return _this4.props.closeEditForm();
-        }).then(function () {
-          return _this4.props.history.push("/users/".concat(currentUserId, "/pins"));
-        });
+        closeEditForm();
+        deletePin(pin.id);
+        this.props.history.push("/users/".concat(currentUserId, "/pins"));
       }
-    }
+    } // displayConfirmation() {
+    //     const { currentUserId, pin} = this.props;
+    //     if (this.state.confirm) {
+    //         return (
+    //             <div className="modal-background">
+    //                 <div className="modal-child" onClick={e => e.stopPropagation()}>
+    //                     <div className="pin-confirmation-box">
+    //                         <div className="confirm-image"></div>
+    //                         <h1>Success</h1>
+    //                         <p><NavLink to={`/users/${currentUserId}/pins/${pin.id}`}>Continue</NavLink></p>
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //         )
+    //     }
+    // }
+
   }, {
     key: "editDetails",
     value: function editDetails() {
       if (this.props.currentUserId !== this.props.pin.userId) return null;
-      var _this$state = this.state,
-          title = _this$state.title,
-          description = _this$state.description,
-          link = _this$state.link;
+      var _this$state2 = this.state,
+          title = _this$state2.title,
+          description = _this$state2.description,
+          link = _this$state2.link;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "edit-details"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Title"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -965,8 +1739,31 @@ var EditPinForm = /*#__PURE__*/function (_React$Component) {
       })));
     }
   }, {
+    key: "boardNames",
+    value: function boardNames() {
+      var boards = this.props.boards;
+      if (!boards) return null;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        id: "board-names",
+        className: "board-names",
+        onChange: this.update("chosenBoardId")
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: ""
+      }, "--Select board--"), boards.map(function (board, idx) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+          key: idx,
+          value: board.id
+        }, board.name);
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "drop-down-arrow"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-chevron-down"
+      })));
+    }
+  }, {
     key: "render",
     value: function render() {
+      if (!this.props.pin) return null;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "modal-background",
         onClick: this.props.closeEditForm
@@ -983,23 +1780,7 @@ var EditPinForm = /*#__PURE__*/function (_React$Component) {
         className: "content"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "board-selection"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Board"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: ""
-      }, "--Select Board--"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "USA"
-      }, "USA"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "Canada"
-      }, "Canada"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "China"
-      }, "China"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "Mexico"
-      }, "Mexico"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "Japan"
-      }, "Japan")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "drop-down-arrow"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-chevron-down"
-      })))), this.editDetails()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Board"), this.boardNames())), this.editDetails()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "image"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "profile-pic"
@@ -1082,7 +1863,7 @@ var PinIndex = /*#__PURE__*/function (_React$Component) {
   _createClass(PinIndex, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.fetchPins();
+      this.props.getInfo();
     }
   }, {
     key: "addCreatePin",
@@ -1103,7 +1884,7 @@ var PinIndex = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      if (!this.props.pins) return null;
+      if (this.props.pins.length === 0) return null;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "all-pins-box"
       }, this.addCreatePin(), this.props.pins.map(function (pin, idx) {
@@ -1143,17 +1924,15 @@ __webpack_require__.r(__webpack_exports__);
 var mapStateToProps = function mapStateToProps(_ref, _ref2) {
   var entities = _ref.entities,
       session = _ref.session;
-  var match = _ref2.match;
+  var params = _ref2.match.params;
   var pins;
   var createOption = false;
 
-  if (match.params.boardId) {
-    var _match$params = match.params,
-        userId = _match$params.userId,
-        boardId = _match$params.boardId;
-    pins = selectBoardPins(entities.pins, userId, boardId);
-  } else if (match.params.userId) {
-    pins = Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["selectUserPins"])(entities.pins, session.currentUserId);
+  if (params.boardId) {
+    pins = entities.boards[params.boardId].pins;
+  } else if (params.userId) {
+    pins = Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["selectUserPins"])(entities.pins, session.currentUserId); //other users
+
     createOption = true;
   } else {
     pins = Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["selectSuggestedPins"])(entities.pins, session.currentUserId);
@@ -1167,7 +1946,7 @@ var mapStateToProps = function mapStateToProps(_ref, _ref2) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    fetchPins: function fetchPins() {
+    getInfo: function getInfo() {
       return dispatch(Object(_actions_pin_actions__WEBPACK_IMPORTED_MODULE_1__["fetchPins"])());
     }
   };
@@ -1243,8 +2022,12 @@ var PinIndexItem = /*#__PURE__*/function (_React$Component) {
         className: "pin-box",
         onClick: this.showPinDetails
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "pin-box-details"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "hover-details"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "This is a pin lol"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, pin.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, pin.description), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, pin.link));
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "This is a pin lol"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, pin.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, pin.description), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, pin.link)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "pin-space"
+      }));
     }
   }]);
 
@@ -1267,7 +2050,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _pin_edit_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pin_edit_form */ "./frontend/components/pins/pin_edit_form.jsx");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _pin_index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./pin_index */ "./frontend/components/pins/pin_index.jsx");
+/* harmony import */ var _reducers_selectors__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../reducers/selectors */ "./frontend/reducers/selectors.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1292,6 +2080,9 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
+
+
 var PinShow = /*#__PURE__*/function (_React$Component) {
   _inherits(PinShow, _React$Component);
 
@@ -1304,17 +2095,33 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      edit: false
+      edit: false,
+      chosenBoard: ''
     };
     _this.openEditForm = _this.openEditForm.bind(_assertThisInitialized(_this));
     _this.closeEditForm = _this.closeEditForm.bind(_assertThisInitialized(_this));
+    _this.goBack = _this.goBack.bind(_assertThisInitialized(_this));
+    _this.getSuggested = _this.getSuggested.bind(_assertThisInitialized(_this));
+    _this.update = _this.update.bind(_assertThisInitialized(_this));
+    _this.handleSaveToBoard = _this.handleSaveToBoard.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(PinShow, [{
+    key: "goBack",
+    value: function goBack(e) {
+      e.stopPropagation();
+      this.props.history.goBack();
+    }
+  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.fetchPin(this.props.match.params.pinId);
+      var _this$props = this.props,
+          fetchPins = _this$props.fetchPins,
+          fetchBoards = _this$props.fetchBoards,
+          currentUserId = _this$props.currentUserId;
+      fetchPins();
+      fetchBoards(currentUserId);
     }
   }, {
     key: "openEditForm",
@@ -1332,33 +2139,95 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "getSuggested",
+    value: function getSuggested() {
+      var _this$props2 = this.props,
+          pins = _this$props2.pins,
+          currentUserId = _this$props2.currentUserId,
+          chosenPinId = _this$props2.chosenPinId;
+      var suggested = Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_4__["selectSuggestedPins"])(pins, currentUserId);
+      delete suggested[chosenPinId + 1];
+      return suggested;
+    }
+  }, {
     key: "renderEditForm",
     value: function renderEditForm() {
       if (this.state.edit) {
-        var _this$props = this.props,
-            pin = _this$props.pin,
-            errors = _this$props.errors,
-            currentUserId = _this$props.currentUserId,
-            updatePin = _this$props.updatePin,
-            deletePin = _this$props.deletePin;
+        var _this$props3 = this.props,
+            pins = _this$props3.pins,
+            boards = _this$props3.boards,
+            chosenPinId = _this$props3.chosenPinId,
+            errors = _this$props3.errors,
+            currentUserId = _this$props3.currentUserId,
+            updatePin = _this$props3.updatePin,
+            deletePin = _this$props3.deletePin,
+            saveToBoard = _this$props3.saveToBoard;
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_pin_edit_form__WEBPACK_IMPORTED_MODULE_1__["default"], {
-          pin: pin,
+          pin: pins[chosenPinId],
+          boards: boards,
           errors: errors,
           currentUserId: currentUserId,
           updatePin: updatePin,
           deletePin: deletePin,
+          saveToBoard: saveToBoard,
           closeEditForm: this.closeEditForm
         });
       }
     }
   }, {
+    key: "boardNames",
+    value: function boardNames() {
+      var boards = this.props.boards;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "board-name-list",
+        onChange: this.update("chosenBoard")
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: ""
+      }, "--Select board--"), boards.map(function (board, idx) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+          key: idx,
+          value: board.id
+        }, board.name);
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.handleSaveToBoard
+      }, "Save"));
+    }
+  }, {
+    key: "update",
+    value: function update(field) {
+      var _this2 = this;
+
+      return function (e) {
+        _this2.setState(_defineProperty({}, field, e.target.value));
+      };
+    }
+  }, {
+    key: "handleSaveToBoard",
+    value: function handleSaveToBoard(e) {
+      e.preventDefault();
+      var boardPin = {
+        board_id: parseInt(this.state.chosenBoard),
+        pin_id: parseInt(this.props.chosenPinId)
+      };
+      this.props.saveToBoard(boardPin);
+    }
+  }, {
     key: "render",
     value: function render() {
-      var pin = this.props.pin;
-      if (!pin) return null;
+      window.scrollTo(0, 0);
+      var _this$props4 = this.props,
+          pins = _this$props4.pins,
+          chosenPinId = _this$props4.chosenPinId,
+          fetchPins = _this$props4.fetchPins;
+      if (!Object.values(pins).length) return null;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-show-page"
       }, this.renderEditForm(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "back-button",
+        onClick: this.goBack
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-arrow-left"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-show-box"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-image"
@@ -1375,16 +2244,19 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
         className: "fas fa-pencil-alt"
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "save-to-board"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, pin.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, pin.description), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, pin.link))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.boardNames())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, pins[chosenPinId].link), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, pins[chosenPinId].title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, pins[chosenPinId].description))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "related-pins"
-      }));
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "More like this"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_pin_index__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        pins: this.getSuggested(),
+        getInfo: fetchPins
+      })));
     }
   }]);
 
   return PinShow;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-/* harmony default export */ __webpack_exports__["default"] = (PinShow);
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["withRouter"])(PinShow));
 
 /***/ }),
 
@@ -1400,40 +2272,51 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _pin_show__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pin_show */ "./frontend/components/pins/pin_show.jsx");
 /* harmony import */ var _actions_pin_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/pin_actions */ "./frontend/actions/pin_actions.js");
-/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
+/* harmony import */ var _actions_board_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/board_actions */ "./frontend/actions/board_actions.js");
+/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
+
 
 
 
 
 
 var mapStateToProps = function mapStateToProps(_ref, _ref2) {
-  var pins = _ref.entities.pins,
+  var _ref$entities = _ref.entities,
+      pins = _ref$entities.pins,
+      boards = _ref$entities.boards,
       currentUserId = _ref.session.currentUserId,
       errors = _ref.errors;
   var params = _ref2.match.params;
   return {
-    pin: pins[params.pinId],
+    pins: pins,
+    //: Object.values(pins),
+    chosenPinId: params.pinId,
     errors: errors,
-    currentUserId: currentUserId //board names
-
+    currentUserId: currentUserId,
+    boards: Object.values(boards)
   };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    fetchPin: function fetchPin(pinId) {
-      return dispatch(Object(_actions_pin_actions__WEBPACK_IMPORTED_MODULE_2__["fetchPin"])(pinId));
+    fetchPins: function fetchPins() {
+      return dispatch(Object(_actions_pin_actions__WEBPACK_IMPORTED_MODULE_2__["fetchPins"])());
+    },
+    fetchBoards: function fetchBoards(userId) {
+      return dispatch(Object(_actions_board_actions__WEBPACK_IMPORTED_MODULE_3__["fetchBoards"])(userId));
     },
     clearErrors: function clearErrors() {
-      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_3__["clearErrors"])());
+      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_4__["clearErrors"])());
     },
     updatePin: function updatePin(pin) {
       return dispatch(Object(_actions_pin_actions__WEBPACK_IMPORTED_MODULE_2__["updatePin"])(pin));
     },
     deletePin: function deletePin(pinId) {
       return dispatch(Object(_actions_pin_actions__WEBPACK_IMPORTED_MODULE_2__["deletePin"])(pinId));
-    } //edit board
-
+    },
+    saveToBoard: function saveToBoard(boardPin) {
+      return dispatch(Object(_actions_pin_actions__WEBPACK_IMPORTED_MODULE_2__["saveToBoard"])(boardPin));
+    }
   };
 };
 
@@ -2669,6 +3552,8 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _boards_board_create_form__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../boards/board_create_form */ "./frontend/components/boards/board_create_form.jsx");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2693,38 +3578,105 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
+
 var UserProfile = /*#__PURE__*/function (_React$Component) {
   _inherits(UserProfile, _React$Component);
 
   var _super = _createSuper(UserProfile);
 
   function UserProfile(props) {
+    var _this;
+
     _classCallCheck(this, UserProfile);
 
-    return _super.call(this, props);
+    _this = _super.call(this, props);
+    _this.state = {
+      boardForm: false
+    };
+    _this.openBoardForm = _this.openBoardForm.bind(_assertThisInitialized(_this));
+    _this.closeBoardForm = _this.closeBoardForm.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(UserProfile, [{
+    key: "showMenu",
+    value: function showMenu() {
+      document.getElementById("create-options").classList.toggle("show-menu");
+    }
+  }, {
+    key: "openBoardForm",
+    value: function openBoardForm() {
+      this.setState({
+        boardForm: true
+      });
+    }
+  }, {
+    key: "showBoardForm",
+    value: function showBoardForm() {
+      if (this.state.boardForm) {
+        var _this$props = this.props,
+            createBoard = _this$props.createBoard,
+            clearErrors = _this$props.clearErrors,
+            user = _this$props.user;
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_boards_board_create_form__WEBPACK_IMPORTED_MODULE_2__["default"], {
+          createBoard: createBoard,
+          clearErrors: clearErrors,
+          closeBoardForm: this.closeBoardForm,
+          currentUserId: user.id
+        });
+      }
+    }
+  }, {
+    key: "closeBoardForm",
+    value: function closeBoardForm() {
+      this.setState({
+        boardForm: false
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       var user = this.props.user;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "user-profile-box"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.showBoardForm(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "header"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "top-buttons"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Create stuff"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Edit profile")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "icon ",
+        onClick: this.showMenu
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "dropdown fas fa-plus"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        id: "create-options",
+        className: "drop-down-menu"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        onClick: this.openBoardForm
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Create Board")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        to: "/pin-builder"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Create Pin"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "icon"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-pencil-alt"
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "user-details"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "info"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, user.username), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Followers")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, user.username), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "47 followers \u2022 5 following")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "image"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "profile-pic"
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "user-selection"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Boards"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Pins"))));
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["NavLink"], {
+        className: "button",
+        to: "/users/".concat(user.id, "/boards")
+      }, "Boards"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["NavLink"], {
+        className: "button",
+        to: "/users/".concat(user.id, "/pins")
+      }, "Pins"))));
     }
   }]);
 
@@ -2746,19 +3698,32 @@ var UserProfile = /*#__PURE__*/function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _user_profile__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./user_profile */ "./frontend/components/user/user_profile.jsx");
+/* harmony import */ var _actions_board_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/board_actions */ "./frontend/actions/board_actions.js");
+/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
+
+
 
 
 
 var mapStateToProps = function mapStateToProps(_ref, _ref2) {
-  var users = _ref.entities.users;
+  var users = _ref.entities.users,
+      errors = _ref.errors;
   var match = _ref2.match;
   return {
-    user: users[match.params.userId]
+    user: users[match.params.userId],
+    errors: errors.boards
   };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {};
+  return {
+    createBoard: function createBoard(board) {
+      return dispatch(Object(_actions_board_actions__WEBPACK_IMPORTED_MODULE_2__["createBoard"])(board));
+    },
+    clearErrors: function clearErrors() {
+      return dispatch(_actions_session_actions__WEBPACK_IMPORTED_MODULE_3__["clearErrors"]);
+    }
+  };
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_user_profile__WEBPACK_IMPORTED_MODULE_1__["default"]));
@@ -2787,6 +3752,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
  //begin testing
 // import {fetchBoards, fetchBoard, createBoard, updateBoard, deleteBoard} from './actions/board_actions'
+// import {fetchBoard, fetchBoards} from './util/board_api_util';
 //end tetsting
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -2807,15 +3773,15 @@ document.addEventListener("DOMContentLoaded", function () {
   } else {
     store = Object(_store_store__WEBPACK_IMPORTED_MODULE_2__["default"])();
   } //begin testing 
-
-
-  window.getState = store.getState;
-  window.dispatch = store.dispatch; // window.fetchBoards = fetchBoards;
+  // window.getState = store.getState;
+  // window.dispatch = store.dispatch;
+  // window.fetchBoards = fetchBoards;
   // window.fetchBoard = fetchBoard;
   // window.createBoard = createBoard;
   // window.updateBoard = updateBoard;
   // window.deleteBoard = deleteBoard;
   //end testing
+
 
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_root__WEBPACK_IMPORTED_MODULE_3__["default"], {
     store: store
@@ -2834,6 +3800,8 @@ document.addEventListener("DOMContentLoaded", function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_board_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/board_actions */ "./frontend/actions/board_actions.js");
+/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/session_actions */ "./frontend/actions/session_actions.js");
+
 
 
 var boardsErrorsReducer = function boardsErrorsReducer() {
@@ -2844,6 +3812,9 @@ var boardsErrorsReducer = function boardsErrorsReducer() {
   switch (action.type) {
     case _actions_board_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_BOARD_ERRORS"]:
       return action.errors;
+
+    case _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["CLEAR_ERRORS"]:
+      return [];
 
     default:
       return state;
@@ -3054,13 +4025,12 @@ var rootReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])(
 /*!****************************************!*\
   !*** ./frontend/reducers/selectors.js ***!
   \****************************************/
-/*! exports provided: selectUserPins, selectBoardPins, selectSuggestedPins */
+/*! exports provided: selectUserPins, selectSuggestedPins */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "selectUserPins", function() { return selectUserPins; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "selectBoardPins", function() { return selectBoardPins; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "selectSuggestedPins", function() { return selectSuggestedPins; });
 var selectUserPins = function selectUserPins(pins, userId) {
   var userPins = [];
@@ -3068,9 +4038,6 @@ var selectUserPins = function selectUserPins(pins, userId) {
     if (pin.userId === userId) userPins.push(pin);
   });
   return userPins;
-};
-var selectBoardPins = function selectBoardPins(pins, userId, boardId) {
-  var boardPins = [];
 };
 var selectSuggestedPins = function selectSuggestedPins(pins, userId) {
   var suggestedPins = [];
@@ -3308,7 +4275,7 @@ var deleteBoard = function deleteBoard(userId, boardId) {
 /*!***************************************!*\
   !*** ./frontend/util/pin_api_util.js ***!
   \***************************************/
-/*! exports provided: fetchPins, fetchPin, createPin, updatePin, deletePin */
+/*! exports provided: fetchPins, fetchPin, createPin, updatePin, deletePin, saveToBoard */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3318,6 +4285,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createPin", function() { return createPin; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updatePin", function() { return updatePin; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deletePin", function() { return deletePin; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveToBoard", function() { return saveToBoard; });
 var fetchPins = function fetchPins() {
   return $.ajax({
     url: "/api/pins",
@@ -3352,6 +4320,15 @@ var deletePin = function deletePin(pinId) {
   return $.ajax({
     url: "/api/pins/".concat(pinId),
     method: "DELETE"
+  });
+};
+var saveToBoard = function saveToBoard(board_pin) {
+  return $.ajax({
+    url: "/api/board_pins",
+    method: "POST",
+    data: {
+      board_pin: board_pin
+    }
   });
 };
 

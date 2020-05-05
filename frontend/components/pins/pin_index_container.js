@@ -3,14 +3,13 @@ import { fetchPins } from '../../actions/pin_actions';
 import PinIndex from './pin_index';
 import { selectUserPins, selectSuggestedPins } from '../../reducers/selectors';
 
-const mapStateToProps = ({entities, session}, {match}) => {
+const mapStateToProps = ({entities, session}, {match: {params}}) => {
     let pins;
     let createOption = false;
-    if (match.params.boardId) {
-        const {userId, boardId} = match.params;
-        pins = selectBoardPins(entities.pins, userId, boardId);
-    } else if (match.params.userId) {
-        pins = selectUserPins(entities.pins, session.currentUserId);
+    if (params.boardId) {
+        pins = entities.boards[params.boardId].pins
+    } else if (params.userId) {
+        pins = selectUserPins(entities.pins, session.currentUserId); //other users
         createOption = true;
     } else {
         pins = selectSuggestedPins(entities.pins, session.currentUserId)
@@ -19,7 +18,7 @@ const mapStateToProps = ({entities, session}, {match}) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    fetchPins: () => dispatch(fetchPins())
+    getInfo: () => dispatch(fetchPins())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PinIndex);

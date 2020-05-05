@@ -1,0 +1,18 @@
+.board-index-box{
+    padding: 40px;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.board-index-item{
+    width: 200px;
+    height: 200px;
+    margin: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    background: linear-gradient(rgb(98, 255, 229), rgb(238, 227, 255));
+}

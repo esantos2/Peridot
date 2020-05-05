@@ -10,30 +10,31 @@ class CreatePinForm extends React.Component{
             description: '',
             link: '',
             confirm: false,
-            errors: this.props.errors
+            errors: this.props.errors,
+            chosenBoardId: ''
         }
         this.update = this.update.bind(this);
         this.selectBoard = this.selectBoard.bind(this);
+        this.boardNames = this.boardNames.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentDidMount(){
-        this.props.clearErrors();
+        const {owner, fetchBoards, clearErrors} = this.props;
+        fetchBoards(owner.id);
+        clearErrors();
     }
 
     update(field){
         return e => { this.setState({[field]: e.currentTarget.value})}
     }
 
-    selectBoard(e){
-        e.preventDefault();
-    }
-
     handleSubmit(e){
         e.preventDefault();
-        const {user_id, title, description, link} = this.state;
-        let newUser = {user_id, title, description, link} ;
+        const {user_id, title, description, link, chosenBoardId} = this.state;
+        let newUser = {user_id, title, description, link};
         this.props.createPin(newUser)
+            .then( pin => this.props.saveToBoard({board_id: parseInt(chosenBoardId), pin_id: pin.pin.id}))
             .then( () => this.setState({confirm: true}))
     }
 
@@ -60,6 +61,27 @@ class CreatePinForm extends React.Component{
         }
     }
 
+    boardNames() {
+        const { boards } = this.props;
+        if (!boards) return null;
+        return (
+            <select id="board-names" className="board-names" onChange={this.update("chosenBoardId")}>
+                <option value="" defaultValue>--Select board--</option>
+                {boards.map((board, idx) => {
+                    return (
+                        <option key={idx} value={board.id}>{board.name}</option>
+                    )
+                })}
+            </select>
+        )
+    }
+
+    selectBoard(e) {
+        e.preventDefault();
+        // this.boardNames();
+        document.getElementById("board-names").classList.toggle("show-menu")
+    }
+
     render(){
         const {owner} = this.props;
         const {title, description, link} = this.state;
@@ -70,6 +92,7 @@ class CreatePinForm extends React.Component{
                     <div className="pin-top-buttons">
                         <button className="save-pin" onClick={this.handleSubmit}>Save</button>
                         <button className="select-board" onClick={this.selectBoard}>Select</button>
+                        {this.boardNames()}
                     </div>
                     <div className="pin-main-content">
                         <div className="pin-image-box">

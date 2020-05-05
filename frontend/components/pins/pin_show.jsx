@@ -1,18 +1,33 @@
 import React from 'react';
 import EditPinForm from './pin_edit_form';
+import { withRouter } from 'react-router-dom';
+import PinIndex from './pin_index';
+import { selectSuggestedPins } from '../../reducers/selectors';
 
 class PinShow extends React.Component{
     constructor(props){
         super(props)
         this.state={
-            edit: false
+            edit: false,
+            chosenBoard: ''
         }
         this.openEditForm = this.openEditForm.bind(this);
         this.closeEditForm = this.closeEditForm.bind(this);
+        this.goBack = this.goBack.bind(this);
+        this.getSuggested = this.getSuggested.bind(this);
+        this.update = this.update.bind(this);
+        this.handleSaveToBoard = this.handleSaveToBoard.bind(this);
+    }
+
+    goBack(e){
+        e.stopPropagation();
+        this.props.history.goBack();
     }
 
     componentDidMount(){
-        this.props.fetchPin(this.props.match.params.pinId);
+        const { fetchPins, fetchBoards, currentUserId} = this.props;
+        fetchPins();
+        fetchBoards(currentUserId);
     }
 
     openEditForm(e){
@@ -21,30 +36,74 @@ class PinShow extends React.Component{
     }
 
     closeEditForm(){
-        this.setState({edit: false})
+        this.setState({ edit: false });
+    }
+
+    getSuggested(){
+        const {pins, currentUserId, chosenPinId} = this.props;
+        let suggested = selectSuggestedPins(pins, currentUserId);
+        delete suggested[chosenPinId+1];
+        return suggested;
     }
 
     renderEditForm(){
         if (this.state.edit){
-            const {pin, errors, currentUserId, updatePin, deletePin} = this.props;
+            const {pins, boards, chosenPinId, errors, currentUserId, updatePin, deletePin, saveToBoard} = this.props;
             return (
                 <EditPinForm 
-                    pin={pin}
+                    pin={pins[chosenPinId]}
+                    boards={boards}
                     errors={errors}
                     currentUserId={currentUserId}
                     updatePin={updatePin}
                     deletePin={deletePin}
+                    saveToBoard={saveToBoard}
                     closeEditForm={this.closeEditForm}
                 />)
         }
     }
 
-    render(){
-        const {pin} = this.props;
-        if (!pin) return null;
+    boardNames() {
+        const { boards } = this.props;
+        return (
+            <div className="board-name-list" onChange={this.update("chosenBoard")}>
+                <select>
+                    <option value="">--Select board--</option>
+                    {boards.map((board, idx) => {
+                        return (
+                            <option key={idx} value={board.id}>{board.name}</option>
+                        )
+                    })}
+                </select>
+                <button onClick={this.handleSaveToBoard}>Save</button>
+            </div>
+        )
+    }
+
+    update(field){
+        return e => {
+            this.setState({[field]: e.target.value})}
+    }
+
+    handleSaveToBoard(e){
+        e.preventDefault();
+        let boardPin = {
+            board_id: parseInt(this.state.chosenBoard),
+            pin_id: parseInt(this.props.chosenPinId)
+        }
+        this.props.saveToBoard(boardPin);
+    }
+
+    render() {
+        window.scrollTo(0,0);
+        const { pins, chosenPinId, fetchPins} = this.props;
+        if (!Object.values(pins).length) return null;
         return (
             <div className="pin-show-page">
                 {this.renderEditForm()}
+                <div className="back-button" onClick={this.goBack}>
+                    <i className="fas fa-arrow-left"></i>
+                </div>
                 <div className="pin-show-box">
                     <div className="pin-image">
                         
@@ -57,20 +116,21 @@ class PinShow extends React.Component{
                                 </div>
                             </div>
                             <div className="save-to-board">
-
+                                {this.boardNames()}
                             </div>
                         </div>
-                        <h1>{pin.title}</h1>
-                        <h3>{pin.description}</h3>
-                        <p>{pin.link}</p>
+                        <p>{pins[chosenPinId].link}</p>
+                        <h1>{pins[chosenPinId].title}</h1>
+                        <h3>{pins[chosenPinId].description}</h3>
                     </div>
                 </div>
                 <div className="related-pins">
-
+                    <h1>More like this</h1>
+                    <PinIndex pins={this.getSuggested()} getInfo={fetchPins}/>
                 </div>
             </div>
         )
     }
 }
 
-export default PinShow;
+export default withRouter(PinShow);

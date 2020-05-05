@@ -6,11 +6,6 @@ export const selectUserPins = (pins, userId) => {
     return userPins;
 };
 
-export const selectBoardPins = (pins, userId, boardId) => {
-    let boardPins = [];
-    
-}
-
 export const selectSuggestedPins = (pins, userId) => {
     let suggestedPins = [];
     Object.values(pins).forEach( pin => {

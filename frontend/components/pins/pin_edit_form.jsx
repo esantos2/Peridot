@@ -1,10 +1,18 @@
 import React from 'react'
-import { withRouter } from 'react-router-dom';
+import { withRouter, NavLink } from 'react-router-dom';
 
 class EditPinForm extends React.Component {
     constructor(props){
         super(props)
         this.state = this.props.pin;
+        const { title, description, link } = this.props.pin
+        this.state = {
+            title,
+            description,
+            link,
+            chosenBoardId: '',
+            confirm: false
+        }
         this.update = this.update.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
@@ -16,26 +24,56 @@ class EditPinForm extends React.Component {
 
     handleSubmit(e){
         e.preventDefault();
-        this.props.updatePin(this.state)
-            .then( () => this.props.closeEditForm())
+        const { title, description, link, chosenBoardId } = this.state;
+        const { pin, currentUserId } = this.props;
+        if (pin.user_id === currentUserId){
+            let newUser = { 
+                id: pin.id,
+                user_id: currentUserId, 
+                title, 
+                description, 
+                link };
+            this.props.updatePin(newUser)
+                .then(pin => this.props.saveToBoard({ board_id: parseInt(chosenBoardId), pin_id: pin.pin.id }));
+        } else {
+            this.props.saveToBoard({ board_id: parseInt(chosenBoardId), pin_id: pin.id });
+        }
+        this.props.closeEditForm();
     }
 
     handleDelete(e){
         e.preventDefault();
-        const {pin, currentUserId, deletePin} = this.props;
-        // delete from board
+        const {pin, currentUserId, deletePin, closeEditForm} = this.props;
         if (currentUserId === pin.userId){
-            deletePin(pin.id)
-                .then( () => this.props.closeEditForm())
-                .then( () => this.props.history.push(`/users/${currentUserId}/pins`));
+            closeEditForm();
+            deletePin(pin.id);
+            this.props.history.push(`/users/${currentUserId}/pins`);
         }
     }
 
+    // displayConfirmation() {
+    //     const { currentUserId, pin} = this.props;
+    //     if (this.state.confirm) {
+    //         return (
+    //             <div className="modal-background">
+    //                 <div className="modal-child" onClick={e => e.stopPropagation()}>
+    //                     <div className="pin-confirmation-box">
+    //                         <div className="confirm-image"></div>
+    //                         <h1>Success</h1>
+    //                         <p><NavLink to={`/users/${currentUserId}/pins/${pin.id}`}>Continue</NavLink></p>
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //         )
+    //     }
+    // }
+
     editDetails(){
         if (this.props.currentUserId !== this.props.pin.userId) return null;
-        const {title, description, link} = this.state
+        const {title, description, link} = this.state;
         return (
             <div className="edit-details">
+                {/* {this.displayConfirmation()} */}
                 <div>
                     <p>Title</p>
                     <input type="text" value={title} onChange={this.update("title")}/>
@@ -52,7 +90,28 @@ class EditPinForm extends React.Component {
         )
     }
 
+    boardNames() {
+        const { boards } = this.props;
+        if (!boards) return null;
+        return (
+            <div>
+                <select id="board-names" className="board-names" onChange={this.update("chosenBoardId")}>
+                    <option value="">--Select board--</option>
+                    {boards.map((board, idx) => {
+                        return (
+                            <option key={idx} value={board.id}>{board.name}</option>
+                        )
+                    })}
+                </select>
+                <div className="drop-down-arrow">
+                    <i className="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        )
+    }
+
     render() {
+        if (!this.props.pin) return null;
         return (
             <div className="modal-background" onClick={this.props.closeEditForm}>
                 <div className="modal-child-round-box" onClick={e => e.stopPropagation()}>
@@ -63,17 +122,7 @@ class EditPinForm extends React.Component {
                                 <div className="board-selection">
                                     <div>
                                         <p>Board</p>
-                                        <select >
-                                            <option value="">--Select Board--</option>
-                                            <option value="USA">USA</option>
-                                            <option value="Canada">Canada</option>
-                                            <option value="China">China</option>
-                                            <option value="Mexico">Mexico</option>
-                                            <option value="Japan">Japan</option>
-                                        </select>
-                                        <div className="drop-down-arrow">
-                                            <i className="fas fa-chevron-down"></i>
-                                        </div>
+                                        {this.boardNames()}
                                     </div>
                                 </div>
                                 {this.editDetails()}

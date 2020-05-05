@@ -1,21 +1,24 @@
 import {connect} from 'react-redux';
 import PinShow from './pin_show';
-import { fetchPin, updatePin, deletePin } from '../../actions/pin_actions';
+import { updatePin, fetchPins, deletePin, saveToBoard } from '../../actions/pin_actions';
+import { fetchBoards } from '../../actions/board_actions';
 import { clearErrors } from '../../actions/session_actions';
 
-const mapStateToProps = ({ entities: { pins }, session: { currentUserId }, errors }, { match: { params } }) => ({
-    pin: pins[params.pinId],
+const mapStateToProps = ({ entities: { pins, boards }, session: { currentUserId }, errors }, { match: { params } }) => ({
+    pins,//: Object.values(pins),
+    chosenPinId: params.pinId,
     errors,
-    currentUserId
-    //board names
+    currentUserId,
+    boards: Object.values(boards)
 })
 
 const mapDispatchToProps = dispatch => ({
-    fetchPin: pinId => dispatch(fetchPin(pinId)),
+    fetchPins: () => dispatch(fetchPins()),
+    fetchBoards: (userId) => dispatch(fetchBoards(userId)),
     clearErrors: () => dispatch(clearErrors()),
     updatePin: pin => dispatch(updatePin(pin)),
-    deletePin: pinId => dispatch(deletePin(pinId))
-    //edit board
+    deletePin: pinId => dispatch(deletePin(pinId)),
+    saveToBoard: (boardPin) => dispatch(saveToBoard(boardPin))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(PinShow);

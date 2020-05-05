@@ -3,7 +3,7 @@
     flex-wrap: wrap;
     justify-content: flex-start;
     box-sizing: border-box;
-    margin-top: 80px;
+    /* margin-top: 80px; */
     padding: 20px;
     width: 100%;
     height: 100%;
@@ -11,22 +11,31 @@
 }
 
 .pin-box{
+    width: 236px;
+    /* padding: 0px 8px;
+    padding-bottom: 16px; */
+    height: auto;
+    padding: 8px;
+    padding-bottom: 16px;
+}
+
+.pin-box-details{
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    margin-left: 10px;
-    margin-right: 10px;
-    margin-bottom: 20px;
-    background-color: rgb(183, 236, 207);
-    height: auto;
-    width: auto;
+    background: linear-gradient(rgb(176, 255, 209), rgb(155, 255, 217));
     border-radius: 20px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
-.pin-box:hover{
-    background-color: rgb(106, 243, 168);
+.pin-space{
+    padding: 8px 6px;
+    padding-bottom: 16px;
+}
+
+.pin-box-details:hover{
+    background: linear-gradient(rgb(255, 255, 113), rgb(255, 246, 194));
 }
 
 .pin-show-page{
@@ -35,8 +44,26 @@
     justify-content: flex-start;
     align-items: center;
     padding: 20px;
-    padding-top: 80px;
     box-sizing: border-box;
+}
+
+.back-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    font-size: 20px;
+    width: 48px;
+    height: 48px;
+    top: 120px;
+    left: 40px;
+}
+
+.back-button:hover{
+    cursor: pointer;
+    width: 48px;
+    background-color: rgba(0, 0, 0, 0.07);
+    border-radius: 50%;
 }
 
 .pin-show-box{
@@ -70,14 +97,13 @@
     width: 252px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: bolder;
-    padding-left: 8px;
-    padding-right: 8px;
     padding-bottom: 16px;
 }
 
 .create-pin-button:hover{
     cursor: pointer;
-    background: rgba(61, 61, 61, 0.2);
+    border-radius: 10px;
+    background: rgba(105, 105, 105, 0.2);
 }
 
 .create-pin-button .image{
@@ -91,7 +117,8 @@
     height: 236px;
     width: 236px;
     border-radius: 10px;
-    background-color: rgb(233, 233, 233);
+    margin: 8px;
+    background-color: rgb(240, 240, 240);
 }
 
 .create-pin-button .title{
@@ -99,4 +126,15 @@
     text-align: left;
     padding: 8px;
     color: gray;
+}
+
+.related-pins > h1{
+    width: 100%;
+    text-align: center;
+    font-size: 21px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0px;
+    margin-top: 40px;
+    padding: 0px 32px;
+    box-sizing: border-box;
 }
