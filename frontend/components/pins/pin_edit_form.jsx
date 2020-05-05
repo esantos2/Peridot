@@ -94,14 +94,19 @@ class EditPinForm extends React.Component {
         const { boards } = this.props;
         if (!boards) return null;
         return (
-            <select id="board-names" className="board-names" onChange={this.update("chosenBoardId")}>
-                <option value="">--Select board--</option>
-                {boards.map((board, idx) => {
-                    return (
-                        <option key={idx} value={board.id}>{board.name}</option>
-                    )
-                })}
-            </select>
+            <div>
+                <select id="board-names" className="board-names" onChange={this.update("chosenBoardId")}>
+                    <option value="">--Select board--</option>
+                    {boards.map((board, idx) => {
+                        return (
+                            <option key={idx} value={board.id}>{board.name}</option>
+                        )
+                    })}
+                </select>
+                <div className="drop-down-arrow">
+                    <i className="fas fa-chevron-down"></i>
+                </div>
+            </div>
         )
     }
 
@@ -118,9 +123,6 @@ class EditPinForm extends React.Component {
                                     <div>
                                         <p>Board</p>
                                         {this.boardNames()}
-                                        <div className="drop-down-arrow">
-                                            <i className="fas fa-chevron-down"></i>
-                                        </div>
                                     </div>
                                 </div>
                                 {this.editDetails()}

@@ -1,5 +1,5 @@
 .pin-modal{
-    margin-top: 120px;
+    margin-top: 40px;
     display: flex;
     justify-content: center;
     box-sizing: border-box;
@@ -148,6 +148,7 @@
 }
 
 .edit-details, .board-selection{
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -200,7 +201,8 @@
 
 .drop-down-arrow{
     position: absolute;
-    right: 40%;
+    right: 57px;
+    bottom: 48px;
     display: flex;
     justify-content: center;
     align-self: center;

@@ -97,7 +97,7 @@ class PinShow extends React.Component{
     render() {
         window.scrollTo(0,0);
         const { pins, chosenPinId, fetchPins} = this.props;
-        if (pins.length === 0) return null;
+        if (!Object.values(pins).length) return null;
         return (
             <div className="pin-show-page">
                 {this.renderEditForm()}
@@ -119,12 +119,13 @@ class PinShow extends React.Component{
                                 {this.boardNames()}
                             </div>
                         </div>
+                        <p>{pins[chosenPinId].link}</p>
                         <h1>{pins[chosenPinId].title}</h1>
                         <h3>{pins[chosenPinId].description}</h3>
-                        <p>{pins[chosenPinId].link}</p>
                     </div>
                 </div>
                 <div className="related-pins">
+                    <h1>More like this</h1>
                     <PinIndex pins={this.getSuggested()} getInfo={fetchPins}/>
                 </div>
             </div>

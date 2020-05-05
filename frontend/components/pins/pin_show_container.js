@@ -5,7 +5,7 @@ import { fetchBoards } from '../../actions/board_actions';
 import { clearErrors } from '../../actions/session_actions';
 
 const mapStateToProps = ({ entities: { pins, boards }, session: { currentUserId }, errors }, { match: { params } }) => ({
-    pins,
+    pins,//: Object.values(pins),
     chosenPinId: params.pinId,
     errors,
     currentUserId,
