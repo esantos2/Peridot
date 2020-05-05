@@ -594,7 +594,7 @@ var CreateBoardForm = /*#__PURE__*/function (_React$Component) {
       };
       closeBoardForm();
       createBoard(newBoard).then(function (board) {
-        return _this3.props.history.push("/users/".concat(currentUserId, "/boards/").concat(board.id));
+        _this3.props.history.push("/users/".concat(currentUserId, "/boards/").concat(board.board.id));
       });
     }
   }, {
