@@ -16,6 +16,7 @@ export const selectSuggestedPins = (pins, userId) => {
 };
 
 export const selectBoardPins = (boardPins, pins, boardId) => {
+    if (Object.values(boardPins).length === 0) return [];
     let pinIds = [];
     let pinsOnBoard = [];
     Object.values(boardPins).forEach( bp => {

@@ -1120,8 +1120,8 @@ var BoardShow = /*#__PURE__*/function (_React$Component) {
           fetchBoard = _this$props.fetchBoard,
           fetchBoardPins = _this$props.fetchBoardPins;
       fetchPins();
-      fetchBoard();
       fetchBoardPins();
+      fetchBoard();
     }
   }, {
     key: "render",
@@ -1130,7 +1130,7 @@ var BoardShow = /*#__PURE__*/function (_React$Component) {
           board = _this$props2.board,
           pins = _this$props2.pins,
           fetchBoard = _this$props2.fetchBoard;
-      if (!board) return null;
+      if (!board || !pins[0]) return null;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "board-show-box"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1966,9 +1966,10 @@ var PinIndex = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var pins = this.props.pins;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "all-pins-box"
-      }, this.addCreatePin(), !this.props.pins ? "" : this.props.pins.map(function (pin, idx) {
+      }, this.addCreatePin(), !pins ? "" : pins.map(function (pin, idx) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_pin_index_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
           key: idx,
           pin: pin
@@ -4170,6 +4171,7 @@ var selectSuggestedPins = function selectSuggestedPins(pins, userId) {
   return suggestedPins;
 };
 var selectBoardPins = function selectBoardPins(boardPins, pins, boardId) {
+  if (Object.values(boardPins).length === 0) return [];
   var pinIds = [];
   var pinsOnBoard = [];
   Object.values(boardPins).forEach(function (bp) {

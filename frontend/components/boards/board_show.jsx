@@ -9,13 +9,13 @@ class BoardShow extends React.Component{
     componentDidMount(){
         const {fetchPins, fetchBoard, fetchBoardPins} = this.props;
         fetchPins();
-        fetchBoard();
         fetchBoardPins();
+        fetchBoard();
     }
 
     render(){
         const {board, pins, fetchBoard} = this.props;
-        if (!board) return null;
+        if (!board || !pins[0]) return null;
         return (
             <div className="board-show-box">
                 <div className="board-info">
