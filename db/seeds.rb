@@ -34,6 +34,19 @@ bios = [
     "Tell me not to do something and I’ll do it twice and take pictures"
 ]
 
+demo = User.create!(
+    username: Faker::Twitter.unique.screen_name,
+    password: "password",
+    first_name: Faker::Name.first_name,
+    last_name: Faker::Name.last_name,
+    email: "demo@gmail.com",
+    bio: bios[n],
+    age: Faker::Number.between(from: 18, to: 35),
+    gender: Faker::Gender.binary_type.downcase,
+    language: Faker::Nation.language,
+    region: Faker::Nation.capital_city
+)
+
 #create users
 users = []
 15.times do |n|
@@ -130,12 +143,12 @@ pins = []
 
 #first two users have cat, animal boards
 board = Board.create!(
-    user_id: 1,
+    user_id: users[0].id,
     name: "Cats",
     description: ""
 )
 board = Board.create!(
-    user_id: 2,
+    user_id: users[1].id,
     name: "Cats",
     description: ""
 )
@@ -169,12 +182,12 @@ end
 
 
 board = Board.create!(
-    user_id: 1,
+    user_id: users[0].id,
     name: "Animals",
     description: ""
 )
 board = Board.create!(
-    user_id: 2,
+    user_id: users[1].id,
     name: "Animals",
     description: ""
 )
