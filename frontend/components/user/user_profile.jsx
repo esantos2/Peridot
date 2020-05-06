@@ -1,5 +1,5 @@
 import React from 'react';
-import {NavLink, Link} from 'react-router-dom';
+import {NavLink, Link, withRouter} from 'react-router-dom';
 import CreateBoardForm from '../boards/board_create_form';
 
 class UserProfile extends React.Component{
@@ -10,6 +10,11 @@ class UserProfile extends React.Component{
         }
         this.openBoardForm = this.openBoardForm.bind(this);
         this.closeBoardForm = this.closeBoardForm.bind(this);
+    }
+
+    componentDidMount(){
+        const {fetchUser, match} = this.props;
+        fetchUser(match.params.userId);
     }
 
     showMenu(){
@@ -36,28 +41,38 @@ class UserProfile extends React.Component{
         this.setState({boardForm: false});
     }
 
+    currentUserOnly(){
+        const {user, currentUserId} = this.props;
+        if (user.id === currentUserId){
+            return (
+                <div className="top-buttons">
+                    <div className="icon " onClick={this.showMenu}>
+                        <i className="dropdown fas fa-plus"></i>
+                    </div>
+                    <ul id="create-options" className="drop-down-menu">
+                        <a onClick={this.openBoardForm}><li>Create Board</li></a>
+                        <Link to="/pin-builder"><li>Create Pin</li></Link>
+                    </ul>
+                    <div className="icon">
+                        <i className="fas fa-pencil-alt"></i>
+                    </div>
+                </div>
+            )
+        }
+    }
+
     render(){
         const {user} = this.props;
+        if (!user) return null;
         return (
             <div className="user-profile-box">
                 {this.showBoardForm()}
                 <div className="header">
-                    <div className="top-buttons">
-                        <div className="icon " onClick={this.showMenu}>
-                            <i className="dropdown fas fa-plus"></i>
-                        </div>
-                        <ul id="create-options" className="drop-down-menu">
-                            <a onClick={this.openBoardForm}><li>Create Board</li></a>
-                            <Link to="/pin-builder"><li>Create Pin</li></Link>
-                        </ul>
-                        <div className="icon">
-                            <i className="fas fa-pencil-alt"></i>
-                        </div>
-                    </div>
+                    {this.currentUserOnly()}
                     <div className="user-details">
                         <div className="info">
                             <h1>{user.username}</h1>
-                            <h3>47 followers • 5 following</h3>
+                            {/* <h3>47 followers • 5 following</h3> */}
                         </div>
                         <div className="image">
                             <div className="profile-pic"></div>
@@ -73,4 +88,4 @@ class UserProfile extends React.Component{
     }
 }
 
-export default UserProfile;
+export default withRouter(UserProfile);

@@ -3,16 +3,21 @@ import PinShow from './pin_show';
 import { updatePin, fetchPins, deletePin, saveToBoard } from '../../actions/pin_actions';
 import { fetchBoards } from '../../actions/board_actions';
 import { clearErrors } from '../../actions/session_actions';
+import { fetchUsers } from '../../actions/user_actions'
 
-const mapStateToProps = ({ entities: { pins, boards }, session: { currentUserId }, errors }, { match: { params } }) => ({
-    pins,//: Object.values(pins),
-    chosenPinId: params.pinId,
-    errors,
-    currentUserId,
-    boards: Object.values(boards)
-})
+const mapStateToProps = ({ entities: { users, pins, boards }, session: { currentUserId }, errors }, { match: { params } }) => {
+    return {
+        pins,
+        chosenPinId: parseInt(params.pinId),
+        users,
+        errors,
+        currentUserId,
+        boards: Object.values(boards)
+    }
+}
 
 const mapDispatchToProps = dispatch => ({
+    fetchUsers: () => dispatch(fetchUsers()),
     fetchPins: () => dispatch(fetchPins()),
     fetchBoards: (userId) => dispatch(fetchBoards(userId)),
     clearErrors: () => dispatch(clearErrors()),

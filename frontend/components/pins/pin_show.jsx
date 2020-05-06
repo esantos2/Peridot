@@ -1,6 +1,6 @@
 import React from 'react';
 import EditPinForm from './pin_edit_form';
-import { withRouter } from 'react-router-dom';
+import { withRouter, NavLink } from 'react-router-dom';
 import PinIndex from './pin_index';
 import { selectSuggestedPins } from '../../reducers/selectors';
 
@@ -25,8 +25,9 @@ class PinShow extends React.Component{
     }
 
     componentDidMount(){
-        const { fetchPins, fetchBoards, currentUserId} = this.props;
+        const { fetchPins, fetchUsers, fetchBoards, currentUserId} = this.props;
         fetchPins();
+        fetchUsers();
         fetchBoards(currentUserId);
     }
 
@@ -94,10 +95,23 @@ class PinShow extends React.Component{
         this.props.saveToBoard(boardPin);
     }
 
+    optionToEdit(){
+        const { pins, chosenPinId, currentUserId } = this.props;
+        if (pins[chosenPinId].user_id === currentUserId){
+            return (
+                <div className="edit-pin" onClick={this.openEditForm}>
+                    <i className="fas fa-pencil-alt"></i>
+                </div>
+            )
+        }
+    }
+
     render() {
         window.scrollTo(0,0);
-        const { pins, chosenPinId, fetchPins} = this.props;
+        const { pins, chosenPinId, fetchPins, users} = this.props;
         if (!Object.values(pins).length) return null;
+        let showPin = pins[chosenPinId];
+        let owner = users[showPin.userId];
         return (
             <div className="pin-show-page">
                 {this.renderEditForm()}
@@ -106,22 +120,23 @@ class PinShow extends React.Component{
                 </div>
                 <div className="pin-show-box">
                     <div className="pin-image-show">
-                        <img className="thumbnail" src={pins[chosenPinId].photoUrl} />
+                        <img className="thumbnail" src={showPin.photoUrl} />
                     </div>
                     <div className="pin-content">
                         <div className="pin-options">
                             <div className="pin-buttons">
-                                <div className="edit-pin" onClick={this.openEditForm}>
-                                    <i className="fas fa-pencil-alt"></i>
-                                </div>
+                                {this.optionToEdit()}
                             </div>
                             <div className="save-to-board">
                                 {this.boardNames()}
                             </div>
                         </div>
-                        <a>{pins[chosenPinId].link}</a>
-                        <h1>{pins[chosenPinId].title}</h1>
-                        <p>{pins[chosenPinId].description}</p>
+                        <a>{showPin.link}</a>
+                        <h1>{showPin.title}</h1>
+                        <NavLink className="pin-owner" to={`/users/${owner.id}`}>
+                            <p>{`${owner.firstName} ${owner.lastName}`}</p>
+                        </NavLink>
+                        <p>{showPin.description}</p>
                     </div>
                 </div>
                 <div className="related-pins">

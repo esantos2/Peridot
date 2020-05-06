@@ -416,29 +416,67 @@ var createNewUser = function createNewUser(user) {
 /*!******************************************!*\
   !*** ./frontend/actions/user_actions.js ***!
   \******************************************/
-/*! exports provided: RECEIVE_USER_ERRORS, receiveUserErrors, updateDetails */
+/*! exports provided: RECEIVE_USER_ERRORS, RECEIVE_USER, RECEIVE_ALL_USERS, receiveUserErrors, receiveUser, receiveAllUsers, updateDetails, fetchUser, fetchUsers */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_USER_ERRORS", function() { return RECEIVE_USER_ERRORS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_USER", function() { return RECEIVE_USER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_ALL_USERS", function() { return RECEIVE_ALL_USERS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveUserErrors", function() { return receiveUserErrors; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveUser", function() { return receiveUser; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveAllUsers", function() { return receiveAllUsers; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateDetails", function() { return updateDetails; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchUser", function() { return fetchUser; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchUsers", function() { return fetchUsers; });
 /* harmony import */ var _util_user_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/user_api_util */ "./frontend/util/user_api_util.js");
 /* harmony import */ var _session_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./session_actions */ "./frontend/actions/session_actions.js");
 
 
 var RECEIVE_USER_ERRORS = "RECEIVE_USER_ERRORS";
+var RECEIVE_USER = "RECEIVE_USER";
+var RECEIVE_ALL_USERS = "RECEIVE_ALL_USERS";
 var receiveUserErrors = function receiveUserErrors(errors) {
   return {
     type: RECEIVE_USER_ERRORS,
     errors: errors
   };
 };
+var receiveUser = function receiveUser(user) {
+  return {
+    type: RECEIVE_USER,
+    user: user
+  };
+};
+var receiveAllUsers = function receiveAllUsers(users) {
+  return {
+    type: RECEIVE_ALL_USERS,
+    users: users
+  };
+};
 var updateDetails = function updateDetails(user) {
   return function (dispatch) {
     return _util_user_api_util__WEBPACK_IMPORTED_MODULE_0__["updateUser"](user).then(function (u) {
       return dispatch(Object(_session_actions__WEBPACK_IMPORTED_MODULE_1__["receiveCurrentUser"])(u));
+    }, function (error) {
+      return dispatch(receiveUserErrors(error.responseJSON));
+    });
+  };
+};
+var fetchUser = function fetchUser(userId) {
+  return function (dispatch) {
+    return _util_user_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchUser"](userId).then(function (user) {
+      return dispatch(receiveAllUsers(user));
+    }, function (error) {
+      return dispatch(receiveUserErrors(error.responseJSON));
+    });
+  };
+};
+var fetchUsers = function fetchUsers() {
+  return function (dispatch) {
+    return _util_user_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchUsers"]().then(function (users) {
+      return dispatch(receiveAllUsers(users));
     }, function (error) {
       return dispatch(receiveUserErrors(error.responseJSON));
     });
@@ -2204,9 +2242,11 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
     value: function componentDidMount() {
       var _this$props = this.props,
           fetchPins = _this$props.fetchPins,
+          fetchUsers = _this$props.fetchUsers,
           fetchBoards = _this$props.fetchBoards,
           currentUserId = _this$props.currentUserId;
       fetchPins();
+      fetchUsers();
       fetchBoards(currentUserId);
     }
   }, {
@@ -2298,14 +2338,34 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
       this.props.saveToBoard(boardPin);
     }
   }, {
-    key: "render",
-    value: function render() {
-      window.scrollTo(0, 0);
+    key: "optionToEdit",
+    value: function optionToEdit() {
       var _this$props4 = this.props,
           pins = _this$props4.pins,
           chosenPinId = _this$props4.chosenPinId,
-          fetchPins = _this$props4.fetchPins;
+          currentUserId = _this$props4.currentUserId;
+
+      if (pins[chosenPinId].user_id === currentUserId) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "edit-pin",
+          onClick: this.openEditForm
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-pencil-alt"
+        }));
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      window.scrollTo(0, 0);
+      var _this$props5 = this.props,
+          pins = _this$props5.pins,
+          chosenPinId = _this$props5.chosenPinId,
+          fetchPins = _this$props5.fetchPins,
+          users = _this$props5.users;
       if (!Object.values(pins).length) return null;
+      var showPin = pins[chosenPinId];
+      var owner = users[showPin.userId];
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-show-page"
       }, this.renderEditForm(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2319,21 +2379,19 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
         className: "pin-image-show"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "thumbnail",
-        src: pins[chosenPinId].photoUrl
+        src: showPin.photoUrl
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-content"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-options"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-buttons"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "edit-pin",
-        onClick: this.openEditForm
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-pencil-alt"
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.optionToEdit()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "save-to-board"
-      }, this.boardNames())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, pins[chosenPinId].link), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, pins[chosenPinId].title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, pins[chosenPinId].description))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.boardNames())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, showPin.link), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, showPin.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["NavLink"], {
+        className: "pin-owner",
+        to: "/users/".concat(owner.id)
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "".concat(owner.firstName, " ").concat(owner.lastName))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, showPin.description))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "related-pins"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "More like this"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_pin_index__WEBPACK_IMPORTED_MODULE_3__["default"], {
         pins: this.getSuggested(),
@@ -2363,6 +2421,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_pin_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/pin_actions */ "./frontend/actions/pin_actions.js");
 /* harmony import */ var _actions_board_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/board_actions */ "./frontend/actions/board_actions.js");
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
+/* harmony import */ var _actions_user_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../actions/user_actions */ "./frontend/actions/user_actions.js");
+
 
 
 
@@ -2371,6 +2431,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var mapStateToProps = function mapStateToProps(_ref, _ref2) {
   var _ref$entities = _ref.entities,
+      users = _ref$entities.users,
       pins = _ref$entities.pins,
       boards = _ref$entities.boards,
       currentUserId = _ref.session.currentUserId,
@@ -2378,8 +2439,8 @@ var mapStateToProps = function mapStateToProps(_ref, _ref2) {
   var params = _ref2.match.params;
   return {
     pins: pins,
-    //: Object.values(pins),
-    chosenPinId: params.pinId,
+    chosenPinId: parseInt(params.pinId),
+    users: users,
     errors: errors,
     currentUserId: currentUserId,
     boards: Object.values(boards)
@@ -2388,6 +2449,9 @@ var mapStateToProps = function mapStateToProps(_ref, _ref2) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
+    fetchUsers: function fetchUsers() {
+      return dispatch(Object(_actions_user_actions__WEBPACK_IMPORTED_MODULE_5__["fetchUsers"])());
+    },
     fetchPins: function fetchPins() {
       return dispatch(Object(_actions_pin_actions__WEBPACK_IMPORTED_MODULE_2__["fetchPins"])());
     },
@@ -3689,6 +3753,14 @@ var UserProfile = /*#__PURE__*/function (_React$Component) {
   }
 
   _createClass(UserProfile, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this$props = this.props,
+          fetchUser = _this$props.fetchUser,
+          match = _this$props.match;
+      fetchUser(match.params.userId);
+    }
+  }, {
     key: "showMenu",
     value: function showMenu() {
       document.getElementById("create-options").classList.toggle("show-menu");
@@ -3704,10 +3776,10 @@ var UserProfile = /*#__PURE__*/function (_React$Component) {
     key: "showBoardForm",
     value: function showBoardForm() {
       if (this.state.boardForm) {
-        var _this$props = this.props,
-            createBoard = _this$props.createBoard,
-            clearErrors = _this$props.clearErrors,
-            user = _this$props.user;
+        var _this$props2 = this.props,
+            createBoard = _this$props2.createBoard,
+            clearErrors = _this$props2.clearErrors,
+            user = _this$props2.user;
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_boards_board_create_form__WEBPACK_IMPORTED_MODULE_2__["default"], {
           createBoard: createBoard,
           clearErrors: clearErrors,
@@ -3724,36 +3796,48 @@ var UserProfile = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "currentUserOnly",
+    value: function currentUserOnly() {
+      var _this$props3 = this.props,
+          user = _this$props3.user,
+          currentUserId = _this$props3.currentUserId;
+
+      if (user.id === currentUserId) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "top-buttons"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "icon ",
+          onClick: this.showMenu
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "dropdown fas fa-plus"
+        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+          id: "create-options",
+          className: "drop-down-menu"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+          onClick: this.openBoardForm
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Create Board")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+          to: "/pin-builder"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Create Pin"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "icon"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-pencil-alt"
+        })));
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       var user = this.props.user;
+      if (!user) return null;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "user-profile-box"
       }, this.showBoardForm(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "header"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "top-buttons"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "icon ",
-        onClick: this.showMenu
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "dropdown fas fa-plus"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        id: "create-options",
-        className: "drop-down-menu"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        onClick: this.openBoardForm
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Create Board")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-        to: "/pin-builder"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Create Pin"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "icon"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-pencil-alt"
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.currentUserOnly(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "user-details"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "info"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, user.username), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "47 followers \u2022 5 following")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, user.username)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "image"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "profile-pic"
@@ -3772,7 +3856,7 @@ var UserProfile = /*#__PURE__*/function (_React$Component) {
   return UserProfile;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-/* harmony default export */ __webpack_exports__["default"] = (UserProfile);
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(UserProfile));
 
 /***/ }),
 
@@ -3789,6 +3873,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _user_profile__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./user_profile */ "./frontend/components/user/user_profile.jsx");
 /* harmony import */ var _actions_board_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/board_actions */ "./frontend/actions/board_actions.js");
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
+/* harmony import */ var _actions_user_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/user_actions */ "./frontend/actions/user_actions.js");
+
 
 
 
@@ -3796,16 +3882,21 @@ __webpack_require__.r(__webpack_exports__);
 
 var mapStateToProps = function mapStateToProps(_ref, _ref2) {
   var users = _ref.entities.users,
+      currentUserId = _ref.session.currentUserId,
       errors = _ref.errors;
   var match = _ref2.match;
   return {
     user: users[match.params.userId],
-    errors: errors.boards
+    errors: errors.boards,
+    currentUserId: currentUserId
   };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
+    fetchUser: function fetchUser(userId) {
+      return dispatch(Object(_actions_user_actions__WEBPACK_IMPORTED_MODULE_4__["receiveUser"])(userId));
+    },
     createBoard: function createBoard(board) {
       return dispatch(Object(_actions_board_actions__WEBPACK_IMPORTED_MODULE_2__["createBoard"])(board));
     },
@@ -4315,9 +4406,14 @@ var usersReducer = function usersReducer() {
 
   switch (action.type) {
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["NEW_USER"]:
-    case _actions_user_actions__WEBPACK_IMPORTED_MODULE_1__["UPDATE_USER_DETAILS"]:
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_CURRENT_USER"]:
       return Object.assign({}, state, _defineProperty({}, action.currentUser.id, action.currentUser));
+
+    case _actions_user_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_USER"]:
+      return Object.assign({}, state, action.user);
+
+    case _actions_user_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_ALL_USERS"]:
+      return Object.assign({}, state, action.users);
 
     default:
       return state;
@@ -4584,12 +4680,16 @@ var logout = function logout() {
 /*!****************************************!*\
   !*** ./frontend/util/user_api_util.js ***!
   \****************************************/
-/*! exports provided: updateUser */
+/*! exports provided: updateUser, fetchUsers, fetchUser */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateUser", function() { return updateUser; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchUsers", function() { return fetchUsers; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchUser", function() { return fetchUser; });
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
+
 var updateUser = function updateUser(user) {
   return $.ajax({
     url: "/api/users/".concat(user.id),
@@ -4597,6 +4697,18 @@ var updateUser = function updateUser(user) {
     data: {
       user: user
     }
+  });
+};
+var fetchUsers = function fetchUsers() {
+  return $.ajax({
+    url: '/api/users',
+    method: "GET"
+  });
+};
+var fetchUser = function fetchUser(userId) {
+  return $.ajax({
+    url: "/api/users".concat(userId),
+    method: "GET"
   });
 };
 
