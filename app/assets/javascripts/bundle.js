@@ -1376,10 +1376,14 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
           photoFile = _this$state.photoFile;
       var formData = new FormData();
       formData.append('pin[title]', title);
-      formData.append('pin[photo]', photoFile);
       formData.append('pin[description]', description);
       formData.append('pin[link]', link);
-      formData.append('pin[user_id]', user_id); // let newUser = {user_id, title, description, link};
+      formData.append('pin[user_id]', user_id);
+
+      if (photoFile) {
+        formData.append('pin[photo]', photoFile);
+      } // let newUser = {user_id, title, description, link};
+
 
       this.props.createPin(formData).then(function (pin) {
         return _this3.props.saveToBoard({

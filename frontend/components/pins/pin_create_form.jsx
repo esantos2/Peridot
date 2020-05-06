@@ -35,14 +35,14 @@ class CreatePinForm extends React.Component{
     handleSubmit(e){
         e.preventDefault();
         const {user_id, title, description, link, chosenBoardId, photoFile} = this.state;
-
         const formData = new FormData();
-        formData.append('pin[title]', title)
-        formData.append('pin[photo]', photoFile)
-        formData.append('pin[description]', description)
-        formData.append('pin[link]', link)
-        formData.append('pin[user_id]', user_id)
-
+        formData.append('pin[title]', title);
+        formData.append('pin[description]', description);
+        formData.append('pin[link]', link);
+        formData.append('pin[user_id]', user_id);
+        if (photoFile){
+            formData.append('pin[photo]', photoFile)
+        }
         // let newUser = {user_id, title, description, link};
         this.props.createPin(formData)
             .then( pin => this.props.saveToBoard({board_id: parseInt(chosenBoardId), pin_id: pin.pin.id}))

@@ -15,6 +15,7 @@ class Api::PinsController < ApplicationController
     end
 
     def create
+        debugger
         @pin = Pin.new(pin_params)
         @pin.user_id = current_user.id
         if @pin.save
@@ -53,6 +54,6 @@ class Api::PinsController < ApplicationController
     private
 
     def pin_params
-        params.require(:pin).permit(:title, :description, :link, :user_id)
+        params.require(:pin).permit(:title, :description, :link, :user_id, :photo)
     end
 end
