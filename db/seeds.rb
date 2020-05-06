@@ -140,14 +140,14 @@ board = Board.create!(
     description: ""
 )
 
-half = cats_file_names / 2
+half = cats_file_names.length / 2
 cats_file_names.each_with_index do |file_name, idx|
     #create pin
     chosen_id = idx < half ? 1 : 2
     pin = Pin.create!(
         user_id: chosen_id,
         title: Faker::Creature::Cat.name,
-        description: Faker::GreekPhilosophers.unique.quote,
+        description: Faker::GreekPhilosophers.quote,
         link: pin_image_url,
         category: "cats"
     )
@@ -161,7 +161,7 @@ cats_file_names.each_with_index do |file_name, idx|
 
     #add BoardPin
     BoardPin.create!(
-        board_id: chosen_id
+        board_id: chosen_id,
         pin_id: pin.id
     )
 end
@@ -178,14 +178,14 @@ board = Board.create!(
     name: "Animals",
     description: ""
 )
-half = animals_file_names / 2
+half = animals_file_names.length / 2
 animals_file_names.each_with_index do |file_name, idx|
     #create pin
     chosen_id = idx < half ? 1 : 2
     pin = Pin.create!(
         user_id: chosen_id,
         title: Faker::Book.unique.title,
-        description: Faker::GreekPhilosophers.unique.quote,
+        description: Faker::GreekPhilosophers.quote,
         link: pin_image_url,
         category: "animals"
     )
@@ -199,7 +199,7 @@ animals_file_names.each_with_index do |file_name, idx|
 
     #add BoardPin
     BoardPin.create!(
-        board_id: chosen_id + 2
+        board_id: chosen_id + 2,
         pin_id: pin.id
     )
 end

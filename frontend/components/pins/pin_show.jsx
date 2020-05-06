@@ -105,8 +105,8 @@ class PinShow extends React.Component{
                     <i className="fas fa-arrow-left"></i>
                 </div>
                 <div className="pin-show-box">
-                    <div className="pin-image">
-                        
+                    <div className="pin-image pin-image-show">
+                        <img className="thumbnail" src={pins[chosenPinId].photoUrl} />
                     </div>
                     <div className="pin-content">
                         <div className="pin-options">

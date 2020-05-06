@@ -2065,7 +2065,10 @@ var PinIndexItem = /*#__PURE__*/function (_React$Component) {
         className: "hover-details"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-image"
-      }, pin.photo)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "thumbnail",
+        src: pin.photoUrl
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-space"
       }));
     }
@@ -2270,8 +2273,11 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-show-box"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "pin-image"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "pin-image pin-image-show"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "thumbnail",
+        src: pins[chosenPinId].photoUrl
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-content"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-options"
@@ -3513,7 +3519,7 @@ var Welcome = function Welcome(_ref) {
   var demoUser = function demoUser(e) {
     e.preventDefault();
     var user = {
-      email: "qween@io",
+      email: "demo@io",
       password: "password"
     };
     processForm(user);
