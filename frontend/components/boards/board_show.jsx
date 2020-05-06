@@ -7,11 +7,14 @@ class BoardShow extends React.Component{
     }
 
     componentDidMount(){
-        this.props.fetchBoard();
+        const {fetchPins, fetchBoard, fetchBoardPins} = this.props;
+        fetchPins();
+        fetchBoard();
+        fetchBoardPins();
     }
 
     render(){
-        const {board, fetchBoard} = this.props;
+        const {board, pins, fetchBoard} = this.props;
         if (!board) return null;
         return (
             <div className="board-show-box">
@@ -21,7 +24,7 @@ class BoardShow extends React.Component{
                     <h3>{board.description}</h3>
                 </div>
                 <div className="board-show-pins">
-                    <PinIndex getInfo={fetchBoard} pins={board.pins} />
+                    <PinIndex getInfo={fetchBoard} pins={pins} />
                 </div>
             </div>
         )

@@ -1,4 +1,10 @@
 class Api::BoardPinsController < ApplicationController
+
+    def index
+        @board_pins = BoardPin.all
+        render "/api/board_pins/index"
+    end
+
     def create
         @board_pin = BoardPin.create(board_pin_params)
         if @board_pin.save
