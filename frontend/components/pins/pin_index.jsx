@@ -25,11 +25,11 @@ class PinIndex extends React.Component{
     }
     
     render(){
-        if (this.props.pins.length === 0) return null;
         return (
             <div className="all-pins-box">
                 {this.addCreatePin()}
-                {(this.props.pins).map((pin, idx) => {
+                {(!this.props.pins) ?  "" :
+                (this.props.pins).map((pin, idx) => {
                     return <PinIndexItem key={idx} pin={pin}/>;
                 })}
             </div>

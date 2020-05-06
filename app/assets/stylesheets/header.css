@@ -20,6 +20,7 @@
     font-size: 25px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: 700;
+    z-index: 50;
 }
 
 .header-logout > div, .header-logout > a, .drop-down{

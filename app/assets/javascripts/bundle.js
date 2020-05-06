@@ -1922,10 +1922,9 @@ var PinIndex = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      if (this.props.pins.length === 0) return null;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "all-pins-box"
-      }, this.addCreatePin(), this.props.pins.map(function (pin, idx) {
+      }, this.addCreatePin(), !this.props.pins ? "" : this.props.pins.map(function (pin, idx) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_pin_index_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
           key: idx,
           pin: pin
@@ -1969,7 +1968,7 @@ var mapStateToProps = function mapStateToProps(_ref, _ref2) {
   if (params.boardId) {
     pins = entities.boards[params.boardId].pins;
   } else if (params.userId) {
-    pins = Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["selectUserPins"])(entities.pins, session.currentUserId); //other users
+    pins = Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["selectUserPins"])(entities.pins, params.userId); //other users
 
     createOption = true;
   } else {
@@ -2273,7 +2272,7 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-show-box"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "pin-image pin-image-show"
+        className: "pin-image-show"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "thumbnail",
         src: pins[chosenPinId].photoUrl
@@ -2290,7 +2289,7 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
         className: "fas fa-pencil-alt"
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "save-to-board"
-      }, this.boardNames())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, pins[chosenPinId].link), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, pins[chosenPinId].title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, pins[chosenPinId].description))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.boardNames())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, pins[chosenPinId].link), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, pins[chosenPinId].title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, pins[chosenPinId].description))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "related-pins"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "More like this"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_pin_index__WEBPACK_IMPORTED_MODULE_3__["default"], {
         pins: this.getSuggested(),

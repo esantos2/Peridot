@@ -105,7 +105,7 @@ class PinShow extends React.Component{
                     <i className="fas fa-arrow-left"></i>
                 </div>
                 <div className="pin-show-box">
-                    <div className="pin-image pin-image-show">
+                    <div className="pin-image-show">
                         <img className="thumbnail" src={pins[chosenPinId].photoUrl} />
                     </div>
                     <div className="pin-content">
@@ -119,9 +119,9 @@ class PinShow extends React.Component{
                                 {this.boardNames()}
                             </div>
                         </div>
-                        <p>{pins[chosenPinId].link}</p>
+                        <a>{pins[chosenPinId].link}</a>
                         <h1>{pins[chosenPinId].title}</h1>
-                        <h3>{pins[chosenPinId].description}</h3>
+                        <p>{pins[chosenPinId].description}</p>
                     </div>
                 </div>
                 <div className="related-pins">

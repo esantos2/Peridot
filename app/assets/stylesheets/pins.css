@@ -1,32 +1,42 @@
 .all-pins-box{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    box-sizing: border-box;
+    display: grid;
+    /* flex-wrap: wrap; */
+    /* justify-content: flex-start; */
     /* margin-top: 80px; */
-    padding: 20px;
+    grid-gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(250px,1fr));
+    /* grid-auto-rows: 200px; */
+
+    box-sizing: border-box;
+    padding: 20px 80px;
+    /* padding: 20px; */
     width: 100%;
     height: 100%;
     /* background-color: rgb(179, 240, 179); */
 }
 
 .pin-box{
-    width: 236px;
+    /* width: 236px; */
     /* padding: 0px 8px;
     padding-bottom: 16px; */
+    width: 100%;
     height: auto;
-    padding: 8px;
-    padding-bottom: 16px;
+    /* padding: 8px; */
+    /* padding-bottom: 16px; */
 }
 
 .pin-box-details{
     display: flex;
+    height: auto;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    background: linear-gradient(rgb(176, 255, 209), rgb(155, 255, 217));
     border-radius: 20px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    background: transparent;
+}
+
+.pin-box-details:hover{
+    box-shadow: 0px 10px 25px 7px rgba(0, 0, 0, 0.2);
 }
 
 .pin-space{
@@ -34,15 +44,12 @@
     padding-bottom: 16px;
 }
 
-.pin-box-details:hover{
-    background: linear-gradient(rgb(255, 255, 113), rgb(255, 246, 194));
-}
-
 .pin-show-page{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    width: 100%;
     padding: 20px;
     box-sizing: border-box;
 }
@@ -67,47 +74,79 @@
 }
 
 .pin-show-box{
-    /* height: 600px; */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    height: auto;
-    width: 600px;
-    background-color: rgb(167, 231, 207);
+    min-width: auto;
     display: flex;
     border-radius: 20px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.281);
+    overflow: hidden;
 }
 
 .pin-image{
-    width: 100%;
-    /* min-width: 100%; */
-    /* margin: 20px; */
-    border-radius: 20px;
-    /* background: linear-gradient( #64e6bf, #91e59c); */
     display: flex;
     justify-content: center;
     align-items: center;
-    /* transform: translate(-50%, -50%); */
+    min-width: 100%;
+    overflow: hidden;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    min-height: 350px;
+    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: box-shadow 500ms; */
+    /* min-width: 100%; */
+    /* margin: 20px; */
+    /* background: linear-gradient( #64e6bf, #91e59c); */
+}
+
+.pin-image:hover{
+    cursor: pointer;
 }
 
 .pin-image-show{
     display: flex;
     justify-content: center;
     align-items: center;
-    /* border-top-right-radius: 0px; */
-    /* border-bottom-right-radius: 0px; */
-    width: auto;
-    overflow: hidden;
-    min-height: 300px;
-    height: 100%;
+    border-radius: 20px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    box-sizing: border-box;
+    padding: 20px;
+    min-height: 400px;
+    height: auto;
+    width: 50%;
+    position: relative;
+}
+
+.thumbnail{
+    max-height: 400px;
+    height: auto;
+    border-radius: 20px;
+    position: absolute;
+    z-index: 10;
+}
+
+.thumbnail:hover{
+    /* cursor: pointer; */
+    background: rgba(65, 65, 65, 0.658);
+    /* box-shadow: 0px 10px 25px 7rgba(116, 36, 36, 0.2).2); */
+    /* animation: shadowHover 700ms; */
+    /* -webkit-animation: shadowHover 700ms; */
 }
 
 .pin-content{
-    margin: 20px;
+    padding: 20px;
     width: 50%;
+    height: auto;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
+    z-index: 10;
+    background-color: white;
 }
 
 .create-pin-button{
@@ -149,6 +188,11 @@
     color: gray;
 }
 
+.related-pins{
+    width: 100%;
+    height: auto;
+}
+
 .related-pins > h1{
     width: 100%;
     text-align: center;
@@ -156,13 +200,6 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0px;
     margin-top: 40px;
-    padding: 0px 32px;
+    /* padding: 0px 32px; */
     box-sizing: border-box;
-}
-
-.thumbnail{
-    width: 100%;
-    max-height: 500px;
-    height: auto;
-    border-radius: inherit;
 }

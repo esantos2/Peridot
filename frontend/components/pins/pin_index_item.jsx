@@ -23,10 +23,6 @@ class PinIndexItem extends React.Component{
                     <div className="pin-image">
                         <img className="thumbnail" src={pin.photoUrl} />
                     </div>
-                    {/* <h3>This is a pin lol</h3>
-                    <h1>{pin.title}</h1>
-                    <p>{pin.description}</p>
-                    <h5>{pin.link}</h5> */}
                 </div>
                 <div className="pin-space"></div>
             </div>
