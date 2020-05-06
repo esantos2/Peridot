@@ -112,6 +112,7 @@ class PinShow extends React.Component{
         if (!Object.values(pins).length) return null;
         let showPin = pins[chosenPinId];
         let owner = users[showPin.userId];
+        if (!owner) return null;
         return (
             <div className="pin-show-page">
                 {this.renderEditForm()}

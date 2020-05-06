@@ -45,7 +45,7 @@ class UserProfile extends React.Component{
         const {user, currentUserId} = this.props;
         if (user.id === currentUserId){
             return (
-                <div className="top-buttons">
+                <div>
                     <div className="icon " onClick={this.showMenu}>
                         <i className="dropdown fas fa-plus"></i>
                     </div>
@@ -68,7 +68,9 @@ class UserProfile extends React.Component{
             <div className="user-profile-box">
                 {this.showBoardForm()}
                 <div className="header">
-                    {this.currentUserOnly()}
+                    <div className="top-buttons">
+                        {this.currentUserOnly()}
+                    </div>
                     <div className="user-details">
                         <div className="info">
                             <h1>{user.username}</h1>

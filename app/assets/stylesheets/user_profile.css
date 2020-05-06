@@ -12,9 +12,10 @@
     flex-direction: column;
 }
 
-.header .top-buttons{
+.header .top-buttons > div{
     display: flex;
     margin-top: 30px;
+    height: 48px;
 }
 
 .header .user-details{

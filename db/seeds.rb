@@ -77,32 +77,32 @@ cats_file_names = [
     "Cats/coffee.jpg",
     "Cats/cool_cat.jpg",
     "Cats/couch_kitten.jpg",
-    "Cats/crib.jpg",
-    "Cats/faucet.jpg",
-    "Cats/flowers.jpg",
-    "Cats/go_cat_go.jpg",
-    "Cats/green_cat.jpg",
-    "Cats/hold.jpg",
-    "Cats/holding_cat.jpg",
-    "Cats/holiday.jpg",
-    "Cats/homie.jpg",
-    "Cats/jump.jpg",
-    "Cats/kiss.jpg",
-    "Cats/kitten.jpg",
-    "Cats/night.jpg",
-    "Cats/petpet.jpg",
-    "Cats/rice.jpg",
-    "Cats/scarlet_cat.jpg",
-    "Cats/selfie.jpg",
-    "Cats/sheets.jpg",
-    "Cats/sleepy_couch.jpg",
-    "Cats/sleepy_pet.jpg",
-    "Cats/staredown.jpg",
-    "Cats/tired_cat.jpg",
-    "Cats/white_cat.jpg",
-    "Cats/window.jpg",
-    "Cats/xmas.jpg"
-]
+    "Cats/crib.jpg"]
+    # "Cats/faucet.jpg",
+    # "Cats/flowers.jpg",
+    # "Cats/go_cat_go.jpg",
+    # "Cats/green_cat.jpg",
+    # "Cats/hold.jpg",
+    # "Cats/holding_cat.jpg",
+    # "Cats/holiday.jpg",
+    # "Cats/homie.jpg",
+    # "Cats/jump.jpg",
+    # "Cats/kiss.jpg",
+    # "Cats/kitten.jpg",
+    # "Cats/night.jpg",
+    # "Cats/petpet.jpg",
+    # "Cats/rice.jpg",
+    # "Cats/scarlet_cat.jpg",
+    # "Cats/selfie.jpg",
+    # "Cats/sheets.jpg",
+    # "Cats/sleepy_couch.jpg",
+    # "Cats/sleepy_pet.jpg",
+    # "Cats/staredown.jpg",
+    # "Cats/tired_cat.jpg",
+    # "Cats/white_cat.jpg",
+    # "Cats/window.jpg",
+    # "Cats/xmas.jpg"
+# ]
 
 animals_file_names = [
     "Animals/backpacking.jpg",
@@ -162,15 +162,26 @@ cats_file_names.each_with_index do |file_name, idx|
         title: Faker::Creature::Cat.name,
         description: Faker::GreekPhilosophers.quote,
         link: pin_image_url,
-        category: "cats"
+        category: "cats",
+        photo: {
+            io: open(main_seed_url + file_name),
+            filename: file_name
+        }
     )
     
-    #add photo to pin
-    pic = open(main_seed_url + file_name)
-    pin.photo.attach(
-        io: pic,
-        filename: file_name
-    )
+    # const formData = new FormData();
+    # formData.append('pin[title]', Faker::Creature::Cat.name);
+    # formData.append('pin[description]', Faker::GreekPhilosophers.quote);
+    # formData.append('pin[link]', pin_image_url);
+    # formData.append('pin[user_id]', chosen_id);
+    # formData.append('pin[category]', "cats")
+    # formData.append('pin[photo]', {io: pic, filename: file_name})
+    # pin = Pin.create!(formData)
+    
+    # pin.photo.attach(
+    #     io: pic,
+    #     filename: file_name
+    # )
 
     #add BoardPin
     BoardPin.create!(
@@ -181,41 +192,41 @@ end
 
 
 
-board = Board.create!(
-    user_id: users[0].id,
-    name: "Animals",
-    description: ""
-)
-board = Board.create!(
-    user_id: users[1].id,
-    name: "Animals",
-    description: ""
-)
-half = animals_file_names.length / 2
-animals_file_names.each_with_index do |file_name, idx|
-    #create pin
-    chosen_id = idx < half ? 1 : 2
-    pin = Pin.create!(
-        user_id: chosen_id,
-        title: Faker::Book.unique.title,
-        description: Faker::GreekPhilosophers.quote,
-        link: pin_image_url,
-        category: "animals"
-    )
+# board = Board.create!(
+#     user_id: users[0].id,
+#     name: "Animals",
+#     description: ""
+# )
+# board = Board.create!(
+#     user_id: users[1].id,
+#     name: "Animals",
+#     description: ""
+# )
+# half = animals_file_names.length / 2
+# animals_file_names.each_with_index do |file_name, idx|
+#     #create pin
+#     chosen_id = idx < half ? 1 : 2
+#     pin = Pin.create!(
+#         user_id: chosen_id,
+#         title: Faker::Book.unique.title,
+#         description: Faker::GreekPhilosophers.quote,
+#         link: pin_image_url,
+#         category: "animals"
+#     )
     
-    #add photo to pin
-    pic = open(main_seed_url + file_name)
-    pin.photo.attach(
-        io: pic,
-        filename: file_name
-    )
+#     #add photo to pin
+#     pic = open(main_seed_url + file_name)
+#     pin.photo.attach(
+#         io: pic,
+#         filename: file_name
+#     )
 
-    #add BoardPin
-    BoardPin.create!(
-        board_id: chosen_id + 2,
-        pin_id: pin.id
-    )
-end
+#     #add BoardPin
+#     BoardPin.create!(
+#         board_id: chosen_id + 2,
+#         pin_id: pin.id
+#     )
+# end
 
 
 #create boards for each user

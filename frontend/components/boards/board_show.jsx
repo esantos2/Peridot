@@ -15,16 +15,17 @@ class BoardShow extends React.Component{
 
     render(){
         const {board, pins, fetchBoard} = this.props;
-        if (!board || !pins[0]) return null;
+        if (!board) return null;
         return (
             <div className="board-show-box">
                 <div className="board-info">
-                    <h2>Board show page</h2>
                     <h1>{board.name}</h1>
                     <h3>{board.description}</h3>
                 </div>
                 <div className="board-show-pins">
-                    <PinIndex getInfo={fetchBoard} pins={pins} />
+                    { !pins[0] ? "" : 
+                        <PinIndex getInfo={fetchBoard} pins={pins} />
+                    }
                 </div>
             </div>
         )

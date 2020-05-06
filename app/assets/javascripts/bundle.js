@@ -868,6 +868,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _board_index_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./board_index_item */ "./frontend/components/boards/board_index_item.jsx");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _boards_board_create_form__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../boards/board_create_form */ "./frontend/components/boards/board_create_form.jsx");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -893,15 +895,26 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
+
 var BoardIndex = /*#__PURE__*/function (_React$Component) {
   _inherits(BoardIndex, _React$Component);
 
   var _super = _createSuper(BoardIndex);
 
   function BoardIndex(props) {
+    var _this;
+
     _classCallCheck(this, BoardIndex);
 
-    return _super.call(this, props);
+    _this = _super.call(this, props);
+    _this.state = {
+      boardForm: false
+    };
+    _this.openBoardForm = _this.openBoardForm.bind(_assertThisInitialized(_this));
+    _this.closeBoardForm = _this.closeBoardForm.bind(_assertThisInitialized(_this));
+    _this.showBoardForm = _this.showBoardForm.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(BoardIndex, [{
@@ -910,16 +923,66 @@ var BoardIndex = /*#__PURE__*/function (_React$Component) {
       this.props.fetchBoards();
     }
   }, {
+    key: "openBoardForm",
+    value: function openBoardForm() {
+      this.setState({
+        boardForm: true
+      });
+    }
+  }, {
+    key: "closeBoardForm",
+    value: function closeBoardForm() {
+      this.setState({
+        boardForm: false
+      });
+    }
+  }, {
+    key: "showBoardForm",
+    value: function showBoardForm() {
+      if (this.state.boardForm) {
+        var _this$props = this.props,
+            createBoard = _this$props.createBoard,
+            clearErrors = _this$props.clearErrors,
+            currentUserId = _this$props.currentUserId;
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_boards_board_create_form__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          createBoard: createBoard,
+          clearErrors: clearErrors,
+          closeBoardForm: this.closeBoardForm,
+          currentUserId: currentUserId.id
+        });
+      }
+    }
+  }, {
+    key: "addCreateBoard",
+    value: function addCreateBoard() {
+      var _this$props2 = this.props,
+          currentUserId = _this$props2.currentUserId,
+          match = _this$props2.match;
+
+      if (parseInt(match.params.userId) === currentUserId) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "create-pin-button",
+          onClick: this.openBoardForm
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "image"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-plus-circle"
+        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "title"
+        }, "Create Board"));
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this$props = this.props,
-          boards = _this$props.boards,
-          updateBoard = _this$props.updateBoard,
-          deleteBoard = _this$props.deleteBoard,
-          currentUserId = _this$props.currentUserId;
+      var _this$props3 = this.props,
+          boards = _this$props3.boards,
+          updateBoard = _this$props3.updateBoard,
+          deleteBoard = _this$props3.deleteBoard,
+          currentUserId = _this$props3.currentUserId;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "board-index-box"
-      }, boards.map(function (board, idx) {
+      }, this.showBoardForm(), this.addCreateBoard(), boards.map(function (board, idx) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_board_index_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
           key: idx,
           currentUserId: currentUserId,
@@ -934,7 +997,7 @@ var BoardIndex = /*#__PURE__*/function (_React$Component) {
   return BoardIndex;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-/* harmony default export */ __webpack_exports__["default"] = (BoardIndex);
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["withRouter"])(BoardIndex));
 
 /***/ }),
 
@@ -975,6 +1038,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch, _ref2) {
     },
     clearErrors: function clearErrors() {
       return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_3__["clearErrors"])());
+    },
+    createBoard: function createBoard(board) {
+      return dispatch(Object(_actions_board_actions__WEBPACK_IMPORTED_MODULE_1__["createBoard"])(board));
     },
     updateBoard: function updateBoard(board) {
       return dispatch(Object(_actions_board_actions__WEBPACK_IMPORTED_MODULE_1__["updateBoard"])(board));
@@ -1168,14 +1234,14 @@ var BoardShow = /*#__PURE__*/function (_React$Component) {
           board = _this$props2.board,
           pins = _this$props2.pins,
           fetchBoard = _this$props2.fetchBoard;
-      if (!board || !pins[0]) return null;
+      if (!board) return null;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "board-show-box"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "board-info"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Board show page"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, board.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, board.description)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, board.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, board.description)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "board-show-pins"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_pins_pin_index__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      }, !pins[0] ? "" : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_pins_pin_index__WEBPACK_IMPORTED_MODULE_1__["default"], {
         getInfo: fetchBoard,
         pins: pins
       })));
@@ -2366,6 +2432,7 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
       if (!Object.values(pins).length) return null;
       var showPin = pins[chosenPinId];
       var owner = users[showPin.userId];
+      if (!owner) return null;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-show-page"
       }, this.renderEditForm(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -3803,9 +3870,7 @@ var UserProfile = /*#__PURE__*/function (_React$Component) {
           currentUserId = _this$props3.currentUserId;
 
       if (user.id === currentUserId) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "top-buttons"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "icon ",
           onClick: this.showMenu
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -3833,7 +3898,9 @@ var UserProfile = /*#__PURE__*/function (_React$Component) {
         className: "user-profile-box"
       }, this.showBoardForm(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "header"
-      }, this.currentUserOnly(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "top-buttons"
+      }, this.currentUserOnly()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "user-details"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "info"
