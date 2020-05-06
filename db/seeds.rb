@@ -21,8 +21,6 @@ bios = [
     "Anything but predictable",
     "I believe in making the impossible possible because there’s no fun in giving up",
     "Turned my dreams into my vision and my vision into my reality",
-    "If I was a writer I’d have a better Peridot bio quote.",
-    "I got to where I am today by being me",
     "Don’t know what to do? You can start by hitting that follow button.",
     "I’m on my journey. Join me by following along.",
     "Follow me to get a behind the scenes look at my life",
@@ -31,7 +29,9 @@ bios = [
     "Sprinkling kindness everywhere I go",
     "Every day might not be a good day but there is good in every day",
     "Even if you had instructions, you still couldn’t handle me",
-    "Tell me not to do something and I’ll do it twice and take pictures"
+    "If I was a writer I’d have a better Peridot bio quote.",
+    "Tell me not to do something and I’ll do it twice and take pictures",
+    "I got to where I am today by being me"
 ]
 
 demo = User.create!(
@@ -40,7 +40,7 @@ demo = User.create!(
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
     email: "demo@gmail.com",
-    bio: bios[n],
+    bio: bios[-1],
     age: Faker::Number.between(from: 18, to: 35),
     gender: Faker::Gender.binary_type.downcase,
     language: Faker::Nation.language,
