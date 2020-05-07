@@ -90,7 +90,7 @@
 /*!*******************************************!*\
   !*** ./frontend/actions/board_actions.js ***!
   \*******************************************/
-/*! exports provided: RECEIVE_BOARDS, RECEIVE_BOARD, REMOVE_BOARD, RECEIVE_BOARD_ERRORS, RECEIVE_BOARD_PINS, receiveBoards, receiveBoard, removeBoard, receiveBoardErrors, receiveBoardPins, fetchBoards, fetchBoard, createBoard, updateBoard, deleteBoard, fetchBoardPins */
+/*! exports provided: RECEIVE_BOARDS, RECEIVE_BOARD, REMOVE_BOARD, RECEIVE_BOARD_ERRORS, receiveBoards, receiveBoard, removeBoard, receiveBoardErrors, fetchBoards, fetchBoard, createBoard, updateBoard, deleteBoard */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -99,25 +99,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_BOARD", function() { return RECEIVE_BOARD; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REMOVE_BOARD", function() { return REMOVE_BOARD; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_BOARD_ERRORS", function() { return RECEIVE_BOARD_ERRORS; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_BOARD_PINS", function() { return RECEIVE_BOARD_PINS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveBoards", function() { return receiveBoards; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveBoard", function() { return receiveBoard; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeBoard", function() { return removeBoard; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveBoardErrors", function() { return receiveBoardErrors; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveBoardPins", function() { return receiveBoardPins; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchBoards", function() { return fetchBoards; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchBoard", function() { return fetchBoard; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createBoard", function() { return createBoard; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateBoard", function() { return updateBoard; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteBoard", function() { return deleteBoard; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchBoardPins", function() { return fetchBoardPins; });
 /* harmony import */ var _util_board_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/board_api_util */ "./frontend/util/board_api_util.js");
 
 var RECEIVE_BOARDS = "RECEIVE_BOARDS";
 var RECEIVE_BOARD = "RECEIVE_BOARD";
 var REMOVE_BOARD = "REMOVE_BOARD";
 var RECEIVE_BOARD_ERRORS = "RECEIVE_BOARD_ERRORS";
-var RECEIVE_BOARD_PINS = "RECEIVE_BOARD_PINS";
 var receiveBoards = function receiveBoards(boards) {
   return {
     type: RECEIVE_BOARDS,
@@ -140,12 +136,6 @@ var receiveBoardErrors = function receiveBoardErrors(errors) {
   return {
     type: RECEIVE_BOARD_ERRORS,
     errors: errors
-  };
-};
-var receiveBoardPins = function receiveBoardPins(boardPins) {
-  return {
-    type: RECEIVE_BOARD_PINS,
-    boardPins: boardPins
   };
 };
 var fetchBoards = function fetchBoards(userId) {
@@ -188,15 +178,6 @@ var deleteBoard = function deleteBoard(userId, boardId) {
   return function (dispatch) {
     return _util_board_api_util__WEBPACK_IMPORTED_MODULE_0__["deleteBoard"](userId, boardId).then(function (boardId) {
       return dispatch(removeBoard(boardId));
-    }, function (error) {
-      return dispatch(receiveBoardErrors(error.responseJSON));
-    });
-  };
-};
-var fetchBoardPins = function fetchBoardPins() {
-  return function (dispatch) {
-    return _util_board_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchBoardPins"]().then(function (boardPins) {
-      return dispatch(receiveBoardPins(boardPins));
     }, function (error) {
       return dispatch(receiveBoardErrors(error.responseJSON));
     });
