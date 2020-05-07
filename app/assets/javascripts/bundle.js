@@ -1550,10 +1550,16 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
       document.getElementById("image-preview").classList.toggle("image-load");
     }
   }, {
+    key: "hideBackground",
+    value: function hideBackground() {
+      document.getElementById("image-background").classList.toggle("show-background");
+    }
+  }, {
     key: "handleFile",
     value: function handleFile(e) {
       var _this4 = this;
 
+      // e.preventDefault();
       var file = e.currentTarget.files[0];
       var fileReader = new FileReader();
 
@@ -1566,6 +1572,7 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
         _this4.showImage();
       };
 
+      this.hideBackground();
       if (file) fileReader.readAsDataURL(file);
     }
   }, {
@@ -1646,25 +1653,21 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "save-pin",
         onClick: this.handleSubmit
-      }, "Save"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "select-board",
-        onClick: this.selectBoard
-      }, "Select"), this.boardNames()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Save"), this.boardNames()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-main-content"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-image-box"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "image-background",
         className: "pin-image-back"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-arrow-alt-circle-up"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Click to upload"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "file",
         onChange: this.handleFile
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "image-preview"
       }, preview)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "save-from-site"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-create-fields"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-create-inputs"
@@ -1679,9 +1682,12 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
         onChange: this.update("title")
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-owner"
-      }, owner.username), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-user-circle"
+      }), owner.username), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-add-description"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+        rows: "1",
         placeholder: "Tell everyone what your Pin is about",
         value: description,
         onChange: this.update("description")
@@ -1689,7 +1695,7 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
         className: "pin-link"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
-        placeholder: "Add a destination link",
+        placeholder: "Add a destination link (optional)",
         value: link,
         onChange: this.update("link")
       })))))));
@@ -2461,7 +2467,7 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
         className: "save-to-board"
       }, this.boardNames())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, showPin.link), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, showPin.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["NavLink"], {
         className: "pin-owner",
-        to: "/users/".concat(owner.id)
+        to: "/users/".concat(owner.id, "/pins")
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "".concat(owner.firstName, " ").concat(owner.lastName))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, showPin.description))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "related-pins"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "More like this"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_pin_index__WEBPACK_IMPORTED_MODULE_3__["default"], {

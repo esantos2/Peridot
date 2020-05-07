@@ -50,10 +50,15 @@ class CreatePinForm extends React.Component{
     }
 
     showImage() {
-        document.getElementById("image-preview").classList.toggle("image-load")
+        document.getElementById("image-preview").classList.toggle("image-load");
+    }
+
+    hideBackground(){
+        document.getElementById("image-background").classList.toggle("show-background");
     }
 
     handleFile(e){
+        // e.preventDefault();
         const file = e.currentTarget.files[0];
         const fileReader = new FileReader();
         fileReader.onloadend = () => {
@@ -63,6 +68,7 @@ class CreatePinForm extends React.Component{
             });
             this.showImage();
         }
+        this.hideBackground();
         if (file) fileReader.readAsDataURL(file);
     }
 
@@ -119,20 +125,19 @@ class CreatePinForm extends React.Component{
                     {this.displayConfirmation()}
                     <div className="pin-top-buttons">
                         <button className="save-pin" onClick={this.handleSubmit}>Save</button>
-                        <button className="select-board" onClick={this.selectBoard}>Select</button>
+                        {/* <button className="select-board" onClick={this.selectBoard}>Select</button> */}
                         {this.boardNames()}
                     </div>
                     <div className="pin-main-content">
                         <div className="pin-image-box">
-                            <div className="pin-image-back">
+                            <div id="image-background" className="pin-image-back">
                                 <i className="fas fa-arrow-alt-circle-up"></i>
-                                <p>Click to upload</p>
                                 <input type="file" onChange={this.handleFile} />
-                                <div className="image-preview">
-                                    {preview}
-                                </div>
+                                {/* <p>Click to upload</p> */}
                             </div>
-                            <div className="save-from-site"></div>
+                            <div className="image-preview">
+                                {preview}
+                            </div>
                         </div>
                         <div className="pin-create-fields">
                             <div className="pin-create-inputs">
@@ -146,10 +151,12 @@ class CreatePinForm extends React.Component{
                                             onChange={this.update("title")}/>
                                     </div>
                                     <div className="pin-owner">
+                                        <i className="fas fa-user-circle"></i>
                                         {owner.username}
                                     </div>
                                     <div className="pin-add-description">
                                         <textarea 
+                                            rows="1"
                                             placeholder="Tell everyone what your Pin is about" 
                                             value={description} 
                                             onChange={this.update("description")}></textarea>
@@ -158,7 +165,7 @@ class CreatePinForm extends React.Component{
                                 <div className="pin-link">
                                     <input 
                                         type="text"
-                                        placeholder="Add a destination link"
+                                        placeholder="Add a destination link (optional)"
                                         value={link}
                                         onChange={this.update("link")}/>
                                 </div>

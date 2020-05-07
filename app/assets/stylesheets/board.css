@@ -17,12 +17,20 @@
     background: linear-gradient(rgb(98, 255, 229), rgb(238, 227, 255));
 }
 
+.board-form-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center
+}
+
 .board-form-box > h1{
+    box-sizing: border-box;
+    width: 720px;
     text-align: center;
     padding: 32px;
     margin: 0px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;;
 }
 
 .date-options > div{

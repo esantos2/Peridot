@@ -77,6 +77,14 @@
     position: relative;
 }
 
+.pin-image-back input{
+    display: flex;
+    justify-content: center;
+    padding-left: 40px;
+    margin: 20px;
+    text-align: center;
+}
+
 .pin-image-box i{
     font-size: 40px;
     color: rgb(107, 107, 107);
@@ -176,13 +184,16 @@
 
 .edit-details textarea, 
 .edit-details input, 
-.board-selection select{
+.board-selection select,
+.pin-add-title input,
+.pin-add-description textarea,
+.pin-link input{
     box-sizing: border-box;
     margin: 10px;
     padding: 10px;
     resize: none;
     border-radius: 10px;
-    border: 2px solid rgb(199, 199, 199);
+    border: 2px solid rgb(218, 218, 218);
     width: 350px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 16px;
@@ -212,10 +223,14 @@
 }
 
 .edit-details input:focus, 
-.edit-details textarea:focus{
+.edit-details textarea:focus,
+.pin-add-title input:focus,
+.pin-add-description textarea:focus,
+.pin-link input:focus{
     outline-style: none;
     border: 3px solid rgb(0, 223, 0);
     margin: 9px;
+    border-radius: 10px;
 }
 
 .board-selection select:focus{
@@ -281,4 +296,54 @@
     /* top: 100px; */
     z-index: 20;
     top:500px;
+}
+
+.pin-create-inputs{
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.pin-details{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.pin-details input, .pin-details textarea, .pin-link input{
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+}
+
+.pin-add-title input{
+    font-size: 36px;
+    font-weight: 700;
+    height: 48px;
+    padding: 10px;
+}
+
+.pin-owner{
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 900;
+    font-size: 16px;
+}
+
+.pin-owner i{
+    padding: 10px;
+    font-size: 20px;
+}
+
+.show-background{
+    display: none;
 }

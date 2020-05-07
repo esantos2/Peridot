@@ -134,7 +134,7 @@ class PinShow extends React.Component{
                         </div>
                         <a>{showPin.link}</a>
                         <h1>{showPin.title}</h1>
-                        <NavLink className="pin-owner" to={`/users/${owner.id}`}>
+                        <NavLink className="pin-owner" to={`/users/${owner.id}/pins`}>
                             <p>{`${owner.firstName} ${owner.lastName}`}</p>
                         </NavLink>
                         <p>{showPin.description}</p>
