@@ -79,10 +79,6 @@ class CreatePinForm extends React.Component{
         document.getElementById("image-preview").classList.toggle("image-load");
     }
     
-    showMenu() {
-        document.getElementById("board-names").classList.toggle("show-menu")
-    }
-    
     hideBackground(){
         document.getElementById("image-background").remove();
         // document.getElementById("image-background").classList.toggle("show-background");
@@ -165,6 +161,10 @@ class CreatePinForm extends React.Component{
         this.update("chosenBoardId")(e);
     }
 
+    showMenu() {
+        document.getElementById("board-names").classList.toggle("show-menu")
+    }
+
     selectBoard(e) {
         e.preventDefault();
         document.getElementById("board-names").classList.toggle("show-menu")
@@ -181,7 +181,6 @@ class CreatePinForm extends React.Component{
                     {this.displayConfirmation()}
                     <div className="pin-top-buttons">
                         <button className="save-pin" onClick={this.handleSubmit}>Save</button>
-                        {/* <button className="select-board" onClick={this.selectBoard}>Select</button> */}
                         {this.boardNames()}
                     </div>
                     <div className="pin-main-content">

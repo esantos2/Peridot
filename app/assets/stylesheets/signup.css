@@ -55,19 +55,39 @@
 .dropdown-fields{
     width: 100%;
     padding: 30px;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
+}
+
+.dropdown-fields > div{
+    margin: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: 200px;
 }
 
 #language, #region{
     margin: 10px;
     width: 200px;
     height: 20px;
-    background-color: white;
-    border-radius: 5px;
+    background-color: rgb(233, 233, 233);
+    padding: 5px;
+    border-radius: 15px;
     font-size: 16px;
     line-height: 1.5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#language >.drop-down, #region > .drop-down{
+    position: relative;
+    width: 100%;
 }
 
 #language:focus, #region:focus{
@@ -75,14 +95,44 @@
     border: 2px solid rgb(0, 223, 0);
 }
 
-#language > select{
-    display: inline-block;
-    height: 30px;
-    font-family: cursive;
+#language-names, #region-names{
+    position: absolute;
+    overflow: scroll;
+    width: 200px;
+    height: 400px;
+    top: 240px;
+    right: 75px;
 }
 
-option:hover{
-    background-color: rgb(0, 155, 0);
+#region-names{
+    top: 330px;
+}
+
+.selected-text-language, .selected-text-region{
+    border-radius: 10px;
+    background-color: rgb(180, 180, 180);
+    position: relative;
+}
+
+#language:hover, #region:hover{
+    background-color: rgb(173, 173, 173);
+    cursor: pointer;
+}
+
+.drop-down-arrow-select-language{
+    position: absolute;
+    color: rgb(201, 201, 201);
+    right: 90px;
+    bottom: 295px;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    cursor: pointer;
+    pointer-events: none;
+}
+
+.drop-down-arrow-select-region{
+    bottom: 205px;
 }
 
 .prompt{

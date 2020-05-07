@@ -54,7 +54,18 @@
     width: auto;
 }
 
-.pin-top-buttons > button, .save-pin{
+.edit{
+    width: 350px;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+}
+
+.show-select{
+    min-width: 170px;
+}
+
+.pin-top-buttons > .save-pin{
     background-color: limegreen;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: 700;
@@ -283,11 +294,24 @@
     pointer-events: none;
 }
 
+.drop-down-arrow-select-board-edit{
+    position: absolute;
+    right: 67px;
+    bottom: 50px;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    cursor: pointer;
+    pointer-events: none;
+}
+
 .edit-details input:focus, 
 .edit-details textarea:focus,
 .pin-add-title input:focus,
 .pin-add-description textarea:focus,
-.pin-link input:focus{
+.pin-link input:focus
+.save-pin:focus,
+.drop-down:focus{
     outline-style: none;
     border: 3px solid rgb(0, 223, 0);
     margin: 9px;
@@ -383,7 +407,10 @@
 }
 
 .pin-owner{
-    display: block;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    flex-wrap: nowrap;
     width: 100%;
     text-align: left;
     padding: 20px;

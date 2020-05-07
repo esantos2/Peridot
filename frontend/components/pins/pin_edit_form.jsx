@@ -1,5 +1,6 @@
 import React from 'react'
 import { withRouter, NavLink } from 'react-router-dom';
+import CreateBoardForm from '../boards/board_create_form';
 
 class EditPinForm extends React.Component {
     constructor(props){
@@ -11,16 +12,42 @@ class EditPinForm extends React.Component {
             description,
             link,
             chosenBoardId: '',
-            confirm: false
+            confirm: false,
+            boardForm: false
         }
         this.update = this.update.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
+        this.makeBoardSelection = this.makeBoardSelection.bind(this);
+        this.showMenu = this.showMenu.bind(this);
+        this.openBoardForm = this.openBoardForm.bind(this);
+        this.closeBoardForm = this.closeBoardForm.bind(this);
     }
 
     update(field){
         return e => this.setState({[field]: e.currentTarget.value});
     }
+
+    openBoardForm() {
+        this.setState({ boardForm: true });
+    }
+
+    closeBoardForm() {
+        this.setState({ boardForm: false });
+    }
+
+    showBoardForm() {
+        if (this.state.boardForm) {
+            const { createBoard, clearErrors, currentUserId } = this.props;
+            return (<CreateBoardForm
+                createBoard={createBoard}
+                clearErrors={clearErrors}
+                closeBoardForm={this.closeBoardForm}
+                currentUserId={currentUserId}
+            />)
+        }
+    }
+
 
     handleSubmit(e){
         e.preventDefault();
@@ -95,19 +122,47 @@ class EditPinForm extends React.Component {
         if (!boards) return null;
         return (
             <div>
-                <select id="board-names" className="board-names" onChange={this.update("chosenBoardId")}>
-                    <option value="">--Select board--</option>
+                <div className="drop-down select-board edit"
+                    id="selected-text"
+                    onClick={this.showMenu}>
+                    Select board
+                </div>
+                <ul id="board-names-edit"
+                    className="drop-down-menu">
                     {boards.map((board, idx) => {
                         return (
-                            <option key={idx} value={board.id}>{board.name}</option>
+                            <li key={idx}
+                                value={board.id}
+                                className="board-name"
+                                onClick={this.makeBoardSelection}
+                            >{board.name}</li>
                         )
                     })}
-                </select>
-                <div className="drop-down-arrow">
+                    <a onClick={this.openBoardForm}><li key="a"
+                        className="create-board-option">
+                        <i className="fas fa-plus-circle"></i>
+                        Create board</li></a>
+                </ul>
+                <div className="drop-down-arrow-select-board-edit">
                     <i className="fas fa-chevron-down"></i>
                 </div>
             </div>
         )
+    }
+
+    makeBoardSelection(e) {
+        document.getElementById("selected-text").innerHTML = e.currentTarget.innerHTML;
+        this.selectBoard(e);
+        this.update("chosenBoardId")(e);
+    }
+
+    showMenu() {
+        document.getElementById("board-names-edit").classList.toggle("show-menu")
+    }
+
+    selectBoard(e) {
+        e.preventDefault();
+        document.getElementById("board-names-edit").classList.toggle("show-menu")
     }
 
     render() {
@@ -115,6 +170,7 @@ class EditPinForm extends React.Component {
         return (
             <div className="modal-background" onClick={this.props.closeEditForm}>
                 <div className="modal-child-round-box" onClick={e => e.stopPropagation()}>
+                    {this.showBoardForm()}
                     <h1>Edit this Pin</h1>
                     <div className="pin-edit-form-box">
                         <div className="edit-pin-board">

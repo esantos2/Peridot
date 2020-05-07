@@ -1225,8 +1225,8 @@ var BoardShow = /*#__PURE__*/function (_React$Component) {
           fetchPins = _this$props.fetchPins,
           fetchBoard = _this$props.fetchBoard,
           fetchBoardPins = _this$props.fetchBoardPins;
-      fetchPins();
       fetchBoardPins();
+      fetchPins();
       fetchBoard();
     }
   }, {
@@ -1585,11 +1585,6 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
       document.getElementById("image-preview").classList.toggle("image-load");
     }
   }, {
-    key: "showMenu",
-    value: function showMenu() {
-      document.getElementById("board-names").classList.toggle("show-menu");
-    }
-  }, {
     key: "hideBackground",
     value: function hideBackground() {
       document.getElementById("image-background").remove(); // document.getElementById("image-background").classList.toggle("show-background");
@@ -1686,6 +1681,11 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
       document.getElementById("selected-text").innerHTML = e.currentTarget.innerHTML;
       this.selectBoard(e);
       this.update("chosenBoardId")(e);
+    }
+  }, {
+    key: "showMenu",
+    value: function showMenu() {
+      document.getElementById("board-names").classList.toggle("show-menu");
     }
   }, {
     key: "selectBoard",
@@ -1845,6 +1845,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _boards_board_create_form__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../boards/board_create_form */ "./frontend/components/boards/board_create_form.jsx");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -1872,6 +1873,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var EditPinForm = /*#__PURE__*/function (_React$Component) {
   _inherits(EditPinForm, _React$Component);
 
@@ -1893,11 +1895,16 @@ var EditPinForm = /*#__PURE__*/function (_React$Component) {
       description: description,
       link: link,
       chosenBoardId: '',
-      confirm: false
+      confirm: false,
+      boardForm: false
     };
     _this.update = _this.update.bind(_assertThisInitialized(_this));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     _this.handleDelete = _this.handleDelete.bind(_assertThisInitialized(_this));
+    _this.makeBoardSelection = _this.makeBoardSelection.bind(_assertThisInitialized(_this));
+    _this.showMenu = _this.showMenu.bind(_assertThisInitialized(_this));
+    _this.openBoardForm = _this.openBoardForm.bind(_assertThisInitialized(_this));
+    _this.closeBoardForm = _this.closeBoardForm.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1911,6 +1918,36 @@ var EditPinForm = /*#__PURE__*/function (_React$Component) {
       };
     }
   }, {
+    key: "openBoardForm",
+    value: function openBoardForm() {
+      this.setState({
+        boardForm: true
+      });
+    }
+  }, {
+    key: "closeBoardForm",
+    value: function closeBoardForm() {
+      this.setState({
+        boardForm: false
+      });
+    }
+  }, {
+    key: "showBoardForm",
+    value: function showBoardForm() {
+      if (this.state.boardForm) {
+        var _this$props = this.props,
+            createBoard = _this$props.createBoard,
+            clearErrors = _this$props.clearErrors,
+            currentUserId = _this$props.currentUserId;
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_boards_board_create_form__WEBPACK_IMPORTED_MODULE_2__["default"], {
+          createBoard: createBoard,
+          clearErrors: clearErrors,
+          closeBoardForm: this.closeBoardForm,
+          currentUserId: currentUserId
+        });
+      }
+    }
+  }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       var _this3 = this;
@@ -1921,9 +1958,9 @@ var EditPinForm = /*#__PURE__*/function (_React$Component) {
           description = _this$state.description,
           link = _this$state.link,
           chosenBoardId = _this$state.chosenBoardId;
-      var _this$props = this.props,
-          pin = _this$props.pin,
-          currentUserId = _this$props.currentUserId;
+      var _this$props2 = this.props,
+          pin = _this$props2.pin,
+          currentUserId = _this$props2.currentUserId;
 
       if (pin.user_id === currentUserId) {
         var newUser = {
@@ -1952,11 +1989,11 @@ var EditPinForm = /*#__PURE__*/function (_React$Component) {
     key: "handleDelete",
     value: function handleDelete(e) {
       e.preventDefault();
-      var _this$props2 = this.props,
-          pin = _this$props2.pin,
-          currentUserId = _this$props2.currentUserId,
-          deletePin = _this$props2.deletePin,
-          closeEditForm = _this$props2.closeEditForm;
+      var _this$props3 = this.props,
+          pin = _this$props3.pin,
+          currentUserId = _this$props3.currentUserId,
+          deletePin = _this$props3.deletePin,
+          closeEditForm = _this$props3.closeEditForm;
 
       if (currentUserId === pin.userId) {
         closeEditForm();
@@ -2007,24 +2044,54 @@ var EditPinForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "boardNames",
     value: function boardNames() {
+      var _this4 = this;
+
       var boards = this.props.boards;
       if (!boards) return null;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
-        id: "board-names",
-        className: "board-names",
-        onChange: this.update("chosenBoardId")
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: ""
-      }, "--Select board--"), boards.map(function (board, idx) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "drop-down select-board edit",
+        id: "selected-text",
+        onClick: this.showMenu
+      }, "Select board"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        id: "board-names-edit",
+        className: "drop-down-menu"
+      }, boards.map(function (board, idx) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
           key: idx,
-          value: board.id
+          value: board.id,
+          className: "board-name",
+          onClick: _this4.makeBoardSelection
         }, board.name);
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "drop-down-arrow"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        onClick: this.openBoardForm
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        key: "a",
+        className: "create-board-option"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-plus-circle"
+      }), "Create board"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "drop-down-arrow-select-board-edit"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-chevron-down"
       })));
+    }
+  }, {
+    key: "makeBoardSelection",
+    value: function makeBoardSelection(e) {
+      document.getElementById("selected-text").innerHTML = e.currentTarget.innerHTML;
+      this.selectBoard(e);
+      this.update("chosenBoardId")(e);
+    }
+  }, {
+    key: "showMenu",
+    value: function showMenu() {
+      document.getElementById("board-names-edit").classList.toggle("show-menu");
+    }
+  }, {
+    key: "selectBoard",
+    value: function selectBoard(e) {
+      e.preventDefault();
+      document.getElementById("board-names-edit").classList.toggle("show-menu");
     }
   }, {
     key: "render",
@@ -2038,7 +2105,7 @@ var EditPinForm = /*#__PURE__*/function (_React$Component) {
         onClick: function onClick(e) {
           return e.stopPropagation();
         }
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Edit this Pin"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.showBoardForm(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Edit this Pin"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-edit-form-box"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "edit-pin-board"
@@ -2367,7 +2434,7 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
     _this = _super.call(this, props);
     _this.state = {
       edit: false,
-      chosenBoard: ''
+      chosenBoardId: ''
     };
     _this.openEditForm = _this.openEditForm.bind(_assertThisInitialized(_this));
     _this.closeEditForm = _this.closeEditForm.bind(_assertThisInitialized(_this));
@@ -2375,6 +2442,11 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
     _this.getSuggested = _this.getSuggested.bind(_assertThisInitialized(_this));
     _this.update = _this.update.bind(_assertThisInitialized(_this));
     _this.handleSaveToBoard = _this.handleSaveToBoard.bind(_assertThisInitialized(_this));
+    _this.selectBoard = _this.selectBoard.bind(_assertThisInitialized(_this));
+    _this.makeBoardSelection = _this.makeBoardSelection.bind(_assertThisInitialized(_this));
+    _this.showMenu = _this.showMenu.bind(_assertThisInitialized(_this));
+    _this.openBoardForm = _this.openBoardForm.bind(_assertThisInitialized(_this));
+    _this.closeBoardForm = _this.closeBoardForm.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -2430,7 +2502,9 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
             pins = _this$props3.pins,
             boards = _this$props3.boards,
             chosenPinId = _this$props3.chosenPinId,
+            createBoard = _this$props3.createBoard,
             errors = _this$props3.errors,
+            clearErrors = _this$props3.clearErrors,
             currentUserId = _this$props3.currentUserId,
             updatePin = _this$props3.updatePin,
             deletePin = _this$props3.deletePin,
@@ -2443,54 +2517,122 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
           updatePin: updatePin,
           deletePin: deletePin,
           saveToBoard: saveToBoard,
-          closeEditForm: this.closeEditForm
+          closeEditForm: this.closeEditForm,
+          clearErrors: clearErrors,
+          createBoard: createBoard
         });
       }
-    }
+    } //board start
+
   }, {
     key: "boardNames",
     value: function boardNames() {
-      var boards = this.props.boards;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "board-name-list",
-        onChange: this.update("chosenBoard")
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: ""
-      }, "--Select board--"), boards.map(function (board, idx) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-          key: idx,
-          value: board.id
-        }, board.name);
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        onClick: this.handleSaveToBoard
-      }, "Save"));
-    }
-  }, {
-    key: "update",
-    value: function update(field) {
       var _this2 = this;
 
-      return function (e) {
-        _this2.setState(_defineProperty({}, field, e.target.value));
-      };
+      var boards = this.props.boards;
+      if (!boards) return null;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "drop-down select-board show-select",
+        id: "selected-text",
+        onClick: this.showMenu
+      }, "Select board"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        id: "board-names",
+        className: "drop-down-menu"
+      }, boards.map(function (board, idx) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+          key: idx,
+          value: board.id,
+          className: "board-name",
+          onClick: _this2.makeBoardSelection
+        }, board.name);
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        onClick: this.openBoardForm
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        key: "a",
+        className: "create-board-option"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-plus-circle"
+      }), "Create board"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "drop-down-arrow-select-board"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-chevron-down"
+      })));
     }
+  }, {
+    key: "makeBoardSelection",
+    value: function makeBoardSelection(e) {
+      document.getElementById("selected-text").innerHTML = e.currentTarget.innerHTML;
+      this.selectBoard(e);
+      this.update("chosenBoardId")(e);
+    }
+  }, {
+    key: "showMenu",
+    value: function showMenu() {
+      document.getElementById("board-names").classList.toggle("show-menu");
+    }
+  }, {
+    key: "selectBoard",
+    value: function selectBoard(e) {
+      e.preventDefault();
+      document.getElementById("board-names").classList.toggle("show-menu");
+    }
+  }, {
+    key: "openBoardForm",
+    value: function openBoardForm() {
+      this.setState({
+        boardForm: true
+      });
+    }
+  }, {
+    key: "closeBoardForm",
+    value: function closeBoardForm() {
+      this.setState({
+        boardForm: false
+      });
+    }
+  }, {
+    key: "showBoardForm",
+    value: function showBoardForm() {
+      if (this.state.boardForm) {
+        var _this$props4 = this.props,
+            createBoard = _this$props4.createBoard,
+            clearErrors = _this$props4.clearErrors,
+            currentUserId = _this$props4.currentUserId;
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(CreateBoardForm, {
+          createBoard: createBoard,
+          clearErrors: clearErrors,
+          closeBoardForm: this.closeBoardForm,
+          currentUserId: currentUserId
+        });
+      }
+    } //board end
+
   }, {
     key: "handleSaveToBoard",
     value: function handleSaveToBoard(e) {
       e.preventDefault();
       var boardPin = {
-        board_id: parseInt(this.state.chosenBoard),
+        board_id: parseInt(this.state.chosenBoardId),
         pin_id: parseInt(this.props.chosenPinId)
       };
       this.props.saveToBoard(boardPin);
     }
   }, {
+    key: "update",
+    value: function update(field) {
+      var _this3 = this;
+
+      return function (e) {
+        _this3.setState(_defineProperty({}, field, e.target.value));
+      };
+    }
+  }, {
     key: "optionToEdit",
     value: function optionToEdit() {
-      var _this$props4 = this.props,
-          pins = _this$props4.pins,
-          chosenPinId = _this$props4.chosenPinId,
-          currentUserId = _this$props4.currentUserId;
+      var _this$props5 = this.props,
+          pins = _this$props5.pins,
+          chosenPinId = _this$props5.chosenPinId,
+          currentUserId = _this$props5.currentUserId;
 
       if (pins[chosenPinId].userId === currentUserId) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2505,18 +2647,18 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
     key: "render",
     value: function render() {
       window.scrollTo(0, 0);
-      var _this$props5 = this.props,
-          pins = _this$props5.pins,
-          chosenPinId = _this$props5.chosenPinId,
-          fetchPins = _this$props5.fetchPins,
-          users = _this$props5.users;
+      var _this$props6 = this.props,
+          pins = _this$props6.pins,
+          chosenPinId = _this$props6.chosenPinId,
+          fetchPins = _this$props6.fetchPins,
+          users = _this$props6.users;
       if (!Object.values(pins).length) return null;
       var showPin = pins[chosenPinId];
       var owner = users[showPin.userId];
       if (!owner) return null;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-show-page"
-      }, this.renderEditForm(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.renderEditForm(), this.showBoardForm(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "back-button",
         onClick: this.goBack
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -2524,7 +2666,7 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-show-box"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "pin-image-show"
+        className: "pin-image-show partition"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "thumbnail",
         src: showPin.photoUrl
@@ -2535,11 +2677,19 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-buttons"
       }, this.optionToEdit()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "save-to-board"
-      }, this.boardNames())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, showPin.link), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, showPin.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["NavLink"], {
+        className: "pin-top-buttons"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "save-pin",
+        onClick: this.handleSaveToBoard
+      }, "Save"), this.boardNames())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: showPin.link,
+        target: "_blank"
+      }, showPin.link), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, showPin.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["NavLink"], {
         className: "pin-owner",
         to: "/users/".concat(owner.id, "/pins")
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "".concat(owner.firstName, " ").concat(owner.lastName))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, showPin.description))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-user-circle"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "".concat(owner.firstName, " ").concat(owner.lastName))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, showPin.description))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "related-pins"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "More like this"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_pin_index__WEBPACK_IMPORTED_MODULE_3__["default"], {
         pins: this.getSuggested(),
@@ -2617,6 +2767,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     saveToBoard: function saveToBoard(boardPin) {
       return dispatch(Object(_actions_pin_actions__WEBPACK_IMPORTED_MODULE_2__["saveToBoard"])(boardPin));
+    },
+    createBoard: function createBoard(board) {
+      return dispatch(Object(_actions_board_actions__WEBPACK_IMPORTED_MODULE_3__["createBoard"])(board));
     }
   };
 };
@@ -2740,7 +2893,7 @@ var LoginForm = /*#__PURE__*/function (_React$Component) {
     value: function demoUser(e) {
       e.preventDefault();
       var user = {
-        email: "qween@io",
+        email: "demo@gmail.com",
         password: "password"
       };
       this.props.processForm(user);
@@ -3161,8 +3314,14 @@ var LanguageAndRegion = /*#__PURE__*/function (_React$Component) {
     _classCallCheck(this, LanguageAndRegion);
 
     _this = _super.call(this, props);
+    _this.state = {
+      language: '',
+      region: ''
+    };
     _this.handleNext = _this.handleNext.bind(_assertThisInitialized(_this));
     _this.handlePrev = _this.handlePrev.bind(_assertThisInitialized(_this));
+    _this.languages = ["English", "Spanish", "Mandarin", "Hindi", "Bengali", "Portuguese", "Russian", "Japanese", "Korean", "French", "German", "Vietnamese", "Italian", "Arabic", "Tagalog", "Armenian"];
+    _this.regions = ["North America", "South America", "Europe", "Africa", "Asia", "Australia", "Antarctica"];
     return _this;
   }
 
@@ -3191,6 +3350,53 @@ var LanguageAndRegion = /*#__PURE__*/function (_React$Component) {
       this.props.addErrors(newErrors);
     }
   }, {
+    key: "dropDown",
+    value: function dropDown(category, list) {
+      var _this2 = this;
+
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: category
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "drop-down",
+        id: "selected-text-".concat(category),
+        onClick: this.showMenu("".concat(category, "-names"))
+      }, "--Select ".concat(category, "--")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        id: "".concat(category, "-names"),
+        className: "drop-down-menu"
+      }, list.map(function (ele, idx) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+          key: idx,
+          value: ele,
+          className: "board-name",
+          onClick: _this2.makeSelection(category)
+        }, ele);
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "\"drop-down-arrow-select-".concat(category)
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-chevron-down"
+      })));
+    }
+  }, {
+    key: "makeSelection",
+    value: function makeSelection(category) {
+      var _this3 = this;
+
+      return function (e) {
+        document.getElementById("selected-text-".concat(category)).innerHTML = e.currentTarget.innerHTML;
+
+        _this3.showMenu("".concat(category, "-names"))(e);
+
+        _this3.props.update(category)(e);
+      };
+    }
+  }, {
+    key: "showMenu",
+    value: function showMenu(name) {
+      return function () {
+        document.getElementById(name).classList.toggle("show-menu");
+      };
+    }
+  }, {
     key: "render",
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -3208,25 +3414,7 @@ var LanguageAndRegion = /*#__PURE__*/function (_React$Component) {
         className: "form-title"
       }, "Pick your language and country/region"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "dropdown-fields"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
-        id: "language",
-        onChange: this.props.update("language")
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: ""
-      }, "--Select language--"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "English"
-      }, "English"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "Spanish"
-      }, "Spanish"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
-        id: "region",
-        onChange: this.props.update("region")
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: ""
-      }, "--Select Region--"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "USA"
-      }, "USA"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "Canada"
-      }, "Canada")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Language: ", this.dropDown("language", this.languages)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Region: ", this.dropDown("region", this.regions))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "error"
       }, this.props.showErrors())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "login-form-buttons"

@@ -3,9 +3,22 @@ import React from 'react'
 class LanguageAndRegion extends React.Component {
 
     constructor(props) {
-        super(props)
+        super(props);
+        this.state = {
+            language: '',
+            region: ''
+        }
         this.handleNext = this.handleNext.bind(this);
         this.handlePrev = this.handlePrev.bind(this);
+        this.languages = [
+            "English", "Spanish", "Mandarin", "Hindi", "Bengali", "Portuguese",
+            "Russian", "Japanese", "Korean", "French", "German", "Vietnamese",
+            "Italian", "Arabic", "Tagalog", "Armenian"
+        ];
+        this.regions = [
+            "North America", "South America", "Europe", "Africa", "Asia",
+            "Australia", "Antarctica"
+        ];
     }
 
     handleNext(e) {
@@ -29,6 +42,47 @@ class LanguageAndRegion extends React.Component {
         this.props.addErrors(newErrors);
     }
 
+    dropDown(category, list) {
+        return (
+            <div id={category}>
+                <div className="drop-down"
+                    id={`selected-text-${category}`}
+                    onClick={this.showMenu(`${category}-names`)}>
+                    {`--Select ${category}--`}
+                </div>
+                <ul id={`${category}-names`}
+                    className="drop-down-menu">
+                    {list.map((ele, idx) => {
+                        return (
+                            <li key={idx}
+                                value={ele}
+                                className="board-name"
+                                onClick={this.makeSelection(category)}
+                            >{ele}</li>
+                        )
+                    })}
+                </ul>
+                <div className={`"drop-down-arrow-select-${category}`}>
+                    <i className="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        )
+    }
+
+    makeSelection(category) {
+        return e => {
+            document.getElementById(`selected-text-${category}`).innerHTML = e.currentTarget.innerHTML;
+            this.showMenu(`${category}-names`)(e);
+            this.props.update(category)(e);
+        }
+    }
+
+    showMenu(name) {
+        return () => {
+            document.getElementById(name).classList.toggle("show-menu")
+        }
+    }
+
     render() {
         return (
             <div className="modal-background">
@@ -37,28 +91,12 @@ class LanguageAndRegion extends React.Component {
                         <form className="login-form">
                             <h1 className="form-title">Pick your language and country/region</h1>
                             <div className="dropdown-fields">
-                                <div>
-                                    <select id="language" onChange={this.props.update("language")}>
-                                        <option value="">--Select language--</option>
-                                        <option value="English">English</option>
-                                        <option value="Spanish">Spanish</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <select id="region" onChange={this.props.update("region")}>
-                                        <option value="">--Select Region--</option>
-                                        <option value="USA">USA</option>
-                                        <option value="Canada">Canada</option>
-                                    </select>
-                                </div>
+                                <div>Language: {this.dropDown("language", this.languages)}</div>
+                                <div>Region: {this.dropDown("region", this.regions)}</div>
                             </div>
                             <div className="error">
                                 {this.props.showErrors()}
                             </div>
-                            {/* <div className="signup-form-buttons">
-                                <button onClick={this.handlePrev}>{'<'}</button>
-                                <button onClick={this.handleNext}>{'>'}</button>
-                            </div> */}
                         </form>
                         <div className="login-form-buttons">
                             <button className="next login-button button" onClick={this.handleNext} >Next</button>
