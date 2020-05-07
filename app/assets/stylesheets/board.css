@@ -16,3 +16,44 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     background: linear-gradient(rgb(98, 255, 229), rgb(238, 227, 255));
 }
+
+.board-form-box > h1{
+    text-align: center;
+    padding: 32px;
+    margin: 0px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
+.date-options > div{
+    display: flex;
+    flex-direction: column;
+}
+
+.date-options > div > p:first-child{
+    margin-top: 14px;
+    margin-bottom: 0px;
+}
+.board-form-box .bottom-options{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.board-form-box .checkbox{
+    width: 100%;
+    margin-left: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
+.board-form-box .checkbox input{
+    width: 10%;
+}
+
+.board-form-box .edit-details > div{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border-top: none;
+    border-bottom: 1px solid rgb(221, 221, 221);
+}

@@ -46,11 +46,17 @@ class CreateBoardForm extends React.Component{
                                     onChange={this.update("name")} />
                             </div>
                             <div>
-                                <p>Visibility</p>
-                                <div className="checkbox">checkbox</div>
+                                <p>Visibility (optional)</p>
+                                <div className="checkbox">
+                                    <input type="checkbox"></input>
+                                    <label>Keep this board secret.</label>
+                                </div>
                             </div>
-                            <div>
-                                <p>Add dates (optional - this can help you plan!)</p>
+                            <div className="date-options">
+                                <div>
+                                    <p>Add dates (optional -</p>
+                                    <p>This can help you plan!)</p>
+                                </div>
                                 <input type="date" />
                             </div>
                         </div>
