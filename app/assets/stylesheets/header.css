@@ -15,12 +15,15 @@
     padding-top: 4px;
     padding-bottom: 4px;
     background-color: white;
-    box-shadow: 1px 1px 10px #e0e0e0;
     box-sizing: border-box;
     font-size: 25px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: 700;
     z-index: 50;
+}
+
+.scroll-shadow{
+    box-shadow: 1px 1px 10px #e0e0e0;
 }
 
 .header-logout > div, .header-logout > a, .drop-down{
@@ -143,6 +146,7 @@ a{
 
 #board-names .board-name{
     border-bottom: 1px solid rgba(156, 156, 156, 0.247);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .create-board-option{

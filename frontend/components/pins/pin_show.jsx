@@ -97,7 +97,7 @@ class PinShow extends React.Component{
 
     optionToEdit(){
         const { pins, chosenPinId, currentUserId } = this.props;
-        if (pins[chosenPinId].user_id === currentUserId){
+        if (pins[chosenPinId].userId === currentUserId){
             return (
                 <div className="edit-pin" onClick={this.openEditForm}>
                     <i className="fas fa-pencil-alt"></i>

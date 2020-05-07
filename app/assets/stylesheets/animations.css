@@ -10,6 +10,11 @@
     -webkit-animation: fadeIn 700ms;
 }
 
+.scroll-shadow{
+    animation: fadeIn 700ms;
+    -webkit-animation: fadeIn 700ms;
+}
+
 @keyframes fadeIn{
     0% {opacity: 0;}
     100% {opacity: 1;}
@@ -19,6 +24,8 @@
     0% {opacity: 0;}
     100% {opacity: 1;}
 }
+
+
 /* 
 @keyframes shadowHover{
     0% {box-shadow: none;}

@@ -1,5 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom';
+import CreateBoardForm from '../boards/board_create_form';
 
 class CreatePinForm extends React.Component{
     constructor(props){
@@ -13,14 +14,18 @@ class CreatePinForm extends React.Component{
             errors: this.props.errors,
             chosenBoardId: '',
             photoFile: null,
-            photoUrl: null
+            photoUrl: null,
+            boardForm: false
         }
         this.update = this.update.bind(this);
         this.selectBoard = this.selectBoard.bind(this);
         this.boardNames = this.boardNames.bind(this);
+        this.makeBoardSelection = this.makeBoardSelection.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleFile = this.handleFile.bind(this);
         this.showMenu = this.showMenu.bind(this);
+        this.openBoardForm = this.openBoardForm.bind(this);
+        this.closeBoardForm = this.closeBoardForm.bind(this);
     }
 
     componentDidMount(){
@@ -31,6 +36,26 @@ class CreatePinForm extends React.Component{
 
     update(field){
         return e => { this.setState({[field]: e.currentTarget.value})}
+    }
+    
+    openBoardForm() {
+        this.setState({ boardForm: true });
+    }
+
+    closeBoardForm() {
+        this.setState({ boardForm: false });
+    }
+
+    showBoardForm() {
+        if (this.state.boardForm) {
+            const { createBoard, clearErrors, owner } = this.props;
+            return (<CreateBoardForm
+                createBoard={createBoard}
+                clearErrors={clearErrors}
+                closeBoardForm={this.closeBoardForm}
+                currentUserId={owner.id}
+            />)
+        }
     }
 
     handleSubmit(e){
@@ -59,7 +84,8 @@ class CreatePinForm extends React.Component{
     }
     
     hideBackground(){
-        document.getElementById("image-background").classList.toggle("show-background");
+        document.getElementById("image-background").remove();
+        // document.getElementById("image-background").classList.toggle("show-background");
     }
 
     handleFile(e){
@@ -105,26 +131,38 @@ class CreatePinForm extends React.Component{
         if (!boards) return null;
         return (
             <div>
-                <div className="drop-down select-board" onClick={this.showMenu}>Select board</div>
-                <ul id="board-names" className="drop-down-menu">
+                <div className="drop-down select-board" 
+                    id="selected-text" 
+                    onClick={this.showMenu}>
+                        Select board
+                </div>
+                <ul id="board-names" 
+                    className="drop-down-menu">
                     {boards.map((board, idx) => {
                         return (
                             <li key={idx} 
                             value={board.id}
                             className="board-name"
-                            onClick={this.update("chosenBoardId")}
+                            onClick={this.makeBoardSelection}
                             >{board.name}</li>
                             )
                         })}
-                    <li key="a" className="create-board-option">
+                    <a onClick={this.openBoardForm}><li key="a" 
+                        className="create-board-option">
                         <i className="fas fa-plus-circle"></i>
-                        Create board</li>
+                        Create board</li></a>
                 </ul>
                 <div className="drop-down-arrow-select-board">
                     <i className="fas fa-chevron-down"></i>
                 </div>
             </div>
         )
+    }
+
+    makeBoardSelection(e){
+        document.getElementById("selected-text").innerHTML = e.currentTarget.innerHTML;
+        this.selectBoard(e);
+        this.update("chosenBoardId")(e);
     }
 
     selectBoard(e) {
@@ -138,6 +176,7 @@ class CreatePinForm extends React.Component{
         const preview = photoUrl ? <img id="image-preview" src={photoUrl} /> : null;
         return (
             <div className="pin-modal">
+                {this.showBoardForm()}
                 <div className="pin-form-box">
                     {this.displayConfirmation()}
                     <div className="pin-top-buttons">
@@ -147,11 +186,15 @@ class CreatePinForm extends React.Component{
                     </div>
                     <div className="pin-main-content">
                         <div className="pin-image-box">
-                            <div id="image-background" className="pin-image-back">
-                                <i className="fas fa-arrow-alt-circle-up"></i>
-                                <input type="file" onChange={this.handleFile} />
-                                {/* <p>Click to upload</p> */}
-                            </div>
+                            <input type="file" name="file-upload" id="file-upload" onChange={this.handleFile} />
+                            <label htmlFor="file-upload">
+                                <div id="image-background">
+                                    <div className="pin-image-back">
+                                        <i className="fas fa-arrow-alt-circle-up"></i>
+                                        <p>Click to upload</p>
+                                    </div>
+                                </div>
+                            </label>
                             <div className="image-preview">
                                 {preview}
                             </div>

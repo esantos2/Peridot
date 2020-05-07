@@ -6,7 +6,7 @@ const Welcome = ({ processForm }) => {
     const demoUser = (e) => {
         e.preventDefault();
         const user = {
-            email: "demo@io",
+            email: "demo@gmail.com",
             password: "password"
         }
         processForm(user);

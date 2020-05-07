@@ -127,8 +127,8 @@ class EditPinForm extends React.Component {
                                 </div>
                                 {this.editDetails()}
                             </div>
-                            <div className="image">
-                                <div className="profile-pic"></div>
+                            <div className="pin-image-show">
+                                <img className="thumbnail" src={this.props.pin.photoUrl} />
                             </div>
                         </div>
                         <div className="bottom-options">
