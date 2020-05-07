@@ -8,8 +8,8 @@ class BoardShow extends React.Component{
 
     componentDidMount(){
         const {fetchPins, fetchBoard, fetchBoardPins} = this.props;
-        fetchPins();
         fetchBoardPins();
+        fetchPins();
         fetchBoard();
     }
 

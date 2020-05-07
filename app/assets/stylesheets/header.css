@@ -144,7 +144,13 @@ a{
     right: 57px;
 }
 
-#board-names .board-name{
+#board-names-edit{
+    top: 45px;
+    right: 45px;
+    width: 327px;
+}
+
+#board-names .board-name, #board-names-edit .board-name{
     border-bottom: 1px solid rgba(156, 156, 156, 0.247);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
