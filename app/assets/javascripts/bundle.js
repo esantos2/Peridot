@@ -1487,6 +1487,7 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
     _this.boardNames = _this.boardNames.bind(_assertThisInitialized(_this));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     _this.handleFile = _this.handleFile.bind(_assertThisInitialized(_this));
+    _this.showMenu = _this.showMenu.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1550,6 +1551,11 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
       document.getElementById("image-preview").classList.toggle("image-load");
     }
   }, {
+    key: "showMenu",
+    value: function showMenu() {
+      document.getElementById("board-names").classList.toggle("show-menu");
+    }
+  }, {
     key: "hideBackground",
     value: function hideBackground() {
       document.getElementById("image-background").classList.toggle("show-background");
@@ -1609,21 +1615,33 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "boardNames",
     value: function boardNames() {
+      var _this5 = this;
+
       var boards = this.props.boards;
       if (!boards) return null;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "drop-down select-board",
+        onClick: this.showMenu
+      }, "Select board"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         id: "board-names",
-        className: "board-names",
-        onChange: this.update("chosenBoardId")
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "",
-        defaultValue: true
-      }, "--Select board--"), boards.map(function (board, idx) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        className: "drop-down-menu"
+      }, boards.map(function (board, idx) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
           key: idx,
-          value: board.id
+          value: board.id,
+          className: "board-name",
+          onClick: _this5.update("chosenBoardId")
         }, board.name);
-      }));
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        key: "a",
+        className: "create-board-option"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-plus-circle"
+      }), "Create board")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "drop-down-arrow-select-board"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-chevron-down"
+      })));
     }
   }, {
     key: "selectBoard",

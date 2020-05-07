@@ -77,6 +77,7 @@ a{
 
 .drop-down{
     position: relative;
+    min-height: auto;
 }
 
 .drop-down-menu{
@@ -113,6 +114,45 @@ a{
     cursor: pointer;
     border-radius: 7px;
     background-color: rgb(240, 240, 240);
+}
+
+.select-board{
+    justify-content: left;
+    padding-left: 20px;
+    width:200px;
+    height: 40px;
+    box-sizing: border-box;
+    margin: 0px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: rgba(209, 209, 209, 0.342);
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.select-board:hover{
+    cursor: pointer;
+    background-color: rgba(141, 141, 141, 0.342);
+}
+
+#board-names{
+    top: 25px;
+    right: 57px;
+}
+
+#board-names .board-name{
+    border-bottom: 1px solid rgba(156, 156, 156, 0.247);
+}
+
+.create-board-option{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 700;
+}
+
+.create-board-option > i{
+    padding: 0px 15px;
+    color: rgb(47, 180, 47);
 }
 
 .options > .icon{

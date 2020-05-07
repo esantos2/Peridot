@@ -20,6 +20,7 @@ class CreatePinForm extends React.Component{
         this.boardNames = this.boardNames.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleFile = this.handleFile.bind(this);
+        this.showMenu = this.showMenu.bind(this);
     }
 
     componentDidMount(){
@@ -52,7 +53,11 @@ class CreatePinForm extends React.Component{
     showImage() {
         document.getElementById("image-preview").classList.toggle("image-load");
     }
-
+    
+    showMenu() {
+        document.getElementById("board-names").classList.toggle("show-menu")
+    }
+    
     hideBackground(){
         document.getElementById("image-background").classList.toggle("show-background");
     }
@@ -99,14 +104,26 @@ class CreatePinForm extends React.Component{
         const { boards } = this.props;
         if (!boards) return null;
         return (
-            <select id="board-names" className="board-names" onChange={this.update("chosenBoardId")}>
-                <option value="" defaultValue>--Select board--</option>
-                {boards.map((board, idx) => {
-                    return (
-                        <option key={idx} value={board.id}>{board.name}</option>
-                    )
-                })}
-            </select>
+            <div>
+                <div className="drop-down select-board" onClick={this.showMenu}>Select board</div>
+                <ul id="board-names" className="drop-down-menu">
+                    {boards.map((board, idx) => {
+                        return (
+                            <li key={idx} 
+                            value={board.id}
+                            className="board-name"
+                            onClick={this.update("chosenBoardId")}
+                            >{board.name}</li>
+                            )
+                        })}
+                    <li key="a" className="create-board-option">
+                        <i className="fas fa-plus-circle"></i>
+                        Create board</li>
+                </ul>
+                <div className="drop-down-arrow-select-board">
+                    <i className="fas fa-chevron-down"></i>
+                </div>
+            </div>
         )
     }
 
