@@ -109,9 +109,9 @@
     align-items: center;
     border-radius: 20px;
     box-sizing: border-box;
-    padding: 20px;
     margin: 10px;
     min-height: 400px;
+    min-width: 200px;
     height: 100%;
     width: 100%;
     position: relative;
@@ -214,4 +214,8 @@
     margin-top: 40px;
     /* padding: 0px 32px; */
     box-sizing: border-box;
+}
+
+.hover-details{
+    display: hidden;
 }

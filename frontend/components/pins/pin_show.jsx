@@ -77,7 +77,7 @@ class PinShow extends React.Component{
         if (!boards) return null;
         return (
             <div>
-                <div className="drop-down select-board"
+                <div className="drop-down select-board show-select"
                     id="selected-text"
                     onClick={this.showMenu}>
                     Select board

@@ -2532,7 +2532,7 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
       var boards = this.props.boards;
       if (!boards) return null;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "drop-down select-board",
+        className: "drop-down select-board show-select",
         id: "selected-text",
         onClick: this.showMenu
       }, "Select board"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
@@ -2893,7 +2893,7 @@ var LoginForm = /*#__PURE__*/function (_React$Component) {
     value: function demoUser(e) {
       e.preventDefault();
       var user = {
-        email: "qween@io",
+        email: "demo@gmail.com",
         password: "password"
       };
       this.props.processForm(user);
@@ -3314,8 +3314,14 @@ var LanguageAndRegion = /*#__PURE__*/function (_React$Component) {
     _classCallCheck(this, LanguageAndRegion);
 
     _this = _super.call(this, props);
+    _this.state = {
+      language: '',
+      region: ''
+    };
     _this.handleNext = _this.handleNext.bind(_assertThisInitialized(_this));
     _this.handlePrev = _this.handlePrev.bind(_assertThisInitialized(_this));
+    _this.languages = ["English", "Spanish", "Mandarin", "Hindi", "Bengali", "Portuguese", "Russian", "Japanese", "Korean", "French", "German", "Vietnamese", "Italian", "Arabic", "Tagalog", "Armenian"];
+    _this.regions = ["North America", "South America", "Europe", "Africa", "Asia", "Australia", "Antarctica"];
     return _this;
   }
 
@@ -3344,6 +3350,53 @@ var LanguageAndRegion = /*#__PURE__*/function (_React$Component) {
       this.props.addErrors(newErrors);
     }
   }, {
+    key: "dropDown",
+    value: function dropDown(category, list) {
+      var _this2 = this;
+
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: category
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "drop-down",
+        id: "selected-text-".concat(category),
+        onClick: this.showMenu("".concat(category, "-names"))
+      }, "--Select ".concat(category, "--")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        id: "".concat(category, "-names"),
+        className: "drop-down-menu"
+      }, list.map(function (ele, idx) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+          key: idx,
+          value: ele,
+          className: "board-name",
+          onClick: _this2.makeSelection(category)
+        }, ele);
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "\"drop-down-arrow-select-".concat(category)
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-chevron-down"
+      })));
+    }
+  }, {
+    key: "makeSelection",
+    value: function makeSelection(category) {
+      var _this3 = this;
+
+      return function (e) {
+        document.getElementById("selected-text-".concat(category)).innerHTML = e.currentTarget.innerHTML;
+
+        _this3.showMenu("".concat(category, "-names"))(e);
+
+        _this3.props.update(category)(e);
+      };
+    }
+  }, {
+    key: "showMenu",
+    value: function showMenu(name) {
+      return function () {
+        document.getElementById(name).classList.toggle("show-menu");
+      };
+    }
+  }, {
     key: "render",
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -3361,25 +3414,7 @@ var LanguageAndRegion = /*#__PURE__*/function (_React$Component) {
         className: "form-title"
       }, "Pick your language and country/region"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "dropdown-fields"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
-        id: "language",
-        onChange: this.props.update("language")
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: ""
-      }, "--Select language--"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "English"
-      }, "English"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "Spanish"
-      }, "Spanish"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
-        id: "region",
-        onChange: this.props.update("region")
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: ""
-      }, "--Select Region--"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "USA"
-      }, "USA"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "Canada"
-      }, "Canada")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Language: ", this.dropDown("language", this.languages)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Region: ", this.dropDown("region", this.regions))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "error"
       }, this.props.showErrors())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "login-form-buttons"

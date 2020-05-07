@@ -61,6 +61,10 @@
     border-radius: 10px;
 }
 
+.show-select{
+    min-width: 170px;
+}
+
 .pin-top-buttons > .save-pin{
     background-color: limegreen;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -289,7 +293,6 @@
     cursor: pointer;
     pointer-events: none;
 }
-
 
 .drop-down-arrow-select-board-edit{
     position: absolute;
