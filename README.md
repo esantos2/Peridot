@@ -1,24 +1,52 @@
-# README
+# Peridot
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Peridot, a Pinterest clone, allows users to discover new ideas and inspiration through 
+other users' shared images, as well as contribute their own collections.
 
-Things you may want to cover:
+[Visit the site](https://peri-dot.herokuapp.com/#/)
 
-* Ruby version
+## Features
+* Create your own pins and boards to save images and ideas.
+* View other users' pins and add them to your own collection.
+* Masonry-style layout provides a responsive and inviting home feed
+* Follow other users
+___
 
-* System dependencies
+## Technologies
+* Ruby on Rails
+* HTML/CSS/JS
+* React/Redux
+* Amazon Web Services
+___
 
-* Configuration
+## Challenges
+* Home feed organization is paramount to the user experience. The masonry style layout proved challenging
+    when implemented outside a library. Instead, I used CSS to display the pins as a grid with rows that
+    change based on the size of the viewport. This provides responseiveness upon window resizing. 
+    To organize the pin heights in a column, I used Javascript to calculate the position of the next 
+    available row end based on the height, and placed the image in that position.
 
-* Database creation
+![character selection](home_feed.png)
 
-* Database initialization
+* Discovering new ideas is easier when you can view other images related to the ones you like.
+    When viewing individual pins, frontend filters generate a suggested feed of similar pins.
+    To implement this, I used selectors to populate the components with pins of the same category 
+    and check user ownership to ensure unsaved pins are shown.
 
-* How to run the test suite
+```
+export const selectSuggestedPins = (pins, userId, pinId) => {
+    //select based on category, ignore currently viewed pin
+    let suggestedPins = [];
+    Object.values(pins).forEach( pin => {
+        if (pin.id === pinId) return;
+        if ((pin.userId !== userId) && (pin.category === pins[pinId].category)) suggestedPins.push(pin);
+    })
+    return suggestedPins;
+};
+```
+___
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Coming soon
+* Masonry-style layout
+* Lazy load images
+* Search bar
