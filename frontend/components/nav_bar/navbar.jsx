@@ -16,7 +16,7 @@ const NavBar = ({ currentUserId, logout }) => {
                 <div className="home-button">
                     <Link to="/home">Home</Link>
                 </div>
-                <div className="search-bar">Peridot!</div>
+                <div className="search-bar">Peridot</div>
                 <a className="icon" id="linked-in" href="https://www.linkedin.com/in/erick-santos2/" target="_blank">
                     <i className="fab fa-linkedin"></i>
                 </a>

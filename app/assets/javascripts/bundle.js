@@ -1162,14 +1162,14 @@ var BoardIndexItem = /*#__PURE__*/function (_React$Component) {
     key: "render",
     value: function render() {
       var board = this.props.board;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "board-index-item"
-      }, this.showEditForm(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, board.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, board.description), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/users/".concat(board.userId, "/boards/").concat(board.id)
-      }, "Show details"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "board-edit-button",
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "board-index-item"
+      }, this.showEditForm(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, board.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, board.description), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-pencil-alt icon",
         onClick: this.openForm
-      }, "Edit board"));
+      })));
     }
   }]);
 
@@ -1357,7 +1357,7 @@ var NavBar = function NavBar(_ref) {
     to: "/home"
   }, "Home")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "search-bar"
-  }, "Peridot!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+  }, "Peridot"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
     className: "icon",
     id: "linked-in",
     href: "https://www.linkedin.com/in/erick-santos2/",
@@ -2042,30 +2042,22 @@ var EditPinForm = /*#__PURE__*/function (_React$Component) {
         deletePin(pin.id);
         this.props.history.push("/users/".concat(currentUserId, "/pins"));
       }
-    }
-  }, {
-    key: "displayConfirmation",
-    value: function displayConfirmation() {
-      if (this.state.confirm) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "modal-background"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "modal-child",
-          onClick: function onClick(e) {
-            return e.stopPropagation();
-          }
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "pin-confirmation-box"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "confirm-image"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "far fa-check-circle"
-        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Success!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["NavLink"], {
-          className: "continue",
-          to: "/users/".concat(this.state.user_id, "/pins")
-        }, "Continue")))));
-      }
-    }
+    } // displayConfirmation() {
+    //     if (this.state.confirm) {
+    //         return (
+    //             <div className="modal-background">
+    //                 <div className="modal-child" onClick={e => e.stopPropagation()}>
+    //                     <div className="pin-confirmation-box">
+    //                         <div className="confirm-image"><i className="far fa-check-circle"></i></div>
+    //                         <h1>Success!</h1>
+    //                         <p><NavLink className="continue" to={`/users/${this.state.user_id}/pins`}>Continue</NavLink></p>
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //         )
+    //     }
+    // }
+
   }, {
     key: "editDetails",
     value: function editDetails() {
@@ -2154,7 +2146,7 @@ var EditPinForm = /*#__PURE__*/function (_React$Component) {
         onClick: function onClick(e) {
           return e.stopPropagation();
         }
-      }, this.showBoardForm(), this.displayConfirmation(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Edit this Pin"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.showBoardForm(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Edit this Pin"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-edit-form-box"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "edit-pin-board"

@@ -7,14 +7,37 @@
 }
 
 .board-index-item{
-    width: 200px;
-    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    width: 236px;
+    height: 236px;
     margin: 20px;
     padding: 20px;
     box-sizing: border-box;
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     background: linear-gradient(rgb(98, 255, 229), rgb(238, 227, 255));
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.board-index-item{
+    padding: 20px;
+    color: black;
+}
+
+.board-index-item:visited{
+    color: black;
+}
+
+.board-index-item > i{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 48px;
+    width: 48px;
 }
 
 .board-form-box{
@@ -75,4 +98,10 @@
 .close-form{
     position: absolute;
 
+}
+
+.board-info{
+    text-align: center;
+    padding: 30px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }

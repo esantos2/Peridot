@@ -37,13 +37,12 @@ class BoardIndexItem extends React.Component{
     render(){
         const {board} = this.props;
         return (
-            <div className="board-index-item">
+            <Link to={`/users/${board.userId}/boards/${board.id}`}><div className="board-index-item">
                 {this.showEditForm()}
                 <h2>{board.name}</h2>
                 <p>{board.description}</p>
-                <Link to={`/users/${board.userId}/boards/${board.id}`}>Show details</Link>
-                <button className="board-edit-button" onClick={this.openForm}>Edit board</button>
-            </div>
+                <i className="fas fa-pencil-alt icon" onClick={this.openForm}></i>
+            </div></Link>
         )
     }
 }
