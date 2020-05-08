@@ -8,7 +8,7 @@ class PinIndex extends React.Component{
     }
 
     componentDidMount(){
-        this.props.getInfo()
+        this.props.getInfo();
     }
 
     addCreatePin(){
@@ -26,7 +26,8 @@ class PinIndex extends React.Component{
 
     render(){
         const {pins} = this.props;
-        if (pins.length === 0) return null;
+        debugger
+        if (!pins || pins.length === 0) return null;
         return (
             <div className="all-pins-box">
                 {this.addCreatePin()}

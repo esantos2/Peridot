@@ -62,7 +62,7 @@ bios = [
 #         language: Faker::Nation.language,
 #         region: Faker::Nation.capital_city
 #     )
-end
+# end
 
 
 demo = User.create!(
@@ -92,7 +92,7 @@ user1 = User.create!(
 )
 
 user2 = User.create!(
-    username: "sojiasha"
+    username: "sojiasha",
     password: "123456",
     first_name: "Soji",
     last_name: "Asha",
@@ -107,7 +107,7 @@ user2 = User.create!(
 user3 = User.create!(
     username: "reginaldB",
     password: "123456",
-    first_name: "Reginald"
+    first_name: "Reginald",
     last_name: "Barclay",
     email: "rb@gmail.com",
     bio: bios[2],
@@ -298,32 +298,32 @@ cats_names = [
     "Cats/coffee.jpg",
     "Cats/cool_cat.jpg",
     "Cats/couch_kitten.jpg",
-    "Cats/crib.jpg"]
-    # "Cats/faucet.jpg",
-    # "Cats/flowers.jpg",
-    # "Cats/go_cat_go.jpg",
-    # "Cats/green_cat.jpg",
-    # "Cats/hold.jpg",
-    # "Cats/holding_cat.jpg",
-    # "Cats/holiday.jpg",
-    # "Cats/homie.jpg",
-    # "Cats/jump.jpg",
-    # "Cats/kiss.jpg",
-    # "Cats/kitten.jpg",
-    # "Cats/night.jpg",
-    # "Cats/petpet.jpg",
-    # "Cats/rice.jpg",
-    # "Cats/scarlet_cat.jpg",
-    # "Cats/selfie.jpg",
-    # "Cats/sheets.jpg",
-    # "Cats/sleepy_couch.jpg",
-    # "Cats/sleepy_pet.jpg",
-    # "Cats/staredown.jpg",
-    # "Cats/tired_cat.jpg",
-    # "Cats/white_cat.jpg",
-    # "Cats/window.jpg",
-    # "Cats/xmas.jpg"
-# ]
+    "Cats/crib.jpg",
+    "Cats/faucet.jpg",
+    "Cats/flowers.jpg",
+    "Cats/go_cat_go.jpg",
+    "Cats/green_cat.jpg",
+    "Cats/hold.jpg",
+    "Cats/holding_cat.jpg",
+    "Cats/holiday.jpg",
+    "Cats/homie.jpg",
+    "Cats/jump.jpg",
+    "Cats/kiss.jpg",
+    "Cats/kitten.jpg",
+    "Cats/night.jpg",
+    "Cats/petpet.jpg",
+    "Cats/rice.jpg",
+    "Cats/scarlet_cat.jpg",
+    "Cats/selfie.jpg",
+    "Cats/sheets.jpg",
+    "Cats/sleepy_couch.jpg",
+    "Cats/sleepy_pet.jpg",
+    "Cats/staredown.jpg",
+    "Cats/tired_cat.jpg",
+    "Cats/white_cat.jpg",
+    "Cats/window.jpg",
+    "Cats/xmas.jpg"
+]
 
 animals_names = [
     "Animals/backpacking.jpg",
@@ -336,16 +336,16 @@ animals_names = [
     "Animals/doggo_dance.jpg",
     "Animals/doggo_skyline.jpg",
     "Animals/doggo_waiting.jpg"
-    # "Animals/doggo_yawn.jpg",
-    # "Animals/english_bulldog.jpg",
-    # "Animals/froggo.jpg",
-    # "Animals/holding_doggo.jpg",
-    # "Animals/lemur.jpg",
-    # "Animals/owl.jpg",
-    # "Animals/pesky_bird.jpg",
-    # "Animals/piglets.jpg",
-    # "Animals/porkchop.jpg",
-    # "Animals/pug_flowers.jpg",
+    "Animals/doggo_yawn.jpg",
+    "Animals/english_bulldog.jpg",
+    "Animals/froggo.jpg",
+    "Animals/holding_doggo.jpg",
+    "Animals/lemur.jpg",
+    "Animals/owl.jpg",
+    "Animals/pesky_bird.jpg",
+    "Animals/piglets.jpg",
+    "Animals/porkchop.jpg",
+    "Animals/pug_flowers.jpg",
     # "Animals/pupper_leaves.jpg",
     # "Animals/rafty_boy.jpg",
     # "Animals/ride_along.jpg",
@@ -430,7 +430,17 @@ tech_names = [
     "Tech/tech_7.jpg",
     "Tech/tech_8.jpg",
     "Tech/tech_9.jpg",
-    "Tech/tech_10.jpg"
+    "Tech/tech_10.jpg",
+    "Tech/tech_11.jpg",
+    "Tech/tech_12.jpg",
+    "Tech/tech_13.jpg",
+    "Tech/tech_14.jpg",
+    "Tech/tech_15.jpg",
+    "Tech/tech_16.jpg",
+    "Tech/tech_17.jpg",
+    "Tech/tech_18.jpg",
+    "Tech/tech_19.jpg",
+    "Tech/tech_20.jpg"
 ]
 
 travel_names = [
@@ -447,7 +457,7 @@ travel_names = [
 ]
 
 
-chosen_id = 0
+chosen_id = 1
 board = Board.create!(
     user_id: chosen_id,
     name: "Purrrfect",
@@ -457,7 +467,7 @@ board = Board.create!(
 cats_names.each_with_index do |file_name, idx|
     pin = Pin.create!(
         user_id: chosen_id,
-        title: purrrfect,
+        title: Faker::Creature::Cat.name,
         description: Faker::GreekPhilosophers.quote,
         link: pin_image_url,
         category: "cats",
@@ -479,7 +489,7 @@ board = Board.create!(
     description: "The clock is always ticking, whether you're there or not."
 )
 
-animal_names.each_with_index do |file_name, idx|
+animals_names.each_with_index do |file_name, idx|
     pin = Pin.create!(
         user_id: chosen_id,
         title: Faker::Creature::Cat.name,
@@ -611,6 +621,31 @@ travel_names.each_with_index do |file_name, idx|
         description: Faker::GreekPhilosophers.quote,
         link: pin_image_url,
         category: "travel",
+        photo: {
+            io: open(main_seed_url + file_name),
+            filename: file_name
+        }
+    )
+    BoardPin.create!(
+        board_id: board.id,
+        pin_id: pin.id
+    )
+end
+
+chosen_id = 5
+board = Board.create!(
+    user_id: chosen_id,
+    name: "Quarantine days",
+    description: "Life finds a way"
+)
+
+covid_names.each_with_index do |file_name, idx|
+    pin = Pin.create!(
+        user_id: chosen_id,
+        title: Faker::Book.title,
+        description: Faker::ChuckNorris.fact,
+        link: pin_image_url,
+        category: "covid",
         photo: {
             io: open(main_seed_url + file_name),
             filename: file_name
