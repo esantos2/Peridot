@@ -2,6 +2,7 @@ import React from 'react';
 import EditPinForm from './pin_edit_form';
 import { withRouter, NavLink } from 'react-router-dom';
 import PinIndex from './pin_index';
+import CreateBoardForm from '../boards/board_create_form'
 import { selectSuggestedPins } from '../../reducers/selectors';
 
 class PinShow extends React.Component{

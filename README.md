@@ -24,7 +24,9 @@ other users' shared images, as well as contribute their own collections.
     To organize the pin heights in a column, I used Javascript to calculate the position of the next 
     available row end based on the height, and placed the image in that position.
 
-![character selection](home_feed.png)
+<p align="center">
+  <img width="auto" height="auto" src="home_feed.png">
+</p>
 
 * Discovering new ideas is easier when you can view other images related to the ones you like.
     When viewing individual pins, frontend filters generate a suggested feed of similar pins.
