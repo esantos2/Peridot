@@ -9,7 +9,8 @@ class PinShow extends React.Component{
         super(props)
         this.state={
             edit: false,
-            chosenBoardId: ''
+            chosenBoardId: '', 
+            confirm: false
         }
         this.openEditForm = this.openEditForm.bind(this);
         this.closeEditForm = this.closeEditForm.bind(this);
@@ -22,6 +23,7 @@ class PinShow extends React.Component{
         this.showMenu = this.showMenu.bind(this);
         this.openBoardForm = this.openBoardForm.bind(this);
         this.closeBoardForm = this.closeBoardForm.bind(this);
+        this.closeConfirm = this.closeConfirm.bind(this);
     }
 
     goBack(e){
@@ -47,7 +49,7 @@ class PinShow extends React.Component{
 
     getSuggested(){
         const {pins, currentUserId, chosenPinId} = this.props;
-        let suggested = selectSuggestedPins(pins, currentUserId);
+        let suggested = selectSuggestedPins(pins, currentUserId, chosenPinId);
         delete suggested[chosenPinId+1];
         return suggested;
     }
@@ -139,7 +141,6 @@ class PinShow extends React.Component{
             />)
         }
     }
-    //board end
     
     handleSaveToBoard(e){
         e.preventDefault();
@@ -148,8 +149,32 @@ class PinShow extends React.Component{
             pin_id: parseInt(this.props.chosenPinId)
         }
         this.props.saveToBoard(boardPin);
+        this.setState({confirm: true});
+    }
+    //board end
+
+    closeConfirm(e){
+        this.setState({confirm: false})
+        // e.stopPropagation()
     }
     
+    displayConfirmation() {
+        if (this.state.confirm) {
+            return (
+                // <div className="modal-background">
+                    <div className="modal-child-round-box saved" onClick={this.closeConfirm}>
+                        <div className="pin-confirmation-box">
+                            {/* <div className="confirm-image"><i className="far fa-check-circle"></i></div> */}
+                            <h1>{`Saved!`}</h1>
+                            <i className="far fa-times-circle"></i>
+                            {/* <p><NavLink className="continue" to={`/users/${this.state.user_id}/pins`}>Continue</NavLink></p> */}
+                        </div>
+                    </div>
+                // </div>
+            )
+        }
+    }
+
     update(field){
         return e => {
             this.setState({[field]: e.target.value})}
@@ -177,6 +202,7 @@ class PinShow extends React.Component{
             <div className="pin-show-page">
                 {this.renderEditForm()}
                 {this.showBoardForm()}
+                {this.displayConfirmation()}
                 <div className="back-button" onClick={this.goBack}>
                     <i className="fas fa-arrow-left"></i>
                 </div>

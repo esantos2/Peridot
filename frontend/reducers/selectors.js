@@ -6,11 +6,20 @@ export const selectUserPins = (pins, userId) => {
     return userPins;
 };
 
-export const selectSuggestedPins = (pins, userId) => {
+export const selectOtherUsersPins = (pins, userId) => {
+    let selectedPins = [];
+    Object.values(pins).forEach(pin => {
+        if (pin.userId !== userId) selectedPins.push(pin);
+    })
+    return selectedPins;
+}
+
+export const selectSuggestedPins = (pins, userId, pinId) => {
     //select based on category, ignore currently viewed pin
     let suggestedPins = [];
     Object.values(pins).forEach( pin => {
-        if (pin.userId !== userId) suggestedPins.push(pin);
+        if (pin.id === pinId) return;
+        if ((pin.userId !== userId) && (pin.category === pins[pinId].category)) suggestedPins.push(pin);
     })
     return suggestedPins;
 };

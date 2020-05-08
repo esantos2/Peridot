@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 import { fetchPins } from '../../actions/pin_actions';
 import PinIndex from './pin_index';
-import { selectUserPins, selectSuggestedPins } from '../../reducers/selectors';
+import { selectUserPins, selectSuggestedPins, selectOtherUsersPins } from '../../reducers/selectors';
 
 const mapStateToProps = ({entities, session}, {match: {params}}) => {
     let pins;
@@ -11,8 +11,10 @@ const mapStateToProps = ({entities, session}, {match: {params}}) => {
     } else if (params.userId) {
         pins = selectUserPins(entities.pins, parseInt(params.userId));
         createOption = true;
+    } else if (params.pinId){
+        pins = selectSuggestedPins(entities.pins, session.currentUserId, parseInt(params.pinId))
     } else {
-        pins = selectSuggestedPins(entities.pins, session.currentUserId)
+        pins = selectOtherUsersPins(entities.pins, parseInt(session.currentUserId));
     }
     return { pins, createOption }
 }

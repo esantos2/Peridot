@@ -2268,6 +2268,7 @@ var PinIndex = /*#__PURE__*/function (_React$Component) {
     key: "render",
     value: function render() {
       var pins = this.props.pins;
+      if (pins.length === 0) return null;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "all-pins-box"
       }, this.addCreatePin(), !pins ? "" : pins.map(function (pin, idx) {
@@ -2316,8 +2317,10 @@ var mapStateToProps = function mapStateToProps(_ref, _ref2) {
   } else if (params.userId) {
     pins = Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["selectUserPins"])(entities.pins, parseInt(params.userId));
     createOption = true;
+  } else if (params.pinId) {
+    pins = Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["selectSuggestedPins"])(entities.pins, session.currentUserId, parseInt(params.pinId));
   } else {
-    pins = Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["selectSuggestedPins"])(entities.pins, session.currentUserId);
+    pins = Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["selectOtherUsersPins"])(entities.pins, parseInt(session.currentUserId));
   }
 
   return {
@@ -2483,7 +2486,8 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
     _this = _super.call(this, props);
     _this.state = {
       edit: false,
-      chosenBoardId: ''
+      chosenBoardId: '',
+      confirm: false
     };
     _this.openEditForm = _this.openEditForm.bind(_assertThisInitialized(_this));
     _this.closeEditForm = _this.closeEditForm.bind(_assertThisInitialized(_this));
@@ -2496,6 +2500,7 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
     _this.showMenu = _this.showMenu.bind(_assertThisInitialized(_this));
     _this.openBoardForm = _this.openBoardForm.bind(_assertThisInitialized(_this));
     _this.closeBoardForm = _this.closeBoardForm.bind(_assertThisInitialized(_this));
+    _this.closeConfirm = _this.closeConfirm.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -2539,7 +2544,7 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
           pins = _this$props2.pins,
           currentUserId = _this$props2.currentUserId,
           chosenPinId = _this$props2.chosenPinId;
-      var suggested = Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_4__["selectSuggestedPins"])(pins, currentUserId);
+      var suggested = Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_4__["selectSuggestedPins"])(pins, currentUserId, chosenPinId);
       delete suggested[chosenPinId + 1];
       return suggested;
     }
@@ -2654,8 +2659,7 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
           currentUserId: currentUserId
         });
       }
-    } //board end
-
+    }
   }, {
     key: "handleSaveToBoard",
     value: function handleSaveToBoard(e) {
@@ -2665,6 +2669,36 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
         pin_id: parseInt(this.props.chosenPinId)
       };
       this.props.saveToBoard(boardPin);
+      this.setState({
+        confirm: true
+      });
+    } //board end
+
+  }, {
+    key: "closeConfirm",
+    value: function closeConfirm(e) {
+      this.setState({
+        confirm: false
+      }); // e.stopPropagation()
+    }
+  }, {
+    key: "displayConfirmation",
+    value: function displayConfirmation() {
+      if (this.state.confirm) {
+        return (
+          /*#__PURE__*/
+          // <div className="modal-background">
+          react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "modal-child-round-box saved",
+            onClick: this.closeConfirm
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "pin-confirmation-box"
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Saved!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+            className: "far fa-times-circle"
+          }))) // </div>
+
+        );
+      }
     }
   }, {
     key: "update",
@@ -2707,7 +2741,7 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
       if (!owner) return null;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-show-page"
-      }, this.renderEditForm(), this.showBoardForm(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.renderEditForm(), this.showBoardForm(), this.displayConfirmation(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "back-button",
         onClick: this.goBack
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -4623,12 +4657,13 @@ var rootReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])(
 /*!****************************************!*\
   !*** ./frontend/reducers/selectors.js ***!
   \****************************************/
-/*! exports provided: selectUserPins, selectSuggestedPins, selectBoardPins */
+/*! exports provided: selectUserPins, selectOtherUsersPins, selectSuggestedPins, selectBoardPins */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "selectUserPins", function() { return selectUserPins; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "selectOtherUsersPins", function() { return selectOtherUsersPins; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "selectSuggestedPins", function() { return selectSuggestedPins; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "selectBoardPins", function() { return selectBoardPins; });
 var selectUserPins = function selectUserPins(pins, userId) {
@@ -4638,11 +4673,19 @@ var selectUserPins = function selectUserPins(pins, userId) {
   });
   return userPins;
 };
-var selectSuggestedPins = function selectSuggestedPins(pins, userId) {
+var selectOtherUsersPins = function selectOtherUsersPins(pins, userId) {
+  var selectedPins = [];
+  Object.values(pins).forEach(function (pin) {
+    if (pin.userId !== userId) selectedPins.push(pin);
+  });
+  return selectedPins;
+};
+var selectSuggestedPins = function selectSuggestedPins(pins, userId, pinId) {
   //select based on category, ignore currently viewed pin
   var suggestedPins = [];
   Object.values(pins).forEach(function (pin) {
-    if (pin.userId !== userId) suggestedPins.push(pin);
+    if (pin.id === pinId) return;
+    if (pin.userId !== userId && pin.category === pins[pinId].category) suggestedPins.push(pin);
   });
   return suggestedPins;
 };
