@@ -10,14 +10,12 @@ other users' shared images, as well as contribute their own collections.
 * View other users' pins and add them to your own collection.
 * Masonry-style layout provides a responsive and inviting home feed
 * Follow other users
-___
 
 ## Technologies
 * Ruby on Rails
 * HTML/CSS/JS
 * React/Redux
 * Amazon Web Services
-___
 
 ## Challenges
 * Home feed organization is paramount to the user experience. The masonry style layout proved challenging
@@ -44,7 +42,6 @@ export const selectSuggestedPins = (pins, userId, pinId) => {
     return suggestedPins;
 };
 ```
-___
 
 ## Coming soon
 * Masonry-style layout
