@@ -2260,7 +2260,6 @@ var PinIndex = /*#__PURE__*/function (_React$Component) {
     key: "render",
     value: function render() {
       var pins = this.props.pins;
-      debugger;
       if (!pins || pins.length === 0) return null;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "all-pins-box"

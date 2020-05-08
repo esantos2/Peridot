@@ -335,7 +335,7 @@ animals_names = [
     "Animals/dog_lifted.jpg",
     "Animals/doggo_dance.jpg",
     "Animals/doggo_skyline.jpg",
-    "Animals/doggo_waiting.jpg"
+    "Animals/doggo_waiting.jpg",
     "Animals/doggo_yawn.jpg",
     "Animals/english_bulldog.jpg",
     "Animals/froggo.jpg",
