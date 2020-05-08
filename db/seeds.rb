@@ -430,17 +430,17 @@ tech_names = [
     "Tech/tech_7.jpg",
     "Tech/tech_8.jpg",
     "Tech/tech_9.jpg",
-    "Tech/tech_10.jpg",
-    "Tech/tech_11.jpg",
-    "Tech/tech_12.jpg",
-    "Tech/tech_13.jpg",
-    "Tech/tech_14.jpg",
-    "Tech/tech_15.jpg",
-    "Tech/tech_16.jpg",
-    "Tech/tech_17.jpg",
-    "Tech/tech_18.jpg",
-    "Tech/tech_19.jpg",
-    "Tech/tech_20.jpg"
+    "Tech/tech_10.jpg"
+    # "Tech/tech_11.jpg",
+    # "Tech/tech_12.jpg",
+    # "Tech/tech_13.jpg",
+    # "Tech/tech_14.jpg",
+    # "Tech/tech_15.jpg",
+    # "Tech/tech_16.jpg",
+    # "Tech/tech_17.jpg",
+    # "Tech/tech_18.jpg",
+    # "Tech/tech_19.jpg",
+    # "Tech/tech_20.jpg"
 ]
 
 travel_names = [
