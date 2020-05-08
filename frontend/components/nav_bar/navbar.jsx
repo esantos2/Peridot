@@ -17,10 +17,10 @@ const NavBar = ({ currentUserId, logout }) => {
                     <Link to="/home">Home</Link>
                 </div>
                 <div className="search-bar">Peridot!</div>
-                <a className="icon" href="https://www.linkedin.com/in/erick-santos2/" target="_blank">
+                <a className="icon" id="linked-in" href="https://www.linkedin.com/in/erick-santos2/" target="_blank">
                     <i className="fab fa-linkedin"></i>
                 </a>
-                <a className="icon" href="https://github.com/Arctive" target="_blank">
+                <a className="icon" id="github" href="https://github.com/Arctive" target="_blank">
                     <i className="fab fa-github"></i>
                 </a>
                 <NavLink to={`/users/${currentUserId}/pins`} className="icon profile">

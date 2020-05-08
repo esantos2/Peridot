@@ -1359,12 +1359,14 @@ var NavBar = function NavBar(_ref) {
     className: "search-bar"
   }, "Peridot!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
     className: "icon",
+    id: "linked-in",
     href: "https://www.linkedin.com/in/erick-santos2/",
     target: "_blank"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
     className: "fab fa-linkedin"
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
     className: "icon",
+    id: "github",
     href: "https://github.com/Arctive",
     target: "_blank"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -1996,7 +1998,7 @@ var EditPinForm = /*#__PURE__*/function (_React$Component) {
           pin = _this$props2.pin,
           currentUserId = _this$props2.currentUserId;
 
-      if (pin.user_id === currentUserId) {
+      if (pin.userId === currentUserId) {
         var newUser = {
           id: pin.id,
           user_id: currentUserId,
@@ -2005,19 +2007,25 @@ var EditPinForm = /*#__PURE__*/function (_React$Component) {
           link: link
         };
         this.props.updatePin(newUser).then(function (pin) {
-          return _this3.props.saveToBoard({
-            board_id: parseInt(chosenBoardId),
-            pin_id: pin.pin.id
-          });
+          if (chosenBoardId) {
+            return _this3.props.saveToBoard({
+              board_id: parseInt(chosenBoardId),
+              pin_id: pin.pin.id
+            });
+          }
         });
       } else {
-        this.props.saveToBoard({
-          board_id: parseInt(chosenBoardId),
-          pin_id: pin.id
-        });
+        if (chosenBoardId) {
+          this.props.saveToBoard({
+            board_id: parseInt(chosenBoardId),
+            pin_id: pin.id
+          });
+        }
       }
 
-      this.props.closeEditForm();
+      this.setState({
+        confirm: true
+      }, this.props.closeEditForm);
     }
   }, {
     key: "handleDelete",
@@ -2034,23 +2042,30 @@ var EditPinForm = /*#__PURE__*/function (_React$Component) {
         deletePin(pin.id);
         this.props.history.push("/users/".concat(currentUserId, "/pins"));
       }
-    } // displayConfirmation() {
-    //     const { currentUserId, pin} = this.props;
-    //     if (this.state.confirm) {
-    //         return (
-    //             <div className="modal-background">
-    //                 <div className="modal-child" onClick={e => e.stopPropagation()}>
-    //                     <div className="pin-confirmation-box">
-    //                         <div className="confirm-image"></div>
-    //                         <h1>Success</h1>
-    //                         <p><NavLink to={`/users/${currentUserId}/pins/${pin.id}`}>Continue</NavLink></p>
-    //                     </div>
-    //                 </div>
-    //             </div>
-    //         )
-    //     }
-    // }
-
+    }
+  }, {
+    key: "displayConfirmation",
+    value: function displayConfirmation() {
+      if (this.state.confirm) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "modal-background"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "modal-child",
+          onClick: function onClick(e) {
+            return e.stopPropagation();
+          }
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "pin-confirmation-box"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "confirm-image"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "far fa-check-circle"
+        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Success!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["NavLink"], {
+          className: "continue",
+          to: "/users/".concat(this.state.user_id, "/pins")
+        }, "Continue")))));
+      }
+    }
   }, {
     key: "editDetails",
     value: function editDetails() {
@@ -2139,7 +2154,7 @@ var EditPinForm = /*#__PURE__*/function (_React$Component) {
         onClick: function onClick(e) {
           return e.stopPropagation();
         }
-      }, this.showBoardForm(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Edit this Pin"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.showBoardForm(), this.displayConfirmation(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Edit this Pin"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-edit-form-box"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "edit-pin-board"

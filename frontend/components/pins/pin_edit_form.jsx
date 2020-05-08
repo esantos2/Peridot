@@ -48,12 +48,11 @@ class EditPinForm extends React.Component {
         }
     }
 
-
     handleSubmit(e){
         e.preventDefault();
         const { title, description, link, chosenBoardId } = this.state;
         const { pin, currentUserId } = this.props;
-        if (pin.user_id === currentUserId){
+        if (pin.userId === currentUserId){
             let newUser = { 
                 id: pin.id,
                 user_id: currentUserId, 
@@ -61,11 +60,18 @@ class EditPinForm extends React.Component {
                 description, 
                 link };
             this.props.updatePin(newUser)
-                .then(pin => this.props.saveToBoard({ board_id: parseInt(chosenBoardId), pin_id: pin.pin.id }));
+                .then(pin => {
+                    
+                    if (chosenBoardId){
+                        return this.props.saveToBoard({ board_id: parseInt(chosenBoardId), pin_id: pin.pin.id })
+                    }
+                });
         } else {
-            this.props.saveToBoard({ board_id: parseInt(chosenBoardId), pin_id: pin.id });
+            if (chosenBoardId){
+                this.props.saveToBoard({ board_id: parseInt(chosenBoardId), pin_id: pin.id });
+            }
         }
-        this.props.closeEditForm();
+        this.setState({ confirm: true }, this.props.closeEditForm);
     }
 
     handleDelete(e){
@@ -78,29 +84,27 @@ class EditPinForm extends React.Component {
         }
     }
 
-    // displayConfirmation() {
-    //     const { currentUserId, pin} = this.props;
-    //     if (this.state.confirm) {
-    //         return (
-    //             <div className="modal-background">
-    //                 <div className="modal-child" onClick={e => e.stopPropagation()}>
-    //                     <div className="pin-confirmation-box">
-    //                         <div className="confirm-image"></div>
-    //                         <h1>Success</h1>
-    //                         <p><NavLink to={`/users/${currentUserId}/pins/${pin.id}`}>Continue</NavLink></p>
-    //                     </div>
-    //                 </div>
-    //             </div>
-    //         )
-    //     }
-    // }
+    displayConfirmation() {
+        if (this.state.confirm) {
+            return (
+                <div className="modal-background">
+                    <div className="modal-child" onClick={e => e.stopPropagation()}>
+                        <div className="pin-confirmation-box">
+                            <div className="confirm-image"><i className="far fa-check-circle"></i></div>
+                            <h1>Success!</h1>
+                            <p><NavLink className="continue" to={`/users/${this.state.user_id}/pins`}>Continue</NavLink></p>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
+    }
 
     editDetails(){
         if (this.props.currentUserId !== this.props.pin.userId) return null;
         const {title, description, link} = this.state;
         return (
             <div className="edit-details">
-                {/* {this.displayConfirmation()} */}
                 <div>
                     <p>Title</p>
                     <input type="text" value={title} onChange={this.update("title")}/>
@@ -171,6 +175,7 @@ class EditPinForm extends React.Component {
             <div className="modal-background" onClick={this.props.closeEditForm}>
                 <div className="modal-child-round-box" onClick={e => e.stopPropagation()}>
                     {this.showBoardForm()}
+                    {this.displayConfirmation()}
                     <h1>Edit this Pin</h1>
                     <div className="pin-edit-form-box">
                         <div className="edit-pin-board">
