@@ -26,6 +26,8 @@ class CreatePinForm extends React.Component{
         this.showMenu = this.showMenu.bind(this);
         this.openBoardForm = this.openBoardForm.bind(this);
         this.closeBoardForm = this.closeBoardForm.bind(this);
+        this.disableButton = this.disableButton.bind(this);
+        this.enableButton = this.enableButton.bind(this);
     }
 
     componentDidMount(){
@@ -60,6 +62,7 @@ class CreatePinForm extends React.Component{
 
     handleSubmit(e){
         e.preventDefault();
+        this.disableButton();
         const {user_id, title, description, link, chosenBoardId, photoFile} = this.state;
         const formData = new FormData();
         formData.append('pin[title]', title);
@@ -72,7 +75,19 @@ class CreatePinForm extends React.Component{
         // let newUser = {user_id, title, description, link};
         this.props.createPin(formData)
             .then( pin => this.props.saveToBoard({board_id: parseInt(chosenBoardId), pin_id: pin.pin.id}))
-            .then( () => this.setState({confirm: true}))
+            .then(() => this.setState({ confirm: true }), this.enableButton);
+    }
+
+    disableButton(){
+        document.getElementById("save-pin").disabled = true;
+        document.getElementById("save-pin").classList.toggle("no-button");
+        document.getElementById("spinner").classList.toggle("show-spinner");
+    }
+    
+    enableButton(){
+        document.getElementById("save-pin").disabled = false;
+        document.getElementById("save-pin").classList.toggle("no-button");
+        document.getElementById("spinner").classList.toggle("show-spinner");
     }
 
     showImage() {
@@ -105,9 +120,9 @@ class CreatePinForm extends React.Component{
                 <div className="modal-background">
                     <div className="modal-child" onClick={e => e.stopPropagation()}>
                         <div className="pin-confirmation-box">
-                            <div className="confirm-image"></div>
-                            <h1>Success</h1>
-                            <p>Go to <NavLink to={`/users/${this.state.user_id}/pins`}>Profile</NavLink></p>
+                            <div className="confirm-image"><i className="far fa-check-circle"></i></div>
+                            <h1>Success!</h1>
+                            <p><NavLink className="continue" to={`/users/${this.state.user_id}/pins`}>Continue</NavLink></p>
                         </div>
                     </div>
                 </div>
@@ -180,8 +195,9 @@ class CreatePinForm extends React.Component{
                 <div className="pin-form-box">
                     {this.displayConfirmation()}
                     <div className="pin-top-buttons">
-                        <button className="save-pin" onClick={this.handleSubmit}>Save</button>
+                        <button id="save-pin" className="save-pin" onClick={this.handleSubmit}>Save</button>
                         {this.boardNames()}
+                        <div id="spinner" className="spinner"></div>
                     </div>
                     <div className="pin-main-content">
                         <div className="pin-image-box">

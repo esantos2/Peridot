@@ -340,7 +340,8 @@
     box-sizing: border-box;
 }
 
-.bottom-options button{
+.bottom-options button, 
+.continue{
     height: 40px;
     width: auto;
     margin: 10px;
@@ -366,12 +367,14 @@
     background-color: rgb(199, 199, 199);
 }
 
-.save-or-cancel > .save-edit{
+.save-or-cancel > .save-edit, 
+.continue{
     background-color: rgb(24, 187, 35);
     color: rgb(255, 255, 255);
 }
 
-.save-or-cancel > .save-edit:hover{
+.save-or-cancel > .save-edit:hover, 
+.continue:hover{
     background-color: rgb(28, 143, 36);
 }
 
@@ -428,4 +431,37 @@
     display: none;
     z-index: -1;
     position: absolute;
+}
+
+.pin-top-buttons >.no-button{
+    background-color: lightgray;
+}
+
+.no-button:hover{
+    background-color: lightgray;
+    cursor: initial;
+}
+
+.pin-confirmation-box{
+    width: auto;
+    padding: 50px;
+}
+
+.pin-confirmation-box h1{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.confirm-image{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+    padding: 20px;
+    color: lightgreen;
+}
+
+.pin-confirmation-box > p{
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 20px;
 }

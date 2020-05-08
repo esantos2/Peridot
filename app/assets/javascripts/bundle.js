@@ -1502,6 +1502,8 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
     _this.showMenu = _this.showMenu.bind(_assertThisInitialized(_this));
     _this.openBoardForm = _this.openBoardForm.bind(_assertThisInitialized(_this));
     _this.closeBoardForm = _this.closeBoardForm.bind(_assertThisInitialized(_this));
+    _this.disableButton = _this.disableButton.bind(_assertThisInitialized(_this));
+    _this.enableButton = _this.enableButton.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1560,6 +1562,7 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
       var _this3 = this;
 
       e.preventDefault();
+      this.disableButton();
       var _this$state = this.state,
           user_id = _this$state.user_id,
           title = _this$state.title,
@@ -1587,7 +1590,21 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
         return _this3.setState({
           confirm: true
         });
-      });
+      }, this.enableButton);
+    }
+  }, {
+    key: "disableButton",
+    value: function disableButton() {
+      document.getElementById("save-pin").disabled = true;
+      document.getElementById("save-pin").classList.toggle("no-button");
+      document.getElementById("spinner").classList.toggle("show-spinner");
+    }
+  }, {
+    key: "enableButton",
+    value: function enableButton() {
+      document.getElementById("save-pin").disabled = false;
+      document.getElementById("save-pin").classList.toggle("no-button");
+      document.getElementById("spinner").classList.toggle("show-spinner");
     }
   }, {
     key: "showImage",
@@ -1635,9 +1652,12 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
           className: "pin-confirmation-box"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "confirm-image"
-        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Success"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Go to ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["NavLink"], {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "far fa-check-circle"
+        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Success!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["NavLink"], {
+          className: "continue",
           to: "/users/".concat(this.state.user_id, "/pins")
-        }, "Profile")))));
+        }, "Continue")))));
       }
     }
   }, {
@@ -1723,9 +1743,13 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
       }, this.displayConfirmation(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-top-buttons"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        id: "save-pin",
         className: "save-pin",
         onClick: this.handleSubmit
-      }, "Save"), this.boardNames()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Save"), this.boardNames(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "spinner",
+        className: "spinner"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-main-content"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-image-box"
