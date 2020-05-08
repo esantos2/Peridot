@@ -35,37 +35,44 @@ class BoardEditForm extends React.Component{
         return (
             <div className="modal-background" onClick={closeEditForm}>
                 <div className="modal-child-round-box" onClick={e => e.stopPropagation()}>
-                    <div className="board-edit-form">
-                        <div className="form-header">
-                            <h2>Edit your board</h2>
-                            <div className="close-form" onClick={closeEditForm}>X</div>
+                    <div className="board-form-box">
+                        <h1>Edit your board</h1>
+                        <div className="close-form" onClick={closeEditForm}>
+
                         </div>
-                        <div>
-                            <p>Name</p>
-                            <input type="text" value={name} onChange={this.update("name")} />
-                        </div>
-                        <div>
-                            <p>Description</p>
-                            <textarea rows="3" placeholder="What's your board about?" value={description || ''} onChange={this.update("description")} />
-                        </div>
-                        <div>
-                            <p>Add dates (optional - this can help you plan!)</p>
-                            <div className="start-end-date">
-                                <label>Start
+                        <div className="edit-details">
+                            <div>
+                                <p>Name</p>
+                                <input type="text" value={name} onChange={this.update("name")} />
+                            </div>
+                            <div>
+                                <p>Description</p>
+                                <textarea rows="3" placeholder="What's your board about?" value={description || ''} onChange={this.update("description")} />
+                            </div>
+                            <div>
+                                <p>Visibility (optional)</p>
+                                <div className="checkbox">
+                                    <input type="checkbox"></input>
+                                    <label>Keep this board secret.</label>
+                                </div>
+                            </div>
+                            <div>
+                                <p>Add dates (optional)</p>
+                                <div className="start-end-date">
+                                    <label>Start</label>
                                     <input type="date" placeholder="Start date"/>
-                                </label>
-                                <label>End
+                                    <label>End</label>
                                     <input type="date" placeholder="End date"/>
-                                </label>
+                                </div>
                             </div>
                         </div>
                         <div className="bottom-options">
-                            <div className="delete-button">
-                                <button className="delete-pin" onClick={this.handleDelete}>Delete</button>
-                            </div>
                             <div className="save-or-cancel">
                                 <button className="cancel-edit" onClick={closeEditForm}>Cancel</button>
                                 <button className="save-edit" onClick={this.handleSubmit}>Save</button>
+                            </div>
+                            <div className="delete-button">
+                                <button className="delete-pin" onClick={this.handleDelete}>Delete</button>
                             </div>
                         </div>
                     </div>

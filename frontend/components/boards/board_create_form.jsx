@@ -55,10 +55,16 @@ class CreateBoardForm extends React.Component{
                             </div>
                             <div className="date-options">
                                 <div>
-                                    <p>Add dates (optional -</p>
-                                    <p>This can help you plan!)</p>
+                                    <p>Add dates (optional)</p>
+                                    <p>This can help you plan!</p>
                                 </div>
-                                <input type="date" />
+                                <div className="start-end-date">
+                                    <label>Start</label>
+                                    <input type="date" placeholder="Start date" />
+                                    <label>End</label>
+                                    <input type="date" placeholder="End date" />
+                                </div>
+                                {/* <input type="date" /> */}
                             </div>
                         </div>
                         <div className="bottom-options">

@@ -65,3 +65,14 @@
     border-top: none;
     border-bottom: 1px solid rgb(221, 221, 221);
 }
+
+.start-end-date > label{
+    margin-top: 10px;
+    margin-left: 20px;
+    display: flex;
+}
+
+.close-form{
+    position: absolute;
+
+}
