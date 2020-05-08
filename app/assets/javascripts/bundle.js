@@ -2968,8 +2968,8 @@ var LoginForm = /*#__PURE__*/function (_React$Component) {
     value: function demoUser(e) {
       e.preventDefault();
       var user = {
-        email: "demo@gmail.com",
-        password: "password"
+        email: "demouser@gmail.com",
+        password: "123456"
       };
       this.props.processForm(user);
     }
@@ -4037,7 +4037,7 @@ var Welcome = function Welcome(_ref) {
   var demoUser = function demoUser(e) {
     e.preventDefault();
     var user = {
-      email: "demo@gmail.com",
+      email: "demouser@gmail.com",
       password: "password"
     };
     processForm(user);
@@ -4248,7 +4248,7 @@ var UserProfile = /*#__PURE__*/function (_React$Component) {
         className: "user-details"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "info"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, user.username)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, user.username), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, user.bio)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "image"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "profile-pic"

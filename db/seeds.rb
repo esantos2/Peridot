@@ -15,8 +15,8 @@ bios = [
     "The best things come from living outside of your comfort zone.",
     "A day in the life of me: Eat avocado toast, post videos, read comments.",
     "Currently saying yes to new adventures",
-    "I’m hurt but I still smile. That’s my life.",
     "I’ve been told ‘You are what you eat.’ Guess I ate a sexy beast this morning.",
+    "I’m hurt but I still smile. That’s my life.",
     "I’m pawsome and currently having a purrfect day",
     "Anything but predictable",
     "I believe in making the impossible possible because there’s no fun in giving up",
@@ -34,40 +34,261 @@ bios = [
     "I got to where I am today by being me"
 ]
 
+# demo = User.create!(
+#     username: Faker::Twitter.unique.screen_name,
+#     password: "password",
+#     first_name: Faker::Name.first_name,
+#     last_name: Faker::Name.last_name,
+#     email: "demo@gmail.com",
+#     bio: bios[-1],
+#     age: Faker::Number.between(from: 18, to: 35),
+#     gender: Faker::Gender.binary_type.downcase,
+#     language: Faker::Nation.language,
+#     region: Faker::Nation.capital_city
+# )
+
+# #create users
+# users = []
+# 15.times do |n|
+#     users << User.create!(
+#         username: Faker::Twitter.unique.screen_name,
+#         password: Faker::Internet.password(min_length: 6),
+#         first_name: Faker::Name.first_name,
+#         last_name: Faker::Name.last_name,
+#         email: Faker::Internet.unique.free_email,
+#         bio: bios[n],
+#         age: Faker::Number.between(from: 18, to: 35),
+#         gender: Faker::Gender.binary_type.downcase,
+#         language: Faker::Nation.language,
+#         region: Faker::Nation.capital_city
+#     )
+end
+
+
 demo = User.create!(
-    username: Faker::Twitter.unique.screen_name,
-    password: "password",
-    first_name: Faker::Name.first_name,
-    last_name: Faker::Name.last_name,
-    email: "demo@gmail.com",
+    username: "demo",
+    password: "123456",
+    first_name: "Demo",
+    last_name: "User",
+    email: "demouser@gmail.com",
     bio: bios[-1],
-    age: Faker::Number.between(from: 18, to: 35),
+    age: 23,
     gender: Faker::Gender.binary_type.downcase,
-    language: Faker::Nation.language,
-    region: Faker::Nation.capital_city
+    language: "english",
+    region: "europe"
 )
 
-#create users
-users = []
-15.times do |n|
-    users << User.create!(
-        username: Faker::Twitter.unique.screen_name,
-        password: Faker::Internet.password(min_length: 6),
-        first_name: Faker::Name.first_name,
-        last_name: Faker::Name.last_name,
-        email: Faker::Internet.unique.free_email,
-        bio: bios[n],
-        age: Faker::Number.between(from: 18, to: 35),
-        gender: Faker::Gender.binary_type.downcase,
-        language: Faker::Nation.language,
-        region: Faker::Nation.capital_city
-    )
-end
+user1 = User.create!(
+    username: "airiam",
+    password: "123456",
+    first_name: "Jonathan",
+    last_name: "Archer",
+    email: "ja@gmail.com",
+    bio: bios[0],
+    age: 28,
+    gender: "male",
+    language: "spanish",
+    region: "europe"
+)
+
+user2 = User.create!(
+    username: "sojiasha"
+    password: "123456",
+    first_name: "Soji",
+    last_name: "Asha",
+    email: "sa@gmail.com",
+    bio: bios[1],
+    age: 21,
+    gender: "female",
+    language: "spanish",
+    region: "america"
+)
+
+user3 = User.create!(
+    username: "reginaldB",
+    password: "123456",
+    first_name: "Reginald"
+    last_name: "Barclay",
+    email: "rb@gmail.com",
+    bio: bios[2],
+    age: 31,
+    gender: "female",
+    language: "japanese",
+    region: "asia"
+)
+
+user4 = User.create!(
+    username: "erickS",
+    password: "123456",
+    first_name: "Erick",
+    last_name: "Santos",
+    email: "es@gmail.com",
+    bio: bios[3],
+    age: 19,
+    gender: "male",
+    language: "english",
+    region: "america"
+)
+
+user5 = User.create!(
+    username: "Bareil",
+    password: "123456",
+    first_name: "Bareil",
+    last_name: "Antos",
+    email: "bareil@gmail.com",
+    bio: bios[4],
+    age: 29,
+    gender: "male",
+    language: "french",
+    region: "africa"
+)
+
+user6 = User.create!(
+    username: "julian",
+    password: "123456",
+    first_name: "Julian",
+    last_name: "Bashir",
+    email: "julianb@gmail.com",
+    bio: bios[5],
+    age: 31,
+    gender: "male",
+    language: "italian",
+    region: "asia"
+)
+
+user7 = User.create!(
+    username: "brad",
+    password: "123456",
+    first_name: "Brad",
+    last_name: "Boimler",
+    email: "brad@gmail.com",
+    bio: bios[6],
+    age: 34,
+    gender: "male",
+    language: "spanish",
+    region: "south america"
+)
+
+user8 = User.create!(
+    username: "borgqueen",
+    password: "123456",
+    first_name: "Brog",
+    last_name: "Queen",
+    email: "brogqueen@gmail.com",
+    bio: bios[7],
+    age: 27,
+    gender: "female",
+    language: "english",
+    region: "america"
+)
+
+user9 = User.create!(
+    username: "phillip",
+    password: "123456",
+    first_name: "Phillip",
+    last_name: "Boyce",
+    email: "phillip@gmail.com",
+    bio: bios[8],
+    age: 29,
+    gender: "male",
+    language: "japanese",
+    region: "europe"
+)
+
+user10 = User.create!(
+    username: "gabrielle",
+    password: "123456",
+    first_name: "Gabrielle",
+    last_name: "Burnham",
+    email: "gabrie@gmail.com",
+    bio: bios[9],
+    age: 18,
+    gender: "female",
+    language: "french",
+    region: "australia"
+)
+
+user11 = User.create!(
+    username: "michael",
+    password: "123456",
+    first_name: "Michael",
+    last_name: "Burnham",
+    email: "michaelB@gmail.com",
+    bio: bios[10],
+    age: 29,
+    gender: "male",
+    language: "english",
+    region: "australia"
+)
+user12 = User.create!(
+    username: "josephcarey",
+    password: "123456",
+    first_name: "Joseph",
+    last_name: "Carey",
+    email: "josephCarey@gmail.com",
+    bio: bios[11],
+    age: 25,
+    gender: "male",
+    language: "korean",
+    region: "america"
+)
+
+user13 = User.create!(
+    username: "christinechapel",
+    password: "123456",
+    first_name: "Christine",
+    last_name: "Chapel",
+    email: "ccc@gmail.com",
+    bio: bios[12],
+    age: 30,
+    gender: "female",
+    language: "russian",
+    region: "africa"
+)
+
+user14 = User.create!(
+    username: "pavelchekov",
+    password: "123456",
+    first_name: "Pavel",
+    last_name: "Chekov",
+    email: "pavelchekov@gmail.com",
+    bio: bios[13],
+    age: 20,
+    gender: "male",
+    language: "english",
+    region: "south america"
+)
+
+user15 = User.create!(
+    username: "katrinacornwell",
+    password: "123456",
+    first_name: "Katrina",
+    last_name: "Cornwell",
+    email: "kcornwell@gmail.com",
+    bio: bios[14],
+    age: 23,
+    gender: "female",
+    language: "spanish",
+    region: "south america"
+)
+
+user16 = User.create!(
+    username: "kimaracretak",
+    password: "123456",
+    first_name: "Kimara",
+    last_name: "Cretak",
+    email: "kimaracretak@gmail.com",
+    bio: bios[15],
+    age: 28,
+    gender: "female",
+    language: "mandarin",
+    region: "europe"
+)
 
 main_seed_url = "https://peridot-seed.s3-us-west-1.amazonaws.com/"
 pin_image_url = "https://unsplash.com/"
 
-cats_file_names = [
+cats_names = [
     "Cats/april.jpg",
     "Cats/basket.jpg",
     "Cats/books.jpg",
@@ -104,7 +325,7 @@ cats_file_names = [
     # "Cats/xmas.jpg"
 # ]
 
-animals_file_names = [
+animals_names = [
     "Animals/backpacking.jpg",
     "Animals/billiards.jpg",
     "Animals/birb.jpg",
@@ -114,52 +335,129 @@ animals_file_names = [
     "Animals/dog_lifted.jpg",
     "Animals/doggo_dance.jpg",
     "Animals/doggo_skyline.jpg",
-    "Animals/doggo_waiting.jpg",
-    "Animals/doggo_yawn.jpg",
-    "Animals/english_bulldog.jpg",
-    "Animals/froggo.jpg",
-    "Animals/holding_doggo.jpg",
-    "Animals/lemur.jpg",
-    "Animals/owl.jpg",
-    "Animals/pesky_bird.jpg",
-    "Animals/piglets.jpg",
-    "Animals/porkchop.jpg",
-    "Animals/pug_flowers.jpg",
-    "Animals/pupper_leaves.jpg",
-    "Animals/rafty_boy.jpg",
-    "Animals/ride_along.jpg",
-    "Animals/roadtrip.jpg",
-    "Animals/smart_boi.jpg",
-    "Animals/smol_owl.jpg",
-    "Animals/smug_pug.jpg",
-    "Animals/snek.jpg",
-    "Animals/starbucks.jpg",
-    "Animals/sunny_doggo.jpg",
+    "Animals/doggo_waiting.jpg"
+    # "Animals/doggo_yawn.jpg",
+    # "Animals/english_bulldog.jpg",
+    # "Animals/froggo.jpg",
+    # "Animals/holding_doggo.jpg",
+    # "Animals/lemur.jpg",
+    # "Animals/owl.jpg",
+    # "Animals/pesky_bird.jpg",
+    # "Animals/piglets.jpg",
+    # "Animals/porkchop.jpg",
+    # "Animals/pug_flowers.jpg",
+    # "Animals/pupper_leaves.jpg",
+    # "Animals/rafty_boy.jpg",
+    # "Animals/ride_along.jpg",
+    # "Animals/roadtrip.jpg",
+    # "Animals/smart_boi.jpg",
+    # "Animals/smol_owl.jpg",
+    # "Animals/smug_pug.jpg",
+    # "Animals/snek.jpg",
+    # "Animals/starbucks.jpg",
+    # "Animals/sunny_doggo.jpg",
+]
+
+covid_names = [
+    "Covid/carts.jpg",
+    "Covid/clothes_line.jpg",
+    "Covid/coffee_time.jpg",
+    "Covid/computer_mask.jpg",
+    "Covid/downer.jpg",
+    "Covid/farm.jpg",
+    "Covid/hammock.jpg",
+    "Covid/happy_hour.jpg",
+    "Covid/making_masks.jpg",
+    "Covid/masked.jpg",
+    "Covid/neon_umbrella.jpg",
+    "Covid/pain.jpg",
+    "Covid/park.jpg",
+    "Covid/ruby_tuesday.jpg",
+    "Covid/scrabble.jpg",
+    "Covid/shelves.jpg",
+    "Covid/stairs.jpg",
+    "Covid/surfer.jpg",
+    "Covid/tables.jpg",
+    "Covid/texting.jpg"
+]
+
+fashion_names = [
+    "Fashion/fashion_1.jpg",
+    "Fashion/fashion_2.jpg",
+    "Fashion/fashion_3.jpg",
+    "Fashion/fashion_4.jpg",
+    "Fashion/fashion_5.jpg",
+    "Fashion/fashion_6.jpg",
+    "Fashion/fashion_7.jpg",
+    "Fashion/fashion_8.jpg",
+    "Fashion/fashion_9.jpg",
+    "Fashion/fashion_10.jpg"
+]
+
+food_names = [
+    "Food/assortment.jpg",
+    "Food/bhanmi.jpg",
+    "Food/breakfast.jpg",
+    "Food/burgers_and_brew.jpg",
+    "Food/citrus.jpg",
+    "Food/dumplings.jpg",
+    "Food/egg_salad.jpg",
+    "Food/garlic.jpg",
+    "Food/greens.jpg",
+    "Food/mc_cafe.jpg"
+]
+
+home_names = [
+    "Home/home_1.jpg",
+    "Home/home_2.jpg",
+    "Home/home_3.jpg",
+    "Home/home_4.jpg",
+    "Home/home_5.jpg",
+    "Home/home_6.jpg",
+    "Home/home_7.jpg",
+    "Home/home_8.jpg",
+    "Home/home_9.jpg",
+    "Home/home_10.jpg"
+]
+
+tech_names = [
+    "Tech/tech_1.jpg",
+    "Tech/tech_2.jpg",
+    "Tech/tech_3.jpg",
+    "Tech/tech_4.jpg",
+    "Tech/tech_5.jpg",
+    "Tech/tech_6.jpg",
+    "Tech/tech_7.jpg",
+    "Tech/tech_8.jpg",
+    "Tech/tech_9.jpg",
+    "Tech/tech_10.jpg"
+]
+
+travel_names = [
+    "Travel/nature_1.jpg",
+    "Travel/nature_2.jpg",
+    "Travel/nature_3.jpg",
+    "Travel/nature_4.jpg",
+    "Travel/nature_5.jpg",
+    "Travel/nature_6.jpg",
+    "Travel/nature_7.jpg",
+    "Travel/nature_8.jpg",
+    "Travel/nature_9.jpg",
+    "Travel/nature_10.jpg"
 ]
 
 
-#create boards and pins
-pins = []
-
-#first two users have cat, animal boards
+chosen_id = 0
 board = Board.create!(
-    user_id: users[0].id,
-    name: "Cats",
-    description: ""
-)
-board = Board.create!(
-    user_id: users[1].id,
-    name: "Cats",
-    description: ""
+    user_id: chosen_id,
+    name: "Purrrfect",
+    description: "In ancient times cats were worshipped as gods; they have not forgotten this."
 )
 
-half = cats_file_names.length / 2
-cats_file_names.each_with_index do |file_name, idx|
-    #create pin
-    chosen_id = idx < half ? 1 : 2
+cats_names.each_with_index do |file_name, idx|
     pin = Pin.create!(
         user_id: chosen_id,
-        title: Faker::Creature::Cat.name,
+        title: purrrfect,
         description: Faker::GreekPhilosophers.quote,
         link: pin_image_url,
         category: "cats",
@@ -168,289 +466,158 @@ cats_file_names.each_with_index do |file_name, idx|
             filename: file_name
         }
     )
-    
-    # const formData = new FormData();
-    # formData.append('pin[title]', Faker::Creature::Cat.name);
-    # formData.append('pin[description]', Faker::GreekPhilosophers.quote);
-    # formData.append('pin[link]', pin_image_url);
-    # formData.append('pin[user_id]', chosen_id);
-    # formData.append('pin[category]', "cats")
-    # formData.append('pin[photo]', {io: pic, filename: file_name})
-    # pin = Pin.create!(formData)
-    
-    # pin.photo.attach(
-    #     io: pic,
-    #     filename: file_name
-    # )
-
-    #add BoardPin
     BoardPin.create!(
-        board_id: chosen_id,
+        board_id: board.id,
         pin_id: pin.id
     )
 end
 
+chosen_id = 1
+board = Board.create!(
+    user_id: chosen_id,
+    name: "Animals Crossing",
+    description: "The clock is always ticking, whether you're there or not."
+)
 
+animal_names.each_with_index do |file_name, idx|
+    pin = Pin.create!(
+        user_id: chosen_id,
+        title: Faker::Creature::Cat.name,
+        description: Faker::GreekPhilosophers.quote,
+        link: pin_image_url,
+        category: "animals",
+        photo: {
+            io: open(main_seed_url + file_name),
+            filename: file_name
+        }
+    )
+    BoardPin.create!(
+        board_id: board.id,
+        pin_id: pin.id
+    )
+end
 
-# board = Board.create!(
-#     user_id: users[0].id,
-#     name: "Animals",
-#     description: ""
-# )
-# board = Board.create!(
-#     user_id: users[1].id,
-#     name: "Animals",
-#     description: ""
-# )
-# half = animals_file_names.length / 2
-# animals_file_names.each_with_index do |file_name, idx|
-#     #create pin
-#     chosen_id = idx < half ? 1 : 2
-#     pin = Pin.create!(
-#         user_id: chosen_id,
-#         title: Faker::Book.unique.title,
-#         description: Faker::GreekPhilosophers.quote,
-#         link: pin_image_url,
-#         category: "animals"
-#     )
-    
-#     #add photo to pin
-#     pic = open(main_seed_url + file_name)
-#     pin.photo.attach(
-#         io: pic,
-#         filename: file_name
-#     )
+chosen_id = 2
+board = Board.create!(
+    user_id: chosen_id,
+    name: "Fashion",
+    description: "You can have anything you want in life if you dress for it"
+)
 
-#     #add BoardPin
-#     BoardPin.create!(
-#         board_id: chosen_id + 2,
-#         pin_id: pin.id
-#     )
-# end
+fashion_names.each_with_index do |file_name, idx|
+    pin = Pin.create!(
+        user_id: chosen_id,
+        title: Faker::Book.title,
+        description: Faker::GreekPhilosophers.quote,
+        link: pin_image_url,
+        category: "fashion",
+        photo: {
+            io: open(main_seed_url + file_name),
+            filename: file_name
+        }
+    )
+    BoardPin.create!(
+        board_id: board.id,
+        pin_id: pin.id
+    )
+end
 
+chosen_id = 3
+board = Board.create!(
+    user_id: chosen_id,
+    name: "Om nom nom",
+    description: "A balanced diet is a cookie in each hand."
+)
 
-#create boards for each user
-#place random pins on each board
+food_names.each_with_index do |file_name, idx|
+    pin = Pin.create!(
+        user_id: chosen_id,
+        title: Faker::Book.title,
+        description: Faker::GreekPhilosophers.quote,
+        link: pin_image_url,
+        category: "food",
+        photo: {
+            io: open(main_seed_url + file_name),
+            filename: file_name
+        }
+    )
+    BoardPin.create!(
+        board_id: board.id,
+        pin_id: pin.id
+    )
+end
 
+chosen_id = 4
+board = Board.create!(
+    user_id: chosen_id,
+    name: "Home decor",
+    description: "There's no place like home"
+)
 
+home_names.each_with_index do |file_name, idx|
+    pin = Pin.create!(
+        user_id: chosen_id,
+        title: Faker::Book.title,
+        description: Faker::GreekPhilosophers.quote,
+        link: pin_image_url,
+        category: "home",
+        photo: {
+            io: open(main_seed_url + file_name),
+            filename: file_name
+        }
+    )
+    BoardPin.create!(
+        board_id: board.id,
+        pin_id: pin.id
+    )
+end
 
+chosen_id = 5
+board = Board.create!(
+    user_id: chosen_id,
+    name: "Tech for days",
+    description: "Life is too short to remove USB safely"
+)
 
+tech_names.each_with_index do |file_name, idx|
+    pin = Pin.create!(
+        user_id: chosen_id,
+        title: Faker::Book.title,
+        description: Faker::ChuckNorris.fact,
+        link: pin_image_url,
+        category: "tech",
+        photo: {
+            io: open(main_seed_url + file_name),
+            filename: file_name
+        }
+    )
+    BoardPin.create!(
+        board_id: board.id,
+        pin_id: pin.id
+    )
+end
 
+chosen_id = 1
+board = Board.create!(
+    user_id: chosen_id,
+    name: "Vacation Ideas",
+    description: "I need a vacation so long that I forget my passwords"
+)
 
-# User.create!(
-#     email: "batBoy@yahoo.com", 
-#     password: "password",
-#     age: "35",
-#     username: "dark_knight", 
-#     gender: "male",
-#     language: "English",
-#     region: "USA",
-#     first_name: "Bruce", 
-#     last_name: "Wayne", 
-#     bio: "I'm rich.")
-
-# User.create!(
-#     email: "qween@io", 
-#     password: "password",
-#     age: "28",
-#     username: "woman_of_wonder", 
-#     gender: "female",
-#     language: "English",
-#     region: "Themyscira",
-#     first_name: "Diana", 
-#     last_name: "Prince", 
-#     bio: "Fighting doesn't make you a hero")
-
-# Pin.create!(
-#     user_id: 1,
-#     title: "Nighthawks",
-#     description: "Chillin like a villain",
-#     link: "www.wheresMyFoodTho.com"
-# )
-
-# Pin.create!(
-#     user_id: 1,
-#     title: "Starry Night",
-#     description: "Have you ever seen such a beautiful site",
-#     link: "www.ohWhatANight.org"
-# )
-
-# Pin.create!(
-#     user_id: 3,
-#     title: "Girl with a Pear Earring",
-#     description: "I could almost kiss the stars for shining so bright",
-#     link: "www.oldSchoolCool.com"
-# )
-
-# Pin.create!(
-#     user_id: 3,
-#     title: "The Birth of Venus",
-#     description: "Aphrodite rising from the seafoam",
-#     link: "www.whyYouDoThis.com"
-# )
-
-# Pin.create!(
-#     user_id: 2,
-#     title: "American Gothic",
-#     description: "Take me home, country road",
-#     link: "www.neverForgetMerlin.com"
-# )
-
-# Pin.create!(
-#     user_id: 1,
-#     title: "The Last Supper",
-#     description: "Pre-quarantine chilling with the boys",
-#     link: "www.whereYouGoinJudas.com"
-# )
-
-# Pin.create!(
-#     user_id: 2,
-#     title: "The Great Wave of Kanagawa",
-#     description: "Surf's up bruh",
-#     link: "www.waterYouWaitingFor.com"
-# )
-
-# Pin.create!(
-#     user_id: 2,
-#     title: "Starry Night Over the Rhone",
-#     description: "Longing, Homecoming, Benign",
-#     link: "www.aintGotTimeForThis.com"
-# )
-
-# Pin.create!(
-#     user_id: 3,
-#     title: "Almond Blossoms",
-#     description: "It's not weird to talk to trees",
-#     link: "www.happyLilSomething.com"
-# )
-
-# Pin.create!(
-#     user_id: 1,
-#     title: "Olympia",
-#     description: "Is it a mountain?",
-#     link: "www.whereWeDroppin.com"
-# )
-
-# Pin.create!(
-#     user_id: 1,
-#     title: "The Yellow House",
-#     description: "It used to be white",
-#     link: "www.whatGoesAroundComesAround.com"
-# )
-
-# Board.create!(
-#     user_id: 1,
-#     name: "Art stuff",
-#     description: "Sent from my iphone",
-#     date_start: "2001-02-03T12:00:00+00:00",
-#     date_end: "2001-02-03T12:00:00+00:00"
-# )
-
-# Board.create!(
-#     user_id: 3,
-#     name: "More pics",
-#     description: "Sent from my iphone",
-#     date_start: "2003-02-03T12:00:00+00:00",
-#     date_end: "2004-02-03T12:00:00+00:00"
-# )
-
-# Board.create!(
-#     user_id: 3,
-#     name: "Random pics",
-#     description: "Sent from my iphone",
-#     date_start: "2003-02-03T12:00:00+00:00",
-#     date_end: "2004-02-03T12:00:00+00:00"
-# )
-
-# Board.create!(
-#     user_id: 3,
-#     name: "Even more pics",
-#     description: "Sent from my iphone",
-#     date_start: "2003-02-03T12:00:00+00:00",
-#     date_end: "2004-02-03T12:00:00+00:00"
-# )
-
-# Board.create!(
-#     user_id: 3,
-#     name: "Other pics",
-#     description: "Sent from my iphone",
-#     date_start: "2003-02-03T12:00:00+00:00",
-#     date_end: "2004-02-03T12:00:00+00:00"
-# )
-
-# Board.create!(
-#     user_id: 1,
-#     name: "Cool pics",
-#     description: "Sent from my iphone",
-#     date_start: "2003-02-03T12:00:00+00:00",
-#     date_end: "2004-02-03T12:00:00+00:00"
-# )
-
-# Board.create!(
-#     user_id: 2,
-#     name: "Stuff from my iphone",
-#     description: "Sent from my iphone",
-#     date_start: "2003-02-03T12:00:00+00:00",
-#     date_end: "2004-02-03T12:00:00+00:00"
-# )
-
-# Board.create!(
-#     user_id: 1,
-#     name: "Farm pics",
-#     description: "Sent from my iphone",
-#     date_start: "2003-02-03T12:00:00+00:00",
-#     date_end: "2004-02-03T12:00:00+00:00"
-# )
-
-# Board.create!(
-#     user_id: 3,
-#     name: "Cool beans",
-#     description: "Sent from my iphone",
-#     date_start: "2003-02-03T12:00:00+00:00",
-#     date_end: "2004-02-03T12:00:00+00:00"
-# )
-
-# BoardPin.create!(
-#     board_id: 3,
-#     pin_id: 3
-# )
-
-# BoardPin.create!(
-#     board_id: 2,
-#     pin_id: 9
-# )
-
-# BoardPin.create!(
-#     board_id: 2,
-#     pin_id: 1
-# )
-
-# BoardPin.create!(
-#     board_id: 2,
-#     pin_id: 2
-# )
-
-# BoardPin.create!(
-#     board_id: 2,
-#     pin_id: 7
-# )
-
-# BoardPin.create!(
-#     board_id: 3,
-#     pin_id: 1
-# )
-
-# BoardPin.create!(
-#     board_id: 1,
-#     pin_id: 4
-# )
-
-# BoardPin.create!(
-#     board_id: 1,
-#     pin_id: 2
-# )
-
-# BoardPin.create!(
-#     board_id: 2,
-#     pin_id: 3
-# )
+travel_names.each_with_index do |file_name, idx|
+    pin = Pin.create!(
+        user_id: chosen_id,
+        title: Faker::Book.title,
+        description: Faker::GreekPhilosophers.quote,
+        link: pin_image_url,
+        category: "travel",
+        photo: {
+            io: open(main_seed_url + file_name),
+            filename: file_name
+        }
+    )
+    BoardPin.create!(
+        board_id: board.id,
+        pin_id: pin.id
+    )
+end
