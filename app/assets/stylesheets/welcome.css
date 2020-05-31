@@ -48,7 +48,7 @@ h2{
 }
 
 .login-button{
-    background-color: rgb(18, 165, 55);
+    background-color: #1DB954;
     color: white;
 }
 
@@ -58,7 +58,7 @@ h2{
 }
 
 .demo-login-button:hover{
-    background-color: rgb(141, 223, 154);
+    background-color: rgb(24, 121, 40);
 }
 
 .buttons .signup-button{
@@ -67,7 +67,7 @@ h2{
 }
 
 .login-button:hover{
-    background-color: rgb(14, 129, 43);
+    background-color: rgb(20, 150, 53);
 }
 
 .buttons .signup-button:hover{

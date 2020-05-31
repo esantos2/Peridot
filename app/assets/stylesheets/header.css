@@ -36,7 +36,7 @@
 }
 
 #logo{
-    color: rgb(47, 180, 47);
+    color: #1DB954;
     font-size: 24px;
 }
 
@@ -162,7 +162,7 @@ a{
 
 .create-board-option > i{
     padding: 0px 15px;
-    color: rgb(47, 180, 47);
+    color: #1DB954;
 }
 
 .options > .icon{

@@ -66,7 +66,7 @@
 }
 
 .pin-top-buttons > .save-pin{
-    background-color: limegreen;
+    background-color: #1DB954;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: 700;
     color: white;
@@ -369,7 +369,7 @@
 
 .save-or-cancel > .save-edit, 
 .continue{
-    background-color: rgb(24, 187, 35);
+    background-color: #1DB954;
     color: rgb(255, 255, 255);
 }
 
