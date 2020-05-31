@@ -15,6 +15,7 @@ class UserProfile extends React.Component{
     componentDidMount(){
         const {fetchUser, match} = this.props;
         fetchUser(match.params.userId);
+        window.scrollTo(0, 0);
     }
 
     showMenu(){

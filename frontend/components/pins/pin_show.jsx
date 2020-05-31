@@ -193,7 +193,6 @@ class PinShow extends React.Component{
     }
 
     render() {
-        window.scrollTo(0,0);
         const { pins, chosenPinId, fetchPins, users} = this.props;
         if (!Object.values(pins).length) return null;
         let showPin = pins[chosenPinId];

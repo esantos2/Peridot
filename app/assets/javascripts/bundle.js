@@ -2390,6 +2390,7 @@ var PinIndexItem = /*#__PURE__*/function (_React$Component) {
     value: function showPinDetails() {
       var pinId = this.props.pin.id;
       this.props.history.push("/pins/".concat(pinId));
+      window.scrollTo(0, 0);
     }
   }, {
     key: "render",
@@ -2723,7 +2724,6 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      window.scrollTo(0, 0);
       var _this$props6 = this.props,
           pins = _this$props6.pins,
           chosenPinId = _this$props6.chosenPinId,
@@ -4180,6 +4180,7 @@ var UserProfile = /*#__PURE__*/function (_React$Component) {
           fetchUser = _this$props.fetchUser,
           match = _this$props.match;
       fetchUser(match.params.userId);
+      window.scrollTo(0, 0);
     }
   }, {
     key: "showMenu",
