@@ -77,7 +77,6 @@
     display: flex;
     border-radius: 20px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.281);
-    overflow: hidden;
 }
 
 .pin-image{
@@ -150,6 +149,8 @@
     align-items: center;
     z-index: 10;
     background-color: white;
+    border-bottom-right-radius: 20px;
+    border-top-right-radius: 20px;
 }
 
 .pin-content a{

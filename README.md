@@ -1,21 +1,38 @@
 # Peridot
 
-Peridot, a Pinterest clone, allows users to discover new ideas and inspiration through 
+Peridot is a single page app inspired by Pinterest, where users can discover new ideas and inspiration through 
 other users' shared images, as well as contribute their own collections.
 
 [Visit the site](https://peri-dot.herokuapp.com/#/)
 
-## Features
-* Create your own pins and boards to save images and ideas.
-* View other users' pins and add them to your own collection.
-* Masonry-style layout provides a responsive and inviting home feed
-* Follow other users
-
 ## Technologies
 * Ruby on Rails
-* HTML/CSS/JS
 * React/Redux
+* HTML/CSS/JS
 * Amazon Web Services
+
+## Features
+
+* When viewing a pin, a suggested feed is generated below containing similar images
+<p align="center">
+  <img max-width="650" height="auto" src="./app/assets/images/gifs/peridot_feed_demo2.gif">
+</p>
+
+* View other users' pins and add them to your own collections.
+<p align="center">
+  <img max-width="650" height="auto" src="./app/assets/images/gifs/peridot_save_pin_demo.gif">
+</p>
+
+
+* Create and edit your own pins and boards to save images and ideas.
+<p align="center">
+  <img max-width="650" height="auto" src="./app/assets/images/gifs/peridot_create_pin_demo.gif">
+</p>
+
+* Masonry-inspired layout provides a responsive and inviting home feed
+<p align="center">
+  <img max-width="650" height="auto" src="./app/assets/images/gifs/peridot_responsive_demo2.gif">
+</p>
 
 ## Challenges
 * Home feed organization is paramount to the user experience. The masonry style layout proved challenging
@@ -25,7 +42,7 @@ other users' shared images, as well as contribute their own collections.
     available row end based on the height, and placed the image in that position.
 
 <p align="center">
-  <img width="auto" height="auto" src="home_feed.png">
+  <img width="auto" height="auto" src="./app/assets/images/home_feed.png">
 </p>
 
 * Discovering new ideas is easier when you can view other images related to the ones you like.
