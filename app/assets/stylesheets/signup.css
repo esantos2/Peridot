@@ -167,13 +167,16 @@
 }
 
 .email-pic div{
-    padding: 15px;
+    padding: 10px 10px 0px 10px;
 }
 
 .email-pic-icon{
     margin-top: 20px;
-    font-size: 90px;
-    /* box-shadow: 0 0 40px 20px rgb(0, 255, 42); */
+    font-size: 50px;
+}
+
+.user-details-form-box h1{
+    font-size: 30px;
 }
 
 h1{

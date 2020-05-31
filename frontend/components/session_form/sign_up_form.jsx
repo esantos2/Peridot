@@ -15,6 +15,8 @@ class SignUpForm extends React.Component{
             password: '',
             age: '',
             username: '',
+            first_name: '',
+            last_name: '',
             gender: '',
             language: '',
             region: ''
@@ -68,8 +70,8 @@ class SignUpForm extends React.Component{
 
     submitForm(e){
         e.preventDefault();
-        const {username, gender, language, region} = this.state;
-        let user = {username, gender, language, region}
+        const {username, first_name, last_name, gender, language, region} = this.state;
+        let user = {username, first_name, last_name, gender, language, region};
         this.props.updateDetails(user);
     }
 
@@ -80,9 +82,9 @@ class SignUpForm extends React.Component{
     }
 
     render(){
-        const {step, email, password, age, username, gender, language, region} = this.state;
+        const {step, email, password, age, username, first_name, last_name, gender, language, region} = this.state;
         const credVals = { email, password, age};
-        const nameVals = { email, username};
+        const nameVals = { email, username, first_name, last_name};
         const genVal = { gender };
         const langAndRegVals = { language, region };
         switch(step){

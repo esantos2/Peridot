@@ -45,6 +45,12 @@ class Names extends React.Component {
                             <div className="login-fields">
                                 <input type='text' placeholder="Username" value={values.username} onChange={this.props.update("username")} />
                             </div>
+                            <div className="login-fields">
+                                <input type='text' placeholder="First Name" value={values.first_name} onChange={this.props.update("first_name")} />
+                            </div>
+                            <div className="login-fields">
+                                <input type='text' placeholder="Last Name" value={values.last_name} onChange={this.props.update("last_name")} />
+                            </div>
                             <div className="error">
                                 {this.props.showErrors()}
                             </div>

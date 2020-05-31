@@ -3613,6 +3613,20 @@ var Names = /*#__PURE__*/function (_React$Component) {
         value: values.username,
         onChange: this.props.update("username")
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "login-fields"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        placeholder: "First Name",
+        value: values.first_name,
+        onChange: this.props.update("first_name")
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "login-fields"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        placeholder: "Last Name",
+        value: values.last_name,
+        onChange: this.props.update("last_name")
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "error"
       }, this.props.showErrors()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "intro"
@@ -3785,6 +3799,8 @@ var SignUpForm = /*#__PURE__*/function (_React$Component) {
       password: '',
       age: '',
       username: '',
+      first_name: '',
+      last_name: '',
       gender: '',
       language: '',
       region: ''
@@ -3871,11 +3887,15 @@ var SignUpForm = /*#__PURE__*/function (_React$Component) {
       e.preventDefault();
       var _this$state3 = this.state,
           username = _this$state3.username,
+          first_name = _this$state3.first_name,
+          last_name = _this$state3.last_name,
           gender = _this$state3.gender,
           language = _this$state3.language,
           region = _this$state3.region;
       var user = {
         username: username,
+        first_name: first_name,
+        last_name: last_name,
         gender: gender,
         language: language,
         region: region
@@ -3898,6 +3918,8 @@ var SignUpForm = /*#__PURE__*/function (_React$Component) {
           password = _this$state4.password,
           age = _this$state4.age,
           username = _this$state4.username,
+          first_name = _this$state4.first_name,
+          last_name = _this$state4.last_name,
           gender = _this$state4.gender,
           language = _this$state4.language,
           region = _this$state4.region;
@@ -3908,7 +3930,9 @@ var SignUpForm = /*#__PURE__*/function (_React$Component) {
       };
       var nameVals = {
         email: email,
-        username: username
+        username: username,
+        first_name: first_name,
+        last_name: last_name
       };
       var genVal = {
         gender: gender
