@@ -5,7 +5,8 @@ class CreateBoardForm extends React.Component{
     constructor(props){
         super(props)
         this.state = {
-            name: ''
+            name: '',
+            buttonLock: true
         }
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -15,19 +16,34 @@ class CreateBoardForm extends React.Component{
     }
 
     update(field) {
-        return e => { this.setState({ [field]: e.currentTarget.value }) }
+        return e => { 
+            this.setState({ [field]: e.currentTarget.value });
+            if (field === "name" && this.state.buttonLock) {
+                this.setState({ buttonLock: false})
+            }
+        }
+    }
+
+    toggleButtonLock(){
+        const {name, buttonLock} = this.state;
+        const saveBtn = document.getElementById("save-board");
+        if (!saveBtn) return;
+        if (buttonLock || name === ''){ //lock button
+            saveBtn.disabled = true;
+            saveBtn.classList.add("no-button");
+        } else{ //unlock
+            saveBtn.disabled = false;
+            saveBtn.classList.remove("no-button");
+        }
     }
 
     handleSubmit(e){
         e.preventDefault();
-        const {createBoard, closeBoardForm, currentUserId} = this.props;
+        const {createBoard, closeBoardForm} = this.props;
         const {name} = this.state;
         let newBoard = {name};
         closeBoardForm();
         createBoard(newBoard)
-            // .then(board =>{ 
-            //     this.props.history.push(`/users/${currentUserId}/boards/${board.board.id}`)} );
-                // this.props.history.push(`/users/${currentUserId}/boards/${board.board.id}`)} );
     }
 
     render(){
@@ -64,13 +80,13 @@ class CreateBoardForm extends React.Component{
                                     <label>End</label>
                                     <input type="date" placeholder="End date" />
                                 </div>
-                                {/* <input type="date" /> */}
                             </div>
                         </div>
                         <div className="bottom-options">
                             <div className="save-or-cancel">
                                 <button className="cancel-edit" onClick={closeBoardForm}>Cancel</button>
-                                <button className="save-edit" onClick={this.handleSubmit}>Create</button>
+                                <button id="save-board" className="save-edit" onClick={this.handleSubmit}>Create</button>
+                                {this.toggleButtonLock()}
                             </div>
                         </div>
                     </div>

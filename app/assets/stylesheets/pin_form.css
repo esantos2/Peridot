@@ -311,6 +311,7 @@
 .pin-add-description textarea:focus,
 .pin-link input:focus
 .save-pin:focus,
+.save-pin:active,
 .drop-down:focus{
     outline-style: none;
     border: 3px solid rgb(0, 223, 0);
@@ -433,12 +434,14 @@
     position: absolute;
 }
 
-.pin-top-buttons >.no-button{
-    background-color: lightgray;
+.pin-top-buttons >.no-button,
+.save-or-cancel > .no-button{
+    background-color: rgb(147, 231, 147);
 }
 
-.no-button:hover{
-    background-color: lightgray;
+.no-button:hover,
+.save-or-cancel > .no-button:hover{
+    background-color: rgb(147, 231, 147);
     cursor: initial;
 }
 

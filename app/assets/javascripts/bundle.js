@@ -615,7 +615,8 @@ var CreateBoardForm = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      name: ''
+      name: '',
+      buttonLock: true
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     return _this;
@@ -633,7 +634,32 @@ var CreateBoardForm = /*#__PURE__*/function (_React$Component) {
 
       return function (e) {
         _this2.setState(_defineProperty({}, field, e.currentTarget.value));
+
+        if (field === "name" && _this2.state.buttonLock) {
+          _this2.setState({
+            buttonLock: false
+          });
+        }
       };
+    }
+  }, {
+    key: "toggleButtonLock",
+    value: function toggleButtonLock() {
+      var _this$state = this.state,
+          name = _this$state.name,
+          buttonLock = _this$state.buttonLock;
+      var saveBtn = document.getElementById("save-board");
+      if (!saveBtn) return;
+
+      if (buttonLock || name === '') {
+        //lock button
+        saveBtn.disabled = true;
+        saveBtn.classList.add("no-button");
+      } else {
+        //unlock
+        saveBtn.disabled = false;
+        saveBtn.classList.remove("no-button");
+      }
     }
   }, {
     key: "handleSubmit",
@@ -641,16 +667,13 @@ var CreateBoardForm = /*#__PURE__*/function (_React$Component) {
       e.preventDefault();
       var _this$props = this.props,
           createBoard = _this$props.createBoard,
-          closeBoardForm = _this$props.closeBoardForm,
-          currentUserId = _this$props.currentUserId;
+          closeBoardForm = _this$props.closeBoardForm;
       var name = this.state.name;
       var newBoard = {
         name: name
       };
       closeBoardForm();
-      createBoard(newBoard); // .then(board =>{ 
-      //     this.props.history.push(`/users/${currentUserId}/boards/${board.board.id}`)} );
-      // this.props.history.push(`/users/${currentUserId}/boards/${board.board.id}`)} );
+      createBoard(newBoard);
     }
   }, {
     key: "render",
@@ -696,9 +719,10 @@ var CreateBoardForm = /*#__PURE__*/function (_React$Component) {
         className: "cancel-edit",
         onClick: closeBoardForm
       }, "Cancel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        id: "save-board",
         className: "save-edit",
         onClick: this.handleSubmit
-      }, "Create"))))));
+      }, "Create"), this.toggleButtonLock())))));
     }
   }]);
 
@@ -2665,8 +2689,9 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
       };
       this.props.saveToBoard(boardPin);
       this.setState({
-        confirm: true
-      });
+        confirm: true,
+        chosenBoardId: ""
+      }, this.toggleButtonLock());
     } //board end
 
   }, {
@@ -2674,25 +2699,20 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
     value: function closeConfirm(e) {
       this.setState({
         confirm: false
-      }); // e.stopPropagation()
+      });
     }
   }, {
     key: "displayConfirmation",
     value: function displayConfirmation() {
       if (this.state.confirm) {
-        return (
-          /*#__PURE__*/
-          // <div className="modal-background">
-          react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-            className: "modal-child-round-box saved",
-            onClick: this.closeConfirm
-          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-            className: "pin-confirmation-box"
-          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Saved!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-            className: "far fa-times-circle"
-          }))) // </div>
-
-        );
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "modal-child-round-box saved",
+          onClick: this.closeConfirm
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "pin-confirmation-box"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Saved!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "far fa-times-circle"
+        })));
       }
     }
   }, {
@@ -2702,7 +2722,26 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
 
       return function (e) {
         _this3.setState(_defineProperty({}, field, e.target.value));
+
+        _this3.toggleButtonLock();
       };
+    }
+  }, {
+    key: "toggleButtonLock",
+    value: function toggleButtonLock() {
+      var chosenBoardId = this.state.chosenBoardId;
+      var saveBtn = document.getElementById("save-pin");
+      if (!saveBtn) return;
+
+      if (!chosenBoardId) {
+        //lock button
+        saveBtn.disabled = true;
+        saveBtn.classList.add("no-button");
+      } else {
+        //unlock
+        saveBtn.disabled = false;
+        saveBtn.classList.remove("no-button");
+      }
     }
   }, {
     key: "optionToEdit",
@@ -2733,6 +2772,7 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
       var showPin = pins[chosenPinId];
       var owner = users[showPin.userId];
       if (!owner) return null;
+      this.toggleButtonLock();
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-show-page"
       }, this.renderEditForm(), this.showBoardForm(), this.displayConfirmation(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2756,6 +2796,7 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
       }, this.optionToEdit()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-top-buttons"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        id: "save-pin",
         className: "save-pin",
         onClick: this.handleSaveToBoard
       }, "Save"), this.boardNames())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {

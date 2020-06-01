@@ -150,35 +150,45 @@ class PinShow extends React.Component{
             pin_id: parseInt(this.props.chosenPinId)
         }
         this.props.saveToBoard(boardPin);
-        this.setState({confirm: true});
+        this.setState({confirm: true, chosenBoardId: ""}, this.toggleButtonLock());
     }
     //board end
 
     closeConfirm(e){
         this.setState({confirm: false})
-        // e.stopPropagation()
     }
     
     displayConfirmation() {
         if (this.state.confirm) {
             return (
-                // <div className="modal-background">
-                    <div className="modal-child-round-box saved" onClick={this.closeConfirm}>
-                        <div className="pin-confirmation-box">
-                            {/* <div className="confirm-image"><i className="far fa-check-circle"></i></div> */}
-                            <h1>{`Saved!`}</h1>
-                            <i className="far fa-times-circle"></i>
-                            {/* <p><NavLink className="continue" to={`/users/${this.state.user_id}/pins`}>Continue</NavLink></p> */}
-                        </div>
+                <div className="modal-child-round-box saved" onClick={this.closeConfirm}>
+                    <div className="pin-confirmation-box">
+                        <h1>{`Saved!`}</h1>
+                        <i className="far fa-times-circle"></i>
                     </div>
-                // </div>
+                </div>
             )
         }
     }
 
     update(field){
         return e => {
-            this.setState({[field]: e.target.value})}
+            this.setState({[field]: e.target.value})
+            this.toggleButtonLock();
+        }
+    }
+
+    toggleButtonLock() {
+        const {chosenBoardId} = this.state;
+        const saveBtn = document.getElementById("save-pin");
+        if (!saveBtn) return;
+        if (!chosenBoardId) { //lock button
+            saveBtn.disabled = true;
+            saveBtn.classList.add("no-button");
+        } else { //unlock
+            saveBtn.disabled = false;
+            saveBtn.classList.remove("no-button");
+        }
     }
 
     optionToEdit(){
@@ -198,6 +208,7 @@ class PinShow extends React.Component{
         let showPin = pins[chosenPinId];
         let owner = users[showPin.userId];
         if (!owner) return null;
+        this.toggleButtonLock();
         return (
             <div className="pin-show-page">
                 {this.renderEditForm()}
@@ -216,7 +227,7 @@ class PinShow extends React.Component{
                                 {this.optionToEdit()}
                             </div>
                             <div className="pin-top-buttons">
-                                <button className="save-pin" onClick={this.handleSaveToBoard}>Save</button>
+                                <button id="save-pin" className="save-pin" onClick={this.handleSaveToBoard}>Save</button>
                                 {this.boardNames()}
                             </div>
                         </div>
