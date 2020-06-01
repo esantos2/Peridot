@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import BoardEditForm from './board_edit_form';
 
 class BoardIndexItem extends React.Component{
@@ -37,12 +37,14 @@ class BoardIndexItem extends React.Component{
     render(){
         const {board} = this.props;
         return (
-            <Link to={`/users/${board.userId}/boards/${board.id}`}><div className="board-index-item">
+            <div>
                 {this.showEditForm()}
-                <h2>{board.name}</h2>
-                <p>{board.description}</p>
-                <i className="fas fa-pencil-alt icon" onClick={this.openForm}></i>
-            </div></Link>
+                <NavLink className="board-index-item" to={`/users/${board.userId}/boards/${board.id}`}>
+                    <h2>{board.name}</h2>
+                    <p>{board.description}</p>
+                    <i className="fas fa-pencil-alt icon" onClick={this.openForm}></i>
+                </NavLink>
+            </div>
         )
     }
 }

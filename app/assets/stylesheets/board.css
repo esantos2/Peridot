@@ -14,18 +14,18 @@
     text-align: center;
     width: 236px;
     height: 236px;
-    margin: 20px;
+    margin: 8px;
     padding: 20px;
     box-sizing: border-box;
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     background: linear-gradient(rgb(98, 255, 229), rgb(238, 227, 255));
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: black;
 }
 
-.board-index-item{
-    padding: 20px;
-    color: black;
+.board-index-item:hover{
+    box-shadow: 0px 10px 25px 7px rgba(0, 0, 0, 0.2);
 }
 
 .board-index-item:visited{

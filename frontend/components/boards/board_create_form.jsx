@@ -6,7 +6,6 @@ class CreateBoardForm extends React.Component{
         super(props)
         this.state = {
             name: '',
-            buttonLock: true
         }
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -17,18 +16,15 @@ class CreateBoardForm extends React.Component{
 
     update(field) {
         return e => { 
-            this.setState({ [field]: e.currentTarget.value });
-            if (field === "name" && this.state.buttonLock) {
-                this.setState({ buttonLock: false})
-            }
+            this.setState({ [field]: e.currentTarget.value }, this.toggleButtonLock());
         }
     }
 
     toggleButtonLock(){
-        const {name, buttonLock} = this.state;
+        const {name} = this.state;
         const saveBtn = document.getElementById("save-board");
         if (!saveBtn) return;
-        if (buttonLock || name === ''){ //lock button
+        if (name === ''){ //lock button
             saveBtn.disabled = true;
             saveBtn.classList.add("no-button");
         } else{ //unlock

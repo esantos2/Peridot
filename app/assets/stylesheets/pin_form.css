@@ -311,7 +311,6 @@
 .pin-add-description textarea:focus,
 .pin-link input:focus
 .save-pin:focus,
-.save-pin:active,
 .drop-down:focus{
     outline-style: none;
     border: 3px solid rgb(0, 223, 0);

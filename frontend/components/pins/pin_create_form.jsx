@@ -26,8 +26,8 @@ class CreatePinForm extends React.Component{
         this.showMenu = this.showMenu.bind(this);
         this.openBoardForm = this.openBoardForm.bind(this);
         this.closeBoardForm = this.closeBoardForm.bind(this);
-        this.disableButton = this.disableButton.bind(this);
-        this.enableButton = this.enableButton.bind(this);
+        this.disableFormButton = this.disableFormButton.bind(this);
+        this.enableFormButton = this.enableFormButton.bind(this);
     }
 
     componentDidMount(){
@@ -37,7 +37,9 @@ class CreatePinForm extends React.Component{
     }
 
     update(field){
-        return e => { this.setState({[field]: e.currentTarget.value})}
+        return e => { 
+            this.setState({[field]: e.currentTarget.value})
+        }
     }
     
     openBoardForm() {
@@ -62,7 +64,7 @@ class CreatePinForm extends React.Component{
 
     handleSubmit(e){
         e.preventDefault();
-        this.disableButton();
+        this.disableFormButton();
         const {user_id, title, description, link, chosenBoardId, photoFile} = this.state;
         const formData = new FormData();
         formData.append('pin[title]', title);
@@ -72,19 +74,31 @@ class CreatePinForm extends React.Component{
         if (photoFile){
             formData.append('pin[photo]', photoFile)
         }
-        // let newUser = {user_id, title, description, link};
         this.props.createPin(formData)
             .then( pin => this.props.saveToBoard({board_id: parseInt(chosenBoardId), pin_id: pin.pin.id}))
-            .then(() => this.setState({ confirm: true }), this.enableButton);
+            .then(() => this.setState({ confirm: true }), this.enableFormButton);
     }
 
-    disableButton(){
+    toggleButtonLock() { //lock button until board selected
+        const {chosenBoardId} = this.state;
+        const saveBtn = document.getElementById("save-pin");
+        if (!saveBtn) return;
+        if (chosenBoardId === '') { //lock button
+            saveBtn.disabled = true;
+            saveBtn.classList.add("no-button");
+        } else { //unlock
+            saveBtn.disabled = false;
+            saveBtn.classList.remove("no-button");
+        }
+    }
+
+    disableFormButton(){
         document.getElementById("save-pin").disabled = true;
         document.getElementById("save-pin").classList.toggle("no-button");
         document.getElementById("spinner").classList.toggle("show-spinner");
     }
     
-    enableButton(){
+    enableFormButton(){
         document.getElementById("save-pin").disabled = false;
         document.getElementById("save-pin").classList.toggle("no-button");
         document.getElementById("spinner").classList.toggle("show-spinner");
@@ -96,11 +110,10 @@ class CreatePinForm extends React.Component{
     
     hideBackground(){
         document.getElementById("image-background").remove();
-        // document.getElementById("image-background").classList.toggle("show-background");
     }
 
     handleFile(e){
-        // e.preventDefault();
+        e.preventDefault();
         const file = e.currentTarget.files[0];
         const fileReader = new FileReader();
         fileReader.onloadend = () => {
@@ -173,7 +186,7 @@ class CreatePinForm extends React.Component{
     makeBoardSelection(e){
         document.getElementById("selected-text").innerHTML = e.currentTarget.innerHTML;
         this.selectBoard(e);
-        this.update("chosenBoardId")(e);
+        this.update("chosenBoardId")(e)
     }
 
     showMenu() {
@@ -189,6 +202,7 @@ class CreatePinForm extends React.Component{
         const {owner} = this.props;
         const {title, description, link, photoUrl} = this.state;
         const preview = photoUrl ? <img id="image-preview" src={photoUrl} /> : null;
+        this.toggleButtonLock();
         return (
             <div className="pin-modal">
                 {this.showBoardForm()}
