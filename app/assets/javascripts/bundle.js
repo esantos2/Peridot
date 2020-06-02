@@ -1397,12 +1397,18 @@ var NavBar = function NavBar(_ref) {
     onClick: showMenu
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
     className: "drop-down fas fa-chevron-down"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     id: "settings",
-    className: "drop-down-menu"
+    className: "menu-back",
+    onClick: showMenu
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+    className: "drop-down-menu",
+    onClick: function onClick(e) {
+      return e.stopPropagation();
+    }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     onClick: logout
-  }, "Log out")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, "Log out"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "nav-space"
   }));
 };
@@ -1518,8 +1524,8 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
     _this.showMenu = _this.showMenu.bind(_assertThisInitialized(_this));
     _this.openBoardForm = _this.openBoardForm.bind(_assertThisInitialized(_this));
     _this.closeBoardForm = _this.closeBoardForm.bind(_assertThisInitialized(_this));
-    _this.disableButton = _this.disableButton.bind(_assertThisInitialized(_this));
-    _this.enableButton = _this.enableButton.bind(_assertThisInitialized(_this));
+    _this.disableFormButton = _this.disableFormButton.bind(_assertThisInitialized(_this));
+    _this.enableFormButton = _this.enableFormButton.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1578,7 +1584,7 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
       var _this3 = this;
 
       e.preventDefault();
-      this.disableButton();
+      this.disableFormButton();
       var _this$state = this.state,
           user_id = _this$state.user_id,
           title = _this$state.title,
@@ -1594,8 +1600,7 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
 
       if (photoFile) {
         formData.append('pin[photo]', photoFile);
-      } // let newUser = {user_id, title, description, link};
-
+      }
 
       this.props.createPin(formData).then(function (pin) {
         return _this3.props.saveToBoard({
@@ -1606,18 +1611,36 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
         return _this3.setState({
           confirm: true
         });
-      }, this.enableButton);
+      }, this.enableFormButton);
     }
   }, {
-    key: "disableButton",
-    value: function disableButton() {
+    key: "toggleButtonLock",
+    value: function toggleButtonLock() {
+      //lock button until board selected
+      var chosenBoardId = this.state.chosenBoardId;
+      var saveBtn = document.getElementById("save-pin");
+      if (!saveBtn) return;
+
+      if (chosenBoardId === '') {
+        //lock button
+        saveBtn.disabled = true;
+        saveBtn.classList.add("no-button");
+      } else {
+        //unlock
+        saveBtn.disabled = false;
+        saveBtn.classList.remove("no-button");
+      }
+    }
+  }, {
+    key: "disableFormButton",
+    value: function disableFormButton() {
       document.getElementById("save-pin").disabled = true;
       document.getElementById("save-pin").classList.toggle("no-button");
       document.getElementById("spinner").classList.toggle("show-spinner");
     }
   }, {
-    key: "enableButton",
-    value: function enableButton() {
+    key: "enableFormButton",
+    value: function enableFormButton() {
       document.getElementById("save-pin").disabled = false;
       document.getElementById("save-pin").classList.toggle("no-button");
       document.getElementById("spinner").classList.toggle("show-spinner");
@@ -1630,14 +1653,14 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "hideBackground",
     value: function hideBackground() {
-      document.getElementById("image-background").remove(); // document.getElementById("image-background").classList.toggle("show-background");
+      document.getElementById("image-background").remove();
     }
   }, {
     key: "handleFile",
     value: function handleFile(e) {
       var _this4 = this;
 
-      // e.preventDefault();
+      e.preventDefault();
       var file = e.currentTarget.files[0];
       var fileReader = new FileReader();
 
@@ -1752,6 +1775,7 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
         id: "image-preview",
         src: photoUrl
       }) : null;
+      this.toggleButtonLock();
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-modal"
       }, this.showBoardForm(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2498,17 +2522,14 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
       chosenBoardId: '',
       confirm: false
     };
-    _this.openEditForm = _this.openEditForm.bind(_assertThisInitialized(_this));
-    _this.closeEditForm = _this.closeEditForm.bind(_assertThisInitialized(_this));
+    _this.toggleEditForm = _this.toggleEditForm.bind(_assertThisInitialized(_this));
+    _this.toggleBoardForm = _this.toggleBoardForm.bind(_assertThisInitialized(_this));
+    _this.toggleMenu = _this.toggleMenu.bind(_assertThisInitialized(_this));
     _this.goBack = _this.goBack.bind(_assertThisInitialized(_this));
     _this.getSuggested = _this.getSuggested.bind(_assertThisInitialized(_this));
     _this.update = _this.update.bind(_assertThisInitialized(_this));
     _this.handleSaveToBoard = _this.handleSaveToBoard.bind(_assertThisInitialized(_this));
-    _this.selectBoard = _this.selectBoard.bind(_assertThisInitialized(_this));
     _this.makeBoardSelection = _this.makeBoardSelection.bind(_assertThisInitialized(_this));
-    _this.showMenu = _this.showMenu.bind(_assertThisInitialized(_this));
-    _this.openBoardForm = _this.openBoardForm.bind(_assertThisInitialized(_this));
-    _this.closeBoardForm = _this.closeBoardForm.bind(_assertThisInitialized(_this));
     _this.closeConfirm = _this.closeConfirm.bind(_assertThisInitialized(_this));
     return _this;
   }
@@ -2532,18 +2553,12 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
       fetchBoards(currentUserId);
     }
   }, {
-    key: "openEditForm",
-    value: function openEditForm(e) {
+    key: "toggleEditForm",
+    value: function toggleEditForm(e) {
       e.preventDefault();
+      var status = this.state.edit;
       this.setState({
-        edit: true
-      });
-    }
-  }, {
-    key: "closeEditForm",
-    value: function closeEditForm() {
-      this.setState({
-        edit: false
+        edit: !status
       });
     }
   }, {
@@ -2580,7 +2595,7 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
           updatePin: updatePin,
           deletePin: deletePin,
           saveToBoard: saveToBoard,
-          closeEditForm: this.closeEditForm,
+          closeEditForm: this.toggleEditForm,
           clearErrors: clearErrors,
           createBoard: createBoard
         });
@@ -2597,10 +2612,16 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "drop-down select-board show-select",
         id: "selected-text",
-        onClick: this.showMenu
-      }, "Select board"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        onClick: this.toggleMenu
+      }, "Select board"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "board-names",
-        className: "drop-down-menu"
+        className: "menu-back",
+        onClick: this.toggleMenu
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "drop-down-menu",
+        onClick: function onClick(e) {
+          return e.stopPropagation();
+        }
       }, boards.map(function (board, idx) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
           key: idx,
@@ -2609,13 +2630,13 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
           onClick: _this2.makeBoardSelection
         }, board.name);
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        onClick: this.openBoardForm
+        onClick: this.toggleBoardForm
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         key: "a",
         className: "create-board-option"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-plus-circle"
-      }), "Create board"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }), "Create board")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "drop-down-arrow-select-board"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-chevron-down"
@@ -2625,32 +2646,20 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
     key: "makeBoardSelection",
     value: function makeBoardSelection(e) {
       document.getElementById("selected-text").innerHTML = e.currentTarget.innerHTML;
-      this.selectBoard(e);
+      this.toggleMenu();
       this.update("chosenBoardId")(e);
     }
   }, {
-    key: "showMenu",
-    value: function showMenu() {
+    key: "toggleMenu",
+    value: function toggleMenu() {
       document.getElementById("board-names").classList.toggle("show-menu");
     }
   }, {
-    key: "selectBoard",
-    value: function selectBoard(e) {
-      e.preventDefault();
-      document.getElementById("board-names").classList.toggle("show-menu");
-    }
-  }, {
-    key: "openBoardForm",
-    value: function openBoardForm() {
+    key: "toggleBoardForm",
+    value: function toggleBoardForm() {
+      var status = this.state.boardForm;
       this.setState({
-        boardForm: true
-      });
-    }
-  }, {
-    key: "closeBoardForm",
-    value: function closeBoardForm() {
-      this.setState({
-        boardForm: false
+        boardForm: !status
       });
     }
   }, {
@@ -2664,7 +2673,7 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_boards_board_create_form__WEBPACK_IMPORTED_MODULE_4__["default"], {
           createBoard: createBoard,
           clearErrors: clearErrors,
-          closeBoardForm: this.closeBoardForm,
+          closeBoardForm: this.toggleBoardForm,
           currentUserId: currentUserId
         });
       }
@@ -2744,7 +2753,7 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
       if (pins[chosenPinId].userId === currentUserId) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "edit-pin",
-          onClick: this.openEditForm
+          onClick: this.toggleEditForm
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-pencil-alt"
         }));

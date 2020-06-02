@@ -13,17 +13,14 @@ class PinShow extends React.Component{
             chosenBoardId: '', 
             confirm: false
         }
-        this.openEditForm = this.openEditForm.bind(this);
-        this.closeEditForm = this.closeEditForm.bind(this);
+        this.toggleEditForm = this.toggleEditForm.bind(this);
+        this.toggleBoardForm = this.toggleBoardForm.bind(this);
+        this.toggleMenu = this.toggleMenu.bind(this);
         this.goBack = this.goBack.bind(this);
         this.getSuggested = this.getSuggested.bind(this);
         this.update = this.update.bind(this);
         this.handleSaveToBoard = this.handleSaveToBoard.bind(this);
-        this.selectBoard = this.selectBoard.bind(this);
         this.makeBoardSelection = this.makeBoardSelection.bind(this);
-        this.showMenu = this.showMenu.bind(this);
-        this.openBoardForm = this.openBoardForm.bind(this);
-        this.closeBoardForm = this.closeBoardForm.bind(this);
         this.closeConfirm = this.closeConfirm.bind(this);
     }
 
@@ -39,13 +36,10 @@ class PinShow extends React.Component{
         fetchBoards(currentUserId);
     }
 
-    openEditForm(e){
+    toggleEditForm(e){
         e.preventDefault();
-        this.setState({edit: true});
-    }
-
-    closeEditForm(){
-        this.setState({ edit: false });
+        let status = this.state.edit;
+        this.setState({edit: !status});
     }
 
     getSuggested(){
@@ -67,7 +61,7 @@ class PinShow extends React.Component{
                     updatePin={updatePin}
                     deletePin={deletePin}
                     saveToBoard={saveToBoard}
-                    closeEditForm={this.closeEditForm}
+                    closeEditForm={this.toggleEditForm}
                     clearErrors={clearErrors}
                     createBoard={createBoard}
                 />)
@@ -82,25 +76,31 @@ class PinShow extends React.Component{
             <div>
                 <div className="drop-down select-board show-select"
                     id="selected-text"
-                    onClick={this.showMenu}>
+                    onClick={this.toggleMenu}>
                     Select board
                 </div>
-                <ul id="board-names"
-                    className="drop-down-menu">
-                    {boards.map((board, idx) => {
-                        return (
-                            <li key={idx}
-                                value={board.id}
-                                className="board-name"
-                                onClick={this.makeBoardSelection}
-                            >{board.name}</li>
-                        )
-                    })}
-                    <a onClick={this.openBoardForm}><li key="a"
-                        className="create-board-option">
-                        <i className="fas fa-plus-circle"></i>
-                        Create board</li></a>
-                </ul>
+                <div id="board-names" 
+                    className="menu-back" 
+                    onClick={this.toggleMenu}>
+                    <ul className="drop-down-menu" onClick={e => e.stopPropagation()}>
+                        {boards.map((board, idx) => {
+                            return (
+                                <li key={idx}
+                                    value={board.id}
+                                    className="board-name"
+                                    onClick={this.makeBoardSelection}
+                                >{board.name}</li>
+                            )
+                        })}
+                        <a onClick={this.toggleBoardForm}>
+                            <li key="a"
+                                className="create-board-option">
+                                <i className="fas fa-plus-circle"></i>
+                                Create board
+                            </li>
+                        </a>
+                    </ul>    
+                </div> 
                 <div className="drop-down-arrow-select-board">
                     <i className="fas fa-chevron-down"></i>
                 </div>
@@ -110,25 +110,17 @@ class PinShow extends React.Component{
 
     makeBoardSelection(e) {
         document.getElementById("selected-text").innerHTML = e.currentTarget.innerHTML;
-        this.selectBoard(e);
+        this.toggleMenu();
         this.update("chosenBoardId")(e);
     }
 
-    showMenu() {
+    toggleMenu() {
         document.getElementById("board-names").classList.toggle("show-menu")
     }
 
-    selectBoard(e) {
-        e.preventDefault();
-        document.getElementById("board-names").classList.toggle("show-menu")
-    }
-
-    openBoardForm() {
-        this.setState({ boardForm: true });
-    }
-
-    closeBoardForm() {
-        this.setState({ boardForm: false });
+    toggleBoardForm() {
+        let status = this.state.boardForm;
+        this.setState({ boardForm: !status });
     }
 
     showBoardForm() {
@@ -137,7 +129,7 @@ class PinShow extends React.Component{
             return (<CreateBoardForm
                 createBoard={createBoard}
                 clearErrors={clearErrors}
-                closeBoardForm={this.closeBoardForm}
+                closeBoardForm={this.toggleBoardForm}
                 currentUserId={currentUserId}
             />)
         }
@@ -195,7 +187,7 @@ class PinShow extends React.Component{
         const { pins, chosenPinId, currentUserId } = this.props;
         if (pins[chosenPinId].userId === currentUserId){
             return (
-                <div className="edit-pin" onClick={this.openEditForm}>
+                <div className="edit-pin" onClick={this.toggleEditForm}>
                     <i className="fas fa-pencil-alt"></i>
                 </div>
             )
