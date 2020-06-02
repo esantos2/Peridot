@@ -2548,9 +2548,15 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
           fetchUsers = _this$props.fetchUsers,
           fetchBoards = _this$props.fetchBoards,
           currentUserId = _this$props.currentUserId;
+      window.addEventListener("click", this.toggleMenu);
       fetchPins();
       fetchUsers();
       fetchBoards(currentUserId);
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      window.removeEventListener("click", this.toggleMenu);
     }
   }, {
     key: "toggleEditForm",
@@ -2611,12 +2617,10 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
       if (!boards) return null;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "drop-down select-board show-select",
-        id: "selected-text",
-        onClick: this.toggleMenu
+        id: "selected-text"
       }, "Select board"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "board-names",
-        className: "menu-back",
-        onClick: this.toggleMenu
+        className: "menu-box"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "drop-down-menu",
         onClick: function onClick(e) {
@@ -2646,13 +2650,22 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
     key: "makeBoardSelection",
     value: function makeBoardSelection(e) {
       document.getElementById("selected-text").innerHTML = e.currentTarget.innerHTML;
-      this.toggleMenu();
+      this.toggleMenu(e);
       this.update("chosenBoardId")(e);
     }
   }, {
     key: "toggleMenu",
-    value: function toggleMenu() {
-      document.getElementById("board-names").classList.toggle("show-menu");
+    value: function toggleMenu(e) {
+      e.stopPropagation();
+      var menuBox = document.getElementById("selected-text");
+      var list = document.getElementById("board-names");
+      if (!menuBox) return null;
+
+      if (e.target === menuBox && !list.classList.contains("show-menu")) {
+        list.classList.add("show-menu");
+      } else {
+        list.classList.remove("show-menu");
+      }
     }
   }, {
     key: "toggleBoardForm",

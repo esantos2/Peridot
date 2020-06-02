@@ -88,6 +88,10 @@ a{
     min-height: auto;
 }
 
+.menu-box{
+    display: none;
+}
+
 .menu-back{
     display: none;
     position: fixed;
@@ -115,9 +119,8 @@ a{
 }
 
 #board-names .drop-down-menu{
-    right: 318px;
-    top: 169px;
-
+    top: 24px;
+    right: 6px;
 }
 
 .show-menu{
@@ -132,6 +135,7 @@ a{
 .drop-down-menu li{
     list-style: none;
     padding: 10px;
+    z-index: 200;
 }
 
 .drop-down-menu li:hover{

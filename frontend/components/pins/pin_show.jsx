@@ -31,9 +31,14 @@ class PinShow extends React.Component{
 
     componentDidMount(){
         const { fetchPins, fetchUsers, fetchBoards, currentUserId} = this.props;
+        window.addEventListener("click", this.toggleMenu);
         fetchPins();
         fetchUsers();
         fetchBoards(currentUserId);
+    }
+
+    componentWillUnmount(){
+        window.removeEventListener("click", this.toggleMenu);
     }
 
     toggleEditForm(e){
@@ -75,13 +80,10 @@ class PinShow extends React.Component{
         return (
             <div>
                 <div className="drop-down select-board show-select"
-                    id="selected-text"
-                    onClick={this.toggleMenu}>
+                    id="selected-text">
                     Select board
                 </div>
-                <div id="board-names" 
-                    className="menu-back" 
-                    onClick={this.toggleMenu}>
+                <div id="board-names" className="menu-box"> 
                     <ul className="drop-down-menu" onClick={e => e.stopPropagation()}>
                         {boards.map((board, idx) => {
                             return (
@@ -110,12 +112,20 @@ class PinShow extends React.Component{
 
     makeBoardSelection(e) {
         document.getElementById("selected-text").innerHTML = e.currentTarget.innerHTML;
-        this.toggleMenu();
+        this.toggleMenu(e);
         this.update("chosenBoardId")(e);
     }
 
-    toggleMenu() {
-        document.getElementById("board-names").classList.toggle("show-menu")
+    toggleMenu(e) {
+        e.stopPropagation();
+        let menuBox = document.getElementById("selected-text");
+        let list = document.getElementById("board-names");
+        if (!menuBox) return null;
+        if (e.target === menuBox && !list.classList.contains("show-menu")){
+            list.classList.add("show-menu");
+        } else{
+            list.classList.remove("show-menu");
+        }
     }
 
     toggleBoardForm() {
