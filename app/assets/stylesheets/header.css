@@ -1,3 +1,7 @@
+body{
+    position: relative;
+}
+
 .header-logout{
     display: flex;
     justify-content: space-between;
@@ -84,8 +88,21 @@ a{
     min-height: auto;
 }
 
-.drop-down-menu{
+.menu-box{
     display: none;
+}
+
+.menu-back{
+    display: none;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 100;
+}
+
+.drop-down-menu{
     position: absolute;
     text-align: left;
     background-color: white;
@@ -97,21 +114,28 @@ a{
     width: 200px;
     min-width: 180px;
     max-width: 360px;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-bottom: 5px;
+    padding: 5px 10px;
     z-index: 5;
+}
+
+#board-names .drop-down-menu{
+    top: 24px;
+    right: 6px;
 }
 
 .show-menu{
     display: block;
 }
 
+.drop-down-menu ul{
+    padding: 0px;
+    margin: 0px;
+}
+
 .drop-down-menu li{
     list-style: none;
     padding: 10px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    z-index: 200;
 }
 
 .drop-down-menu li:hover{
@@ -138,11 +162,6 @@ a{
 .select-board:hover{
     cursor: pointer;
     background-color: rgba(141, 141, 141, 0.342);
-}
-
-#board-names{
-    top: 25px;
-    right: 57px;
 }
 
 #board-names-edit{

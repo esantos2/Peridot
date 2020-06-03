@@ -3,7 +3,7 @@ import { withRouter, NavLink } from 'react-router-dom';
 import CreateBoardForm from '../boards/board_create_form';
 
 class EditPinForm extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props)
         this.state = this.props.pin;
         const { title, description, link } = this.props.pin
@@ -19,21 +19,17 @@ class EditPinForm extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
         this.makeBoardSelection = this.makeBoardSelection.bind(this);
-        this.showMenu = this.showMenu.bind(this);
-        this.openBoardForm = this.openBoardForm.bind(this);
-        this.closeBoardForm = this.closeBoardForm.bind(this);
+        this.toggleMenu = this.toggleMenu.bind(this);
+        this.toggleBoardForm = this.toggleBoardForm.bind(this);
     }
 
-    update(field){
-        return e => this.setState({[field]: e.currentTarget.value});
+    update(field) {
+        return e => this.setState({ [field]: e.currentTarget.value });
     }
 
-    openBoardForm() {
-        this.setState({ boardForm: true });
-    }
-
-    closeBoardForm() {
-        this.setState({ boardForm: false });
+    toggleBoardForm() {
+        let status = this.state.boardForm;
+        this.setState({ boardForm: !status });
     }
 
     showBoardForm() {
@@ -42,79 +38,64 @@ class EditPinForm extends React.Component {
             return (<CreateBoardForm
                 createBoard={createBoard}
                 clearErrors={clearErrors}
-                closeBoardForm={this.closeBoardForm}
+                closeBoardForm={this.toggleBoardForm}
                 currentUserId={currentUserId}
             />)
         }
     }
 
-    handleSubmit(e){
+    handleSubmit(e) {
         e.preventDefault();
         const { title, description, link, chosenBoardId } = this.state;
         const { pin, currentUserId } = this.props;
-        if (pin.userId === currentUserId){
-            let newUser = { 
+        if (pin.userId === currentUserId) {
+            let newUser = {
                 id: pin.id,
-                user_id: currentUserId, 
-                title, 
-                description, 
-                link };
+                user_id: currentUserId,
+                title,
+                description,
+                link
+            };
             this.props.updatePin(newUser)
                 .then(pin => {
-                    if (chosenBoardId){
+                    if (chosenBoardId) {
                         return this.props.saveToBoard({ board_id: parseInt(chosenBoardId), pin_id: pin.pin.id })
                     }
                 });
         } else {
-            if (chosenBoardId){
+            if (chosenBoardId) {
                 this.props.saveToBoard({ board_id: parseInt(chosenBoardId), pin_id: pin.id });
             }
         }
-        this.setState({ confirm: true }, this.props.closeEditForm);
+        this.setState({ confirm: true }, this.props.closeEditForm(e));
     }
 
-    handleDelete(e){
+    handleDelete(e) {
         e.preventDefault();
-        const {pin, currentUserId, deletePin, closeEditForm} = this.props;
-        if (currentUserId === pin.userId){
+        const { pin, currentUserId, deletePin, closeEditForm } = this.props;
+        if (currentUserId === pin.userId) {
             closeEditForm();
             deletePin(pin.id);
             this.props.history.push(`/users/${currentUserId}/pins`);
         }
     }
-    
-    // displayConfirmation() {
-    //     if (this.state.confirm) {
-    //         return (
-    //             <div className="modal-background">
-    //                 <div className="modal-child" onClick={e => e.stopPropagation()}>
-    //                     <div className="pin-confirmation-box">
-    //                         <div className="confirm-image"><i className="far fa-check-circle"></i></div>
-    //                         <h1>Success!</h1>
-    //                         <p><NavLink className="continue" to={`/users/${this.state.user_id}/pins`}>Continue</NavLink></p>
-    //                     </div>
-    //                 </div>
-    //             </div>
-    //         )
-    //     }
-    // }
 
-    editDetails(){
+    editDetails() {
         if (this.props.currentUserId !== this.props.pin.userId) return null;
-        const {title, description, link} = this.state;
+        const { title, description, link } = this.state;
         return (
             <div className="edit-details">
                 <div>
                     <p>Title</p>
-                    <input type="text" value={title} onChange={this.update("title")}/>
+                    <input type="text" value={title} onChange={this.update("title")} />
                 </div>
                 <div>
                     <p>Description</p>
-                    <textarea rows="3" value={description} onChange={this.update("description")}/>
+                    <textarea rows="3" value={description} onChange={this.update("description")} />
                 </div>
                 <div>
                     <p>Website</p>
-                    <input type="text" value={link} onChange={this.update("link")}/>
+                    <input type="text" value={link} onChange={this.update("link")} />
                 </div>
             </div>
         )
@@ -127,11 +108,11 @@ class EditPinForm extends React.Component {
             <div>
                 <div className="drop-down select-board edit"
                     id="selected-text"
-                    onClick={this.showMenu}>
+                    onClick={this.toggleMenu}>
                     Select board
                 </div>
                 <ul id="board-names-edit"
-                    className="drop-down-menu">
+                    className="drop-down-menu menu-box">
                     {boards.map((board, idx) => {
                         return (
                             <li key={idx}
@@ -155,12 +136,25 @@ class EditPinForm extends React.Component {
 
     makeBoardSelection(e) {
         document.getElementById("selected-text").innerHTML = e.currentTarget.innerHTML;
-        this.selectBoard(e);
+        this.toggleMenu(e);
         this.update("chosenBoardId")(e);
     }
 
-    showMenu() {
+    toggleMenu(e) {
         document.getElementById("board-names-edit").classList.toggle("show-menu")
+    }
+
+    toggleButtonLock() { //lock button until board selected
+        const { chosenBoardId } = this.state;
+        const saveBtn = document.getElementById("save-pin");
+        if (!saveBtn) return;
+        if (chosenBoardId === '') { //lock button
+            saveBtn.disabled = true;
+            saveBtn.classList.add("no-button");
+        } else { //unlock
+            saveBtn.disabled = false;
+            saveBtn.classList.remove("no-button");
+        }
     }
 
     selectBoard(e) {

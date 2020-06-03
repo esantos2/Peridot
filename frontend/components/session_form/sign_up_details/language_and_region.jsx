@@ -51,7 +51,7 @@ class LanguageAndRegion extends React.Component {
                     {`--Select ${category}--`}
                 </div>
                 <ul id={`${category}-names`}
-                    className="drop-down-menu">
+                    className="drop-down-menu menu-box">
                     {list.map((ele, idx) => {
                         return (
                             <li key={idx}

@@ -100,12 +100,12 @@
     overflow: scroll;
     width: 200px;
     height: 400px;
-    top: 240px;
-    right: 75px;
+    top: 227px;
+    right: 71px;
 }
 
 #region-names{
-    top: 330px;
+    top: 317px;
 }
 
 .selected-text-language, .selected-text-region{
