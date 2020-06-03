@@ -8,22 +8,36 @@ class UserProfile extends React.Component{
         this.state = {
             boardForm: false
         }
-        this.openBoardForm = this.openBoardForm.bind(this);
-        this.closeBoardForm = this.closeBoardForm.bind(this);
+        this.toggleMenu = this.toggleMenu.bind(this);
+        this.toggleBoardForm = this.toggleBoardForm.bind(this);
     }
 
     componentDidMount(){
         const {fetchUser, match} = this.props;
         fetchUser(match.params.userId);
         window.scrollTo(0, 0);
+        window.addEventListener("click", this.toggleMenu);
     }
 
-    showMenu(){
-        document.getElementById("create-options").classList.toggle("show-menu")
+    componentWillUnmount(){
+        window.removeEventListener("click", this.toggleMenu);
     }
 
-    openBoardForm(){
-        this.setState({boardForm: true});
+    toggleMenu(e) {
+        e.stopPropagation();
+        let options = document.getElementById("options");
+        let list = document.getElementById("create-options");
+        if (!options) return null;
+        if (e.target === options && !list.classList.contains("show-menu")) {
+            list.classList.add("show-menu");
+        } else {
+            list.classList.remove("show-menu");
+        }
+    }
+
+    toggleBoardForm(){
+        let status = this.state.boardForm;
+        this.setState({boardForm: !status});
     }
 
     showBoardForm(){
@@ -32,14 +46,10 @@ class UserProfile extends React.Component{
             return (<CreateBoardForm 
                 createBoard={createBoard}
                 clearErrors={clearErrors}
-                closeBoardForm={this.closeBoardForm}
+                closeBoardForm={this.toggleBoardForm}
                 currentUserId={user.id}
             />)
         }
-    }
-
-    closeBoardForm(){
-        this.setState({boardForm: false});
     }
 
     currentUserOnly(){
@@ -47,11 +57,11 @@ class UserProfile extends React.Component{
         if (user.id === currentUserId){
             return (
                 <div>
-                    <div className="icon " onClick={this.showMenu}>
-                        <i className="dropdown fas fa-plus"></i>
+                    <div className="icon">
+                        <i id="options" className="dropdown fas fa-plus"></i>
                     </div>
-                    <ul id="create-options" className="drop-down-menu">
-                        <a onClick={this.openBoardForm}><li>Create Board</li></a>
+                    <ul id="create-options" className="drop-down-menu menu-box">
+                        <a onClick={this.toggleBoardForm}><li>Create Board</li></a>
                         <Link to="/pin-builder"><li>Create Pin</li></Link>
                     </ul>
                     <div className="icon">

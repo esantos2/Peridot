@@ -18,47 +18,28 @@ class CreatePinForm extends React.Component{
             boardForm: false
         }
         this.update = this.update.bind(this);
-        this.selectBoard = this.selectBoard.bind(this);
         this.boardNames = this.boardNames.bind(this);
         this.makeBoardSelection = this.makeBoardSelection.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleFile = this.handleFile.bind(this);
-        this.showMenu = this.showMenu.bind(this);
-        this.openBoardForm = this.openBoardForm.bind(this);
-        this.closeBoardForm = this.closeBoardForm.bind(this);
-        this.disableFormButton = this.disableFormButton.bind(this);
-        this.enableFormButton = this.enableFormButton.bind(this);
+        this.toggleBoardForm = this.toggleBoardForm.bind(this);
+        this.toggleMenu = this.toggleMenu.bind(this);
     }
 
     componentDidMount(){
         const {owner, fetchBoards, clearErrors} = this.props;
+        window.addEventListener("click", this.toggleMenu);
         fetchBoards(owner.id);
         clearErrors();
+    }
+
+    componentWillUnmount(){
+        window.removeEventListener("click", this.toggleMenu);
     }
 
     update(field){
         return e => { 
             this.setState({[field]: e.currentTarget.value})
-        }
-    }
-    
-    openBoardForm() {
-        this.setState({ boardForm: true });
-    }
-
-    closeBoardForm() {
-        this.setState({ boardForm: false });
-    }
-
-    showBoardForm() {
-        if (this.state.boardForm) {
-            const { createBoard, clearErrors, owner } = this.props;
-            return (<CreateBoardForm
-                createBoard={createBoard}
-                clearErrors={clearErrors}
-                closeBoardForm={this.closeBoardForm}
-                currentUserId={owner.id}
-            />)
         }
     }
 
@@ -150,32 +131,36 @@ class CreatePinForm extends React.Component{
         }
     }
 
+    //board start
     boardNames() {
         const { boards } = this.props;
         if (!boards) return null;
         return (
             <div>
-                <div className="drop-down select-board" 
-                    id="selected-text" 
-                    onClick={this.showMenu}>
-                        Select board
+                <div className="drop-down select-board show-select"
+                    id="selected-text">
+                    Select board
                 </div>
-                <ul id="board-names" 
-                    className="drop-down-menu">
-                    {boards.map((board, idx) => {
-                        return (
-                            <li key={idx} 
-                            value={board.id}
-                            className="board-name"
-                            onClick={this.makeBoardSelection}
-                            >{board.name}</li>
+                <div id="board-names" className="menu-box">
+                    <ul className="drop-down-menu" onClick={e => e.stopPropagation()}>
+                        {boards.map((board, idx) => {
+                            return (
+                                <li key={idx}
+                                    value={board.id}
+                                    className="board-name"
+                                    onClick={this.makeBoardSelection}
+                                >{board.name}</li>
                             )
                         })}
-                    <a onClick={this.openBoardForm}><li key="a" 
-                        className="create-board-option">
-                        <i className="fas fa-plus-circle"></i>
-                        Create board</li></a>
-                </ul>
+                        <a onClick={this.toggleBoardForm}>
+                            <li key="a"
+                                className="create-board-option">
+                                <i className="fas fa-plus-circle"></i>
+                                Create board
+                            </li>
+                        </a>
+                    </ul>
+                </div>
                 <div className="drop-down-arrow-select-board">
                     <i className="fas fa-chevron-down"></i>
                 </div>
@@ -183,20 +168,51 @@ class CreatePinForm extends React.Component{
         )
     }
 
-    makeBoardSelection(e){
+    makeBoardSelection(e) {
         document.getElementById("selected-text").innerHTML = e.currentTarget.innerHTML;
-        this.selectBoard(e);
-        this.update("chosenBoardId")(e)
+        this.toggleMenu(e);
+        this.update("chosenBoardId")(e);
     }
 
-    showMenu() {
-        document.getElementById("board-names").classList.toggle("show-menu")
+    toggleMenu(e) {
+        e.stopPropagation();
+        let menuBox = document.getElementById("selected-text");
+        let list = document.getElementById("board-names");
+        if (!menuBox) return null;
+        if (e.target === menuBox && !list.classList.contains("show-menu")) {
+            list.classList.add("show-menu");
+        } else {
+            list.classList.remove("show-menu");
+        }
     }
 
-    selectBoard(e) {
+    toggleBoardForm() {
+        let status = this.state.boardForm;
+        this.setState({ boardForm: !status });
+    }
+
+    showBoardForm() {
+        if (this.state.boardForm) {
+            const { createBoard, clearErrors, currentUserId } = this.props;
+            return (<CreateBoardForm
+                createBoard={createBoard}
+                clearErrors={clearErrors}
+                closeBoardForm={this.toggleBoardForm}
+                currentUserId={currentUserId}
+            />)
+        }
+    }
+
+    handleSaveToBoard(e) {
         e.preventDefault();
-        document.getElementById("board-names").classList.toggle("show-menu")
+        let boardPin = {
+            board_id: parseInt(this.state.chosenBoardId),
+            pin_id: parseInt(this.props.chosenPinId)
+        }
+        this.props.saveToBoard(boardPin);
+        this.setState({ confirm: true, chosenBoardId: "" }, this.toggleButtonLock());
     }
+    //board end
 
     render(){
         const {owner} = this.props;

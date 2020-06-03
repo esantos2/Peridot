@@ -1516,16 +1516,12 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
       boardForm: false
     };
     _this.update = _this.update.bind(_assertThisInitialized(_this));
-    _this.selectBoard = _this.selectBoard.bind(_assertThisInitialized(_this));
     _this.boardNames = _this.boardNames.bind(_assertThisInitialized(_this));
     _this.makeBoardSelection = _this.makeBoardSelection.bind(_assertThisInitialized(_this));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     _this.handleFile = _this.handleFile.bind(_assertThisInitialized(_this));
-    _this.showMenu = _this.showMenu.bind(_assertThisInitialized(_this));
-    _this.openBoardForm = _this.openBoardForm.bind(_assertThisInitialized(_this));
-    _this.closeBoardForm = _this.closeBoardForm.bind(_assertThisInitialized(_this));
-    _this.disableFormButton = _this.disableFormButton.bind(_assertThisInitialized(_this));
-    _this.enableFormButton = _this.enableFormButton.bind(_assertThisInitialized(_this));
+    _this.toggleBoardForm = _this.toggleBoardForm.bind(_assertThisInitialized(_this));
+    _this.toggleMenu = _this.toggleMenu.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1536,8 +1532,14 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
           owner = _this$props.owner,
           fetchBoards = _this$props.fetchBoards,
           clearErrors = _this$props.clearErrors;
+      window.addEventListener("click", this.toggleMenu);
       fetchBoards(owner.id);
       clearErrors();
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      window.removeEventListener("click", this.toggleMenu);
     }
   }, {
     key: "update",
@@ -1547,36 +1549,6 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
       return function (e) {
         _this2.setState(_defineProperty({}, field, e.currentTarget.value));
       };
-    }
-  }, {
-    key: "openBoardForm",
-    value: function openBoardForm() {
-      this.setState({
-        boardForm: true
-      });
-    }
-  }, {
-    key: "closeBoardForm",
-    value: function closeBoardForm() {
-      this.setState({
-        boardForm: false
-      });
-    }
-  }, {
-    key: "showBoardForm",
-    value: function showBoardForm() {
-      if (this.state.boardForm) {
-        var _this$props2 = this.props,
-            createBoard = _this$props2.createBoard,
-            clearErrors = _this$props2.clearErrors,
-            owner = _this$props2.owner;
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_boards_board_create_form__WEBPACK_IMPORTED_MODULE_2__["default"], {
-          createBoard: createBoard,
-          clearErrors: clearErrors,
-          closeBoardForm: this.closeBoardForm,
-          currentUserId: owner.id
-        });
-      }
     }
   }, {
     key: "handleSubmit",
@@ -1709,7 +1681,8 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
           className: "error"
         }, errors[0]);
       }
-    }
+    } //board start
+
   }, {
     key: "boardNames",
     value: function boardNames() {
@@ -1718,12 +1691,16 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
       var boards = this.props.boards;
       if (!boards) return null;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "drop-down select-board",
-        id: "selected-text",
-        onClick: this.showMenu
-      }, "Select board"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "drop-down select-board show-select",
+        id: "selected-text"
+      }, "Select board"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "board-names",
-        className: "drop-down-menu"
+        className: "menu-box"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "drop-down-menu",
+        onClick: function onClick(e) {
+          return e.stopPropagation();
+        }
       }, boards.map(function (board, idx) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
           key: idx,
@@ -1732,13 +1709,13 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
           onClick: _this5.makeBoardSelection
         }, board.name);
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        onClick: this.openBoardForm
+        onClick: this.toggleBoardForm
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         key: "a",
         className: "create-board-option"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-plus-circle"
-      }), "Create board"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }), "Create board")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "drop-down-arrow-select-board"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-chevron-down"
@@ -1748,20 +1725,62 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
     key: "makeBoardSelection",
     value: function makeBoardSelection(e) {
       document.getElementById("selected-text").innerHTML = e.currentTarget.innerHTML;
-      this.selectBoard(e);
+      this.toggleMenu(e);
       this.update("chosenBoardId")(e);
     }
   }, {
-    key: "showMenu",
-    value: function showMenu() {
-      document.getElementById("board-names").classList.toggle("show-menu");
+    key: "toggleMenu",
+    value: function toggleMenu(e) {
+      e.stopPropagation();
+      var menuBox = document.getElementById("selected-text");
+      var list = document.getElementById("board-names");
+      if (!menuBox) return null;
+
+      if (e.target === menuBox && !list.classList.contains("show-menu")) {
+        list.classList.add("show-menu");
+      } else {
+        list.classList.remove("show-menu");
+      }
     }
   }, {
-    key: "selectBoard",
-    value: function selectBoard(e) {
-      e.preventDefault();
-      document.getElementById("board-names").classList.toggle("show-menu");
+    key: "toggleBoardForm",
+    value: function toggleBoardForm() {
+      var status = this.state.boardForm;
+      this.setState({
+        boardForm: !status
+      });
     }
+  }, {
+    key: "showBoardForm",
+    value: function showBoardForm() {
+      if (this.state.boardForm) {
+        var _this$props2 = this.props,
+            createBoard = _this$props2.createBoard,
+            clearErrors = _this$props2.clearErrors,
+            currentUserId = _this$props2.currentUserId;
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_boards_board_create_form__WEBPACK_IMPORTED_MODULE_2__["default"], {
+          createBoard: createBoard,
+          clearErrors: clearErrors,
+          closeBoardForm: this.toggleBoardForm,
+          currentUserId: currentUserId
+        });
+      }
+    }
+  }, {
+    key: "handleSaveToBoard",
+    value: function handleSaveToBoard(e) {
+      e.preventDefault();
+      var boardPin = {
+        board_id: parseInt(this.state.chosenBoardId),
+        pin_id: parseInt(this.props.chosenPinId)
+      };
+      this.props.saveToBoard(boardPin);
+      this.setState({
+        confirm: true,
+        chosenBoardId: ""
+      }, this.toggleButtonLock());
+    } //board end
+
   }, {
     key: "render",
     value: function render() {
@@ -1976,9 +1995,8 @@ var EditPinForm = /*#__PURE__*/function (_React$Component) {
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     _this.handleDelete = _this.handleDelete.bind(_assertThisInitialized(_this));
     _this.makeBoardSelection = _this.makeBoardSelection.bind(_assertThisInitialized(_this));
-    _this.showMenu = _this.showMenu.bind(_assertThisInitialized(_this));
-    _this.openBoardForm = _this.openBoardForm.bind(_assertThisInitialized(_this));
-    _this.closeBoardForm = _this.closeBoardForm.bind(_assertThisInitialized(_this));
+    _this.toggleMenu = _this.toggleMenu.bind(_assertThisInitialized(_this));
+    _this.toggleBoardForm = _this.toggleBoardForm.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1992,17 +2010,11 @@ var EditPinForm = /*#__PURE__*/function (_React$Component) {
       };
     }
   }, {
-    key: "openBoardForm",
-    value: function openBoardForm() {
+    key: "toggleBoardForm",
+    value: function toggleBoardForm() {
+      var status = this.state.boardForm;
       this.setState({
-        boardForm: true
-      });
-    }
-  }, {
-    key: "closeBoardForm",
-    value: function closeBoardForm() {
-      this.setState({
-        boardForm: false
+        boardForm: !status
       });
     }
   }, {
@@ -2016,7 +2028,7 @@ var EditPinForm = /*#__PURE__*/function (_React$Component) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_boards_board_create_form__WEBPACK_IMPORTED_MODULE_2__["default"], {
           createBoard: createBoard,
           clearErrors: clearErrors,
-          closeBoardForm: this.closeBoardForm,
+          closeBoardForm: this.toggleBoardForm,
           currentUserId: currentUserId
         });
       }
@@ -2063,7 +2075,7 @@ var EditPinForm = /*#__PURE__*/function (_React$Component) {
 
       this.setState({
         confirm: true
-      }, this.props.closeEditForm);
+      }, this.props.closeEditForm(e));
     }
   }, {
     key: "handleDelete",
@@ -2080,22 +2092,7 @@ var EditPinForm = /*#__PURE__*/function (_React$Component) {
         deletePin(pin.id);
         this.props.history.push("/users/".concat(currentUserId, "/pins"));
       }
-    } // displayConfirmation() {
-    //     if (this.state.confirm) {
-    //         return (
-    //             <div className="modal-background">
-    //                 <div className="modal-child" onClick={e => e.stopPropagation()}>
-    //                     <div className="pin-confirmation-box">
-    //                         <div className="confirm-image"><i className="far fa-check-circle"></i></div>
-    //                         <h1>Success!</h1>
-    //                         <p><NavLink className="continue" to={`/users/${this.state.user_id}/pins`}>Continue</NavLink></p>
-    //                     </div>
-    //                 </div>
-    //             </div>
-    //         )
-    //     }
-    // }
-
+    }
   }, {
     key: "editDetails",
     value: function editDetails() {
@@ -2130,10 +2127,10 @@ var EditPinForm = /*#__PURE__*/function (_React$Component) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "drop-down select-board edit",
         id: "selected-text",
-        onClick: this.showMenu
+        onClick: this.toggleMenu
       }, "Select board"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         id: "board-names-edit",
-        className: "drop-down-menu"
+        className: "drop-down-menu menu-box"
       }, boards.map(function (board, idx) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
           key: idx,
@@ -2158,13 +2155,31 @@ var EditPinForm = /*#__PURE__*/function (_React$Component) {
     key: "makeBoardSelection",
     value: function makeBoardSelection(e) {
       document.getElementById("selected-text").innerHTML = e.currentTarget.innerHTML;
-      this.selectBoard(e);
+      this.toggleMenu(e);
       this.update("chosenBoardId")(e);
     }
   }, {
-    key: "showMenu",
-    value: function showMenu() {
+    key: "toggleMenu",
+    value: function toggleMenu(e) {
       document.getElementById("board-names-edit").classList.toggle("show-menu");
+    }
+  }, {
+    key: "toggleButtonLock",
+    value: function toggleButtonLock() {
+      //lock button until board selected
+      var chosenBoardId = this.state.chosenBoardId;
+      var saveBtn = document.getElementById("save-pin");
+      if (!saveBtn) return;
+
+      if (chosenBoardId === '') {
+        //lock button
+        saveBtn.disabled = true;
+        saveBtn.classList.add("no-button");
+      } else {
+        //unlock
+        saveBtn.disabled = false;
+        saveBtn.classList.remove("no-button");
+      }
     }
   }, {
     key: "selectBoard",
@@ -2562,6 +2577,7 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
     key: "toggleEditForm",
     value: function toggleEditForm(e) {
       e.preventDefault();
+      e.stopPropagation();
       var status = this.state.edit;
       this.setState({
         edit: !status
@@ -4245,8 +4261,8 @@ var UserProfile = /*#__PURE__*/function (_React$Component) {
     _this.state = {
       boardForm: false
     };
-    _this.openBoardForm = _this.openBoardForm.bind(_assertThisInitialized(_this));
-    _this.closeBoardForm = _this.closeBoardForm.bind(_assertThisInitialized(_this));
+    _this.toggleMenu = _this.toggleMenu.bind(_assertThisInitialized(_this));
+    _this.toggleBoardForm = _this.toggleBoardForm.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -4258,17 +4274,33 @@ var UserProfile = /*#__PURE__*/function (_React$Component) {
           match = _this$props.match;
       fetchUser(match.params.userId);
       window.scrollTo(0, 0);
+      window.addEventListener("click", this.toggleMenu);
     }
   }, {
-    key: "showMenu",
-    value: function showMenu() {
-      document.getElementById("create-options").classList.toggle("show-menu");
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      window.removeEventListener("click", this.toggleMenu);
     }
   }, {
-    key: "openBoardForm",
-    value: function openBoardForm() {
+    key: "toggleMenu",
+    value: function toggleMenu(e) {
+      e.stopPropagation();
+      var options = document.getElementById("options");
+      var list = document.getElementById("create-options");
+      if (!options) return null;
+
+      if (e.target === options && !list.classList.contains("show-menu")) {
+        list.classList.add("show-menu");
+      } else {
+        list.classList.remove("show-menu");
+      }
+    }
+  }, {
+    key: "toggleBoardForm",
+    value: function toggleBoardForm() {
+      var status = this.state.boardForm;
       this.setState({
-        boardForm: true
+        boardForm: !status
       });
     }
   }, {
@@ -4282,17 +4314,10 @@ var UserProfile = /*#__PURE__*/function (_React$Component) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_boards_board_create_form__WEBPACK_IMPORTED_MODULE_2__["default"], {
           createBoard: createBoard,
           clearErrors: clearErrors,
-          closeBoardForm: this.closeBoardForm,
+          closeBoardForm: this.toggleBoardForm,
           currentUserId: user.id
         });
       }
-    }
-  }, {
-    key: "closeBoardForm",
-    value: function closeBoardForm() {
-      this.setState({
-        boardForm: false
-      });
     }
   }, {
     key: "currentUserOnly",
@@ -4303,15 +4328,15 @@ var UserProfile = /*#__PURE__*/function (_React$Component) {
 
       if (user.id === currentUserId) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "icon ",
-          onClick: this.showMenu
+          className: "icon"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          id: "options",
           className: "dropdown fas fa-plus"
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
           id: "create-options",
-          className: "drop-down-menu"
+          className: "drop-down-menu menu-box"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-          onClick: this.openBoardForm
+          onClick: this.toggleBoardForm
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Create Board")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
           to: "/pin-builder"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Create Pin"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {

@@ -43,6 +43,7 @@ class PinShow extends React.Component{
 
     toggleEditForm(e){
         e.preventDefault();
+        e.stopPropagation();
         let status = this.state.edit;
         this.setState({edit: !status});
     }
