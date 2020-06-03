@@ -3508,7 +3508,7 @@ var LanguageAndRegion = /*#__PURE__*/function (_React$Component) {
         onClick: this.showMenu("".concat(category, "-names"))
       }, "--Select ".concat(category, "--")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         id: "".concat(category, "-names"),
-        className: "drop-down-menu"
+        className: "drop-down-menu menu-box"
       }, list.map(function (ele, idx) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
           key: idx,
