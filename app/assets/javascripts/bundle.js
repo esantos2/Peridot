@@ -1518,8 +1518,8 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
     _this.showMenu = _this.showMenu.bind(_assertThisInitialized(_this));
     _this.openBoardForm = _this.openBoardForm.bind(_assertThisInitialized(_this));
     _this.closeBoardForm = _this.closeBoardForm.bind(_assertThisInitialized(_this));
-    _this.disableButton = _this.disableButton.bind(_assertThisInitialized(_this));
-    _this.enableButton = _this.enableButton.bind(_assertThisInitialized(_this));
+    _this.disableFormButton = _this.disableFormButton.bind(_assertThisInitialized(_this));
+    _this.enableFormButton = _this.enableFormButton.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1578,7 +1578,7 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
       var _this3 = this;
 
       e.preventDefault();
-      this.disableButton();
+      this.disableFormButton();
       var _this$state = this.state,
           user_id = _this$state.user_id,
           title = _this$state.title,
@@ -1594,8 +1594,7 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
 
       if (photoFile) {
         formData.append('pin[photo]', photoFile);
-      } // let newUser = {user_id, title, description, link};
-
+      }
 
       this.props.createPin(formData).then(function (pin) {
         return _this3.props.saveToBoard({
@@ -1606,18 +1605,36 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
         return _this3.setState({
           confirm: true
         });
-      }, this.enableButton);
+      }, this.enableFormButton);
     }
   }, {
-    key: "disableButton",
-    value: function disableButton() {
+    key: "toggleButtonLock",
+    value: function toggleButtonLock() {
+      //lock button until board selected
+      var chosenBoardId = this.state.chosenBoardId;
+      var saveBtn = document.getElementById("save-pin");
+      if (!saveBtn) return;
+
+      if (chosenBoardId === '') {
+        //lock button
+        saveBtn.disabled = true;
+        saveBtn.classList.add("no-button");
+      } else {
+        //unlock
+        saveBtn.disabled = false;
+        saveBtn.classList.remove("no-button");
+      }
+    }
+  }, {
+    key: "disableFormButton",
+    value: function disableFormButton() {
       document.getElementById("save-pin").disabled = true;
       document.getElementById("save-pin").classList.toggle("no-button");
       document.getElementById("spinner").classList.toggle("show-spinner");
     }
   }, {
-    key: "enableButton",
-    value: function enableButton() {
+    key: "enableFormButton",
+    value: function enableFormButton() {
       document.getElementById("save-pin").disabled = false;
       document.getElementById("save-pin").classList.toggle("no-button");
       document.getElementById("spinner").classList.toggle("show-spinner");
@@ -1630,14 +1647,14 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "hideBackground",
     value: function hideBackground() {
-      document.getElementById("image-background").remove(); // document.getElementById("image-background").classList.toggle("show-background");
+      document.getElementById("image-background").remove();
     }
   }, {
     key: "handleFile",
     value: function handleFile(e) {
       var _this4 = this;
 
-      // e.preventDefault();
+      e.preventDefault();
       var file = e.currentTarget.files[0];
       var fileReader = new FileReader();
 
@@ -1752,6 +1769,7 @@ var CreatePinForm = /*#__PURE__*/function (_React$Component) {
         id: "image-preview",
         src: photoUrl
       }) : null;
+      this.toggleButtonLock();
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-modal"
       }, this.showBoardForm(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
