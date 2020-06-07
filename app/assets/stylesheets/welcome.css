@@ -98,14 +98,19 @@ h2{
 
 .splash-back{
     display: flex;
-    flex-flow: column wrap;
-    justify-content: flex-start;
-    align-items: center;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: flex-start;
     max-width: 100%;
     height: 100%;
-    max-height: 1200px;
     overflow: hidden;
-    margin: 0px 30px;
+}
+
+.splash-col{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .tile-box{
