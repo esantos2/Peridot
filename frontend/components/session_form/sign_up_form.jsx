@@ -4,6 +4,7 @@ import Names from './sign_up_details/names';
 import Gender from './sign_up_details/gender';
 import LanguageAndRegion from './sign_up_details/language_and_region';
 import Success from './sign_up_details/success';
+import { getSplashBack } from '../../util/splash_background_util';
 
 class SignUpForm extends React.Component{
     constructor(props){
@@ -81,46 +82,55 @@ class SignUpForm extends React.Component{
         return error;
     }
 
-    render(){
-        const {step, email, password, age, username, first_name, last_name, gender, language, region} = this.state;
-        const credVals = { email, password, age};
-        const nameVals = { email, username, first_name, last_name};
+    getFormComponent(){
+        const { step, email, password, age, username, first_name, last_name, gender, language, region } = this.state;
+        const credVals = { email, password, age };
+        const nameVals = { email, username, first_name, last_name };
         const genVal = { gender };
         const langAndRegVals = { language, region };
-        switch(step){
+        switch (step) {
             case 1: //email, password, age
-                return <Credentials 
+                return <Credentials
                     update={this.update}
                     newUserDetails={this.props.newUserDetails}
                     addErrors={this.addErrors}
                     showErrors={this.showErrors}
                     submitForm={this.submitForm}
-                    values={credVals}/>;
+                    values={credVals} />;
             case 2: //username, first_name, last_name
-                return <Names 
-                    update={this.update} 
-                    prevStep={this.prevStep} 
+                return <Names
+                    update={this.update}
+                    prevStep={this.prevStep}
                     addErrors={this.addErrors}
                     showErrors={this.showErrors}
-                    values={nameVals}/>;
+                    values={nameVals} />;
             case 3: //gender
-                return <Gender 
-                    update={this.update} 
-                    prevStep={this.prevStep} 
+                return <Gender
+                    update={this.update}
+                    prevStep={this.prevStep}
                     addErrors={this.addErrors}
                     showErrors={this.showErrors}
                     values={genVal} />;
             case 4: //language, region
-                return <LanguageAndRegion 
-                    update={this.update} 
-                    prevStep={this.prevStep} 
+                return <LanguageAndRegion
+                    update={this.update}
+                    prevStep={this.prevStep}
                     addErrors={this.addErrors}
                     showErrors={this.showErrors}
                     values={langAndRegVals} />;
             case 5: //signup
-                return <Success 
-                    submitForm={this.submitForm}/>;
+                return <Success
+                    submitForm={this.submitForm} />;
         }
+    }
+
+    render(){
+        return (
+            <div>
+                {getSplashBack()}
+                {this.getFormComponent()}
+            </div>
+        )
     }
 }
 

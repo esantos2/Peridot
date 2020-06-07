@@ -8,6 +8,9 @@ class PinIndex extends React.Component{
     }
 
     componentDidMount(){
+        let body = document.querySelector("body");
+        body.style.height = "auto";
+        body.style.overflow = "visible";
         this.props.getInfo();
     }
 

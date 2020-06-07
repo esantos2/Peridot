@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { getSplashBack } from '../../util/splash_background_util';
 
 class Welcome extends React.Component{
     
@@ -14,12 +15,6 @@ class Welcome extends React.Component{
         body.style.overflow = "hidden";
     }
 
-    componentWillUnmount(){
-        let body = document.querySelector("body");
-        body.style.height = "auto";
-        body.style.overflow = "visible";
-    }
-
     demoUser(e){
         e.preventDefault();
         const user = {
@@ -29,43 +24,10 @@ class Welcome extends React.Component{
         this.props.processForm(user);
     }
 
-    getSplashBack(){
-        const urlStart = "https://peridot-seed.s3-us-west-1.amazonaws.com/Splash/splash(";
-        const urlEnd = ").jpg";
-        const imgUrls = [];
-        let col = [];
-        for (let i = 4; i <= 27; i++){
-            col.push(urlStart + i + urlEnd);
-            if (i % 3 === 0){
-                imgUrls.push(col);
-                col = [];
-            }
-        }
-
-        return (
-            <div className="splash-back">
-                {imgUrls.map((col, i) => {
-                    return (
-                        <div key={i} className="splash-col">
-                            {col.map((url) => {
-                                return (
-                                    <div key={url} className="tile-box">
-                                        <img className="tile-img" src={url}/>
-                                        <div className="pin-space"></div>
-                                    </div>
-                                )
-                            })}
-                        </div>
-                    )
-                })}
-            </div>
-        )
-    }
-
     render(){
         return (
             <div>
-                {this.getSplashBack()}
+                {getSplashBack()}
                 <div className="modal-background">
                     <div className="modal-child" onClick={e => e.stopPropagation()}>
                         <div className="login-signup">
