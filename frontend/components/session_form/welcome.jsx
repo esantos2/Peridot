@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import PinIndex from '../pins/pin_index';
 
-const Welcome = ({ processForm, fetchPins }) => {
+const Welcome = ({ processForm }) => {
 
     const demoUser = (e) => {
         e.preventDefault();
@@ -13,11 +12,30 @@ const Welcome = ({ processForm, fetchPins }) => {
         processForm(user);
     }
 
+    const getSplashBack = () => {
+        const urlStart = "https://peridot-seed.s3-us-west-1.amazonaws.com/Splash/splash(";
+        const urlEnd = ").jpg";
+        const imgUrls = [];
+        for (let i = 4; i <= 27; i++){
+            imgUrls.push(urlStart + i + urlEnd);
+        }
+        return (
+            <div className="splash-back">
+                {imgUrls.map((url, idx) => {
+                    return (
+                        <div key={idx} className="tile-box">
+                            <img className="tile-img" src={url}/>
+                            <div className="pin-space"></div>
+                        </div>
+                    )
+                })}
+            </div>
+        )
+    }
+
     return (
         <div>
-            {/* <div className="background-pins">
-                <PinIndex getInfo={fetchPins}/>
-            </div> */}
+            {getSplashBack()}
             <div className="modal-background">
                 <div className="modal-child" onClick={e => e.stopPropagation()}>
                     <div className="login-signup">
