@@ -27,15 +27,41 @@ class PinIndex extends React.Component{
         }
     }
 
+    organizePins(){
+        const {pins} = this.props;
+        let indexMargin = 160;
+        let pinWidth = 244;
+        let numCols = Math.floor(( window.innerWidth - indexMargin) / pinWidth );
+
+        let pinCols = new Array(numCols);
+        for (let i = 0; i < pinCols.length; i++){
+            pinCols[i] = new Array(0);
+        }
+
+        for (let i = 0; i < pins.length; i++){
+            let col = i % numCols;
+            pinCols[col].push(pins[i]);
+        }
+
+        return pinCols;
+    }
+
     render(){
         const {pins} = this.props;
         if (!pins || pins.length === 0) return null;
+        const masonryPins = this.organizePins();
         return (
             <div className="all-pins-box">
                 {this.addCreatePin()}
                 {(!pins) ?  "" :
-                (pins).map((pin, idx) => {
-                    return <PinIndexItem key={idx} pin={pin}/>;
+                (masonryPins).map((pinCol, colNum) => {
+                    return (
+                        <div key={colNum} className="pin-column">
+                            {pinCol.map((pin, idx) => {
+                                return <PinIndexItem key={idx} pin={pin} />;
+                            })}
+                        </div>
+                    )
                 })}
             </div>
         )
