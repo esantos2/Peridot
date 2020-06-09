@@ -2505,6 +2505,7 @@ var PinIndexItem = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.showPinDetails = _this.showPinDetails.bind(_assertThisInitialized(_this));
+    _this.showImage = _this.showImage.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -2514,6 +2515,12 @@ var PinIndexItem = /*#__PURE__*/function (_React$Component) {
       var pinId = this.props.pin.id;
       this.props.history.push("/pins/".concat(pinId));
       window.scrollTo(0, 0);
+    }
+  }, {
+    key: "showImage",
+    value: function showImage(e) {
+      e.preventDefault();
+      document.getElementById(this.props.pin.id).classList.add("image-load");
     }
   }, {
     key: "render",
@@ -2528,7 +2535,9 @@ var PinIndexItem = /*#__PURE__*/function (_React$Component) {
         className: "pin-image"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "thumbnail",
-        src: pin.photoUrl
+        src: pin.photoUrl,
+        id: pin.id,
+        onLoad: this.showImage
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-space"
       }));
@@ -5358,6 +5367,13 @@ var getSplashBack = function getSplashBack() {
     }
   }
 
+  var showImage = function showImage(url) {
+    return function (e) {
+      e.preventDefault();
+      document.getElementById(url).classList.add("image-load");
+    };
+  };
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "splash-back"
   }, imgUrls.map(function (col, i) {
@@ -5370,7 +5386,9 @@ var getSplashBack = function getSplashBack() {
         className: "tile-box"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "tile-img",
-        src: url
+        src: url,
+        id: url,
+        onLoad: showImage(url)
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-space"
       }));

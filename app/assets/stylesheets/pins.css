@@ -14,7 +14,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    transition: 1000ms ease-in;
+    transition: 500ms ease-in;
 }
 
 .pin-box{
@@ -121,6 +121,12 @@
     height: auto;
     width: 100%;
     max-width: 600px;
+    opacity: 0;
+    transition: opacity 300ms ease-in;
+}
+
+.pin-image-show .thumbnail{
+    opacity: 1;
 }
 
 .thumbnail:hover{

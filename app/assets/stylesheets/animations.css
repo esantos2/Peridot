@@ -9,6 +9,11 @@
     -webkit-animation: fadeIn 700ms;
 }
 
+.pin-image .image-load,
+.tile-box .image-load{
+    opacity: 1;
+}
+
 .scroll-shadow{
     animation: fadeIn 700ms;
     -webkit-animation: fadeIn 700ms;

@@ -13,6 +13,13 @@ export const getSplashBack = () => {
         }
     }
 
+    const showImage = (url) => {
+        return e => {
+            e.preventDefault();
+            document.getElementById(url).classList.add("image-load");
+        }
+    }
+
     return (
         <div className="splash-back">
             {imgUrls.map((col, i) => {
@@ -21,7 +28,7 @@ export const getSplashBack = () => {
                         {col.map((url) => {
                             return (
                                 <div key={url} className="tile-box">
-                                    <img className="tile-img" src={url} />
+                                    <img className="tile-img" src={url} id={url} onLoad={showImage(url)}/>
                                     <div className="pin-space"></div>
                                 </div>
                             )
