@@ -1,9 +1,10 @@
 .all-pins-box{
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: flex-start;
     box-sizing: border-box;
-    padding: 20px 80px;
+    padding: 20px 40px;
     width: 100%;
     height: 100%;
 }
