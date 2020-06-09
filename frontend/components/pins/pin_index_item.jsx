@@ -18,9 +18,6 @@ class PinIndexItem extends React.Component{
         return (
             <div className="pin-box" onClick={this.showPinDetails}>
                 <div className="pin-box-details">
-                    <div className="hover-details">
-                            
-                    </div>
                     <div className="pin-image">
                         <img className="thumbnail" src={pin.photoUrl} />
                     </div>

@@ -2313,17 +2313,52 @@ var PinIndex = /*#__PURE__*/function (_React$Component) {
       }
     }
   }, {
+    key: "organizePins",
+    value: function organizePins() {
+      var pins = this.props.pins;
+      var indexMargin = 160;
+      var pinWidth = 244;
+      var numCols = Math.floor((window.innerWidth - indexMargin) / pinWidth);
+      var pinCols = new Array(numCols);
+
+      for (var i = 0; i < pinCols.length; i++) {
+        pinCols[i] = new Array(0);
+      }
+
+      var shufflePins = pins;
+
+      for (var _i = shufflePins.length - 1; _i > 0; _i--) {
+        var randIdx = Math.floor(Math.random() * (_i + 1));
+        var _ref = [shufflePins[randIdx], shufflePins[_i]];
+        shufflePins[_i] = _ref[0];
+        shufflePins[randIdx] = _ref[1];
+      }
+
+      for (var _i2 = 0; _i2 < shufflePins.length; _i2++) {
+        var col = _i2 % numCols;
+        pinCols[col].push(shufflePins[_i2]);
+      }
+
+      return pinCols;
+    }
+  }, {
     key: "render",
     value: function render() {
       var pins = this.props.pins;
       if (!pins || pins.length === 0) return null;
+      var masonryPins = this.organizePins();
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "all-pins-box"
-      }, this.addCreatePin(), !pins ? "" : pins.map(function (pin, idx) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_pin_index_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
-          key: idx,
-          pin: pin
-        });
+      }, this.addCreatePin(), !pins ? "" : masonryPins.map(function (pinCol, colNum) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          key: colNum,
+          className: "pin-column"
+        }, pinCol.map(function (pin, idx) {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_pin_index_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
+            key: idx,
+            pin: pin
+          });
+        }));
       }));
     }
   }]);
@@ -2458,8 +2493,6 @@ var PinIndexItem = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-box-details"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "hover-details"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-image"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "thumbnail",

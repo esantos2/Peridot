@@ -7,7 +7,6 @@
 
 .user-profile-box .header{
     width: 800px;
-    /* margin-top: 80px; */
     display: flex;
     flex-direction: column;
 }
@@ -94,7 +93,6 @@
     margin: 2px;
     width: auto;
     font-weight: bolder;
-    /* font-family: "Noto Sans"; */
 }
 
 #create-options li{
