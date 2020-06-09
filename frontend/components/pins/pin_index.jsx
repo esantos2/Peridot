@@ -38,9 +38,15 @@ class PinIndex extends React.Component{
             pinCols[i] = new Array(0);
         }
 
-        for (let i = 0; i < pins.length; i++){
+        let shufflePins = pins;
+        for(let i = shufflePins.length - 1; i > 0; i--){
+            const randIdx = Math.floor( Math.random() * (i + 1));
+            [ shufflePins[i], shufflePins[randIdx] ] = [ shufflePins[randIdx], shufflePins[i] ];
+        }
+
+        for (let i = 0; i < shufflePins.length; i++){
             let col = i % numCols;
-            pinCols[col].push(pins[i]);
+            pinCols[col].push(shufflePins[i]);
         }
 
         return pinCols;

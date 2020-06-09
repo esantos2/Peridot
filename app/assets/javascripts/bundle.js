@@ -2325,9 +2325,18 @@ var PinIndex = /*#__PURE__*/function (_React$Component) {
         pinCols[i] = new Array(0);
       }
 
-      for (var _i = 0; _i < pins.length; _i++) {
-        var col = _i % numCols;
-        pinCols[col].push(pins[_i]);
+      var shufflePins = pins;
+
+      for (var _i = shufflePins.length - 1; _i > 0; _i--) {
+        var randIdx = Math.floor(Math.random() * (_i + 1));
+        var _ref = [shufflePins[randIdx], shufflePins[_i]];
+        shufflePins[_i] = _ref[0];
+        shufflePins[randIdx] = _ref[1];
+      }
+
+      for (var _i2 = 0; _i2 < shufflePins.length; _i2++) {
+        var col = _i2 % numCols;
+        pinCols[col].push(shufflePins[_i2]);
       }
 
       return pinCols;
