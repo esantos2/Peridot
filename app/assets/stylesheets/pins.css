@@ -160,6 +160,7 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: bolder;
     padding-bottom: 16px;
+    margin-bottom: 8px;
 }
 
 .create-pin-button:hover{
