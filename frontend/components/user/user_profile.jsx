@@ -89,7 +89,8 @@ class UserProfile extends React.Component{
                             <h3>{user.bio}</h3>
                         </div>
                         <div className="image">
-                            <div className="profile-pic"></div>
+                            <img className="profile-pic" src="https://peridot-seed.s3-us-west-1.amazonaws.com/profile_blank.jpg"></img>
+                            {/* <div className="profile-pic"></div> */}
                         </div>
                     </div>
                     <div className="user-selection">
