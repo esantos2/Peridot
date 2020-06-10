@@ -1,6 +1,7 @@
 import React from 'react';
 import PinIndexItem from './pin_index_item';
 import { NavLink } from 'react-router-dom';
+import { addMainSpinner } from '../../util/loading_spinner';
 
 class PinIndex extends React.Component{
     constructor(props){
@@ -45,13 +46,15 @@ class PinIndex extends React.Component{
 
     reorganizePins(){
         const numCols = this.getNumCols();
-        if (numCols !== this.state.columns && numCols > 0) this.setState({columns: numCols});
+        if (numCols !== this.state.columns && numCols > 0){
+            this.setState({ columns: numCols });
+        }   
     }
 
     shufflePins(){
         const { pins } = this.props;
         const numCols = this.state.columns;
-
+        addMainSpinner();
         //array of columns
         let pinCols = new Array(numCols);
         for (let i = 0; i < pinCols.length; i++) {
@@ -74,19 +77,31 @@ class PinIndex extends React.Component{
         return pinCols;
     }
 
+    loadingScreen(){
+        return (
+            <div id="main-spinner" className="main-spinner-box">
+                <div className="main-loading-spinner"></div>
+                <h1 className="loading-message">We're adding new ideas to your home feed!</h1>
+            </div>
+        )
+    }
+
     render(){
         const {pins} = this.props;
         if (!pins || pins.length === 0 || !this.state.columns) return null;
         const masonryPins = this.shufflePins();
+        const lastCol = masonryPins.length - 1;
+        const lastRow = masonryPins[lastCol].length - 1;
         return (
             <div className="all-pins-box">
-                {(!pins) ?  "" :
-                (masonryPins).map((pinCol, colNum) => {
+                {this.loadingScreen()}
+                {(masonryPins).map((pinCol, colNum) => {
                     return (
                         <div key={colNum} className="pin-column">
                             { (colNum === 0) ? this.addCreatePin() : ""}
                             {pinCol.map((pin, idx) => {
-                                return <PinIndexItem key={idx} pin={pin} />;
+                                const lastPin = colNum === lastCol && idx === lastRow;
+                                return <PinIndexItem key={idx} pin={pin} lastPin={lastPin} />;
                             })}
                         </div>
                     )

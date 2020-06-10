@@ -2251,6 +2251,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _pin_index_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pin_index_item */ "./frontend/components/pins/pin_index_item.jsx");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _util_loading_spinner__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../util/loading_spinner */ "./frontend/util/loading_spinner.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2272,6 +2273,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
 
 
 
@@ -2337,15 +2339,19 @@ var PinIndex = /*#__PURE__*/function (_React$Component) {
     key: "reorganizePins",
     value: function reorganizePins() {
       var numCols = this.getNumCols();
-      if (numCols !== this.state.columns && numCols > 0) this.setState({
-        columns: numCols
-      });
+
+      if (numCols !== this.state.columns && numCols > 0) {
+        this.setState({
+          columns: numCols
+        });
+      }
     }
   }, {
     key: "shufflePins",
     value: function shufflePins() {
       var pins = this.props.pins;
-      var numCols = this.state.columns; //array of columns
+      var numCols = this.state.columns;
+      Object(_util_loading_spinner__WEBPACK_IMPORTED_MODULE_3__["addMainSpinner"])(); //array of columns
 
       var pinCols = new Array(numCols);
 
@@ -2372,6 +2378,18 @@ var PinIndex = /*#__PURE__*/function (_React$Component) {
       return pinCols;
     }
   }, {
+    key: "loadingScreen",
+    value: function loadingScreen() {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "main-spinner",
+        className: "main-spinner-box"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "main-loading-spinner"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+        className: "loading-message"
+      }, "We're adding new ideas to your home feed!"));
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this2 = this;
@@ -2379,16 +2397,20 @@ var PinIndex = /*#__PURE__*/function (_React$Component) {
       var pins = this.props.pins;
       if (!pins || pins.length === 0 || !this.state.columns) return null;
       var masonryPins = this.shufflePins();
+      var lastCol = masonryPins.length - 1;
+      var lastRow = masonryPins[lastCol].length - 1;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "all-pins-box"
-      }, !pins ? "" : masonryPins.map(function (pinCol, colNum) {
+      }, this.loadingScreen(), masonryPins.map(function (pinCol, colNum) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           key: colNum,
           className: "pin-column"
         }, colNum === 0 ? _this2.addCreatePin() : "", pinCol.map(function (pin, idx) {
+          var lastPin = colNum === lastCol && idx === lastRow;
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_pin_index_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
             key: idx,
-            pin: pin
+            pin: pin,
+            lastPin: lastPin
           });
         }));
       }));
@@ -2468,6 +2490,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _util_loading_spinner__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../util/loading_spinner */ "./frontend/util/loading_spinner.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2489,6 +2512,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
 
 
 
@@ -2518,14 +2542,21 @@ var PinIndexItem = /*#__PURE__*/function (_React$Component) {
     }
   }, {
     key: "showImage",
-    value: function showImage(e) {
-      e.preventDefault();
-      document.getElementById(this.props.pin.id).classList.add("image-load");
+    value: function showImage(lastPin) {
+      var _this2 = this;
+
+      return function (e) {
+        e.preventDefault();
+        if (lastPin) Object(_util_loading_spinner__WEBPACK_IMPORTED_MODULE_2__["removeMainSpinner"])();
+        document.getElementById(_this2.props.pin.id).classList.add("image-load");
+      };
     }
   }, {
     key: "render",
     value: function render() {
-      var pin = this.props.pin;
+      var _this$props = this.props,
+          pin = _this$props.pin,
+          lastPin = _this$props.lastPin;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-box",
         onClick: this.showPinDetails
@@ -2537,7 +2568,7 @@ var PinIndexItem = /*#__PURE__*/function (_React$Component) {
         className: "thumbnail",
         src: pin.photoUrl,
         id: pin.id,
-        onLoad: this.showImage
+        onLoad: this.showImage(lastPin)
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-space"
       }));
@@ -5175,6 +5206,30 @@ var fetchBoardPins = function fetchBoardPins() {
 
 /***/ }),
 
+/***/ "./frontend/util/loading_spinner.js":
+/*!******************************************!*\
+  !*** ./frontend/util/loading_spinner.js ***!
+  \******************************************/
+/*! exports provided: addMainSpinner, removeMainSpinner */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addMainSpinner", function() { return addMainSpinner; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeMainSpinner", function() { return removeMainSpinner; });
+var addMainSpinner = function addMainSpinner() {
+  var mainSpinner = document.getElementById("main-spinner");
+  if (!mainSpinner) return;
+  mainSpinner.classList.add("show-spinner");
+};
+var removeMainSpinner = function removeMainSpinner() {
+  var mainSpinner = document.getElementById("main-spinner");
+  if (!mainSpinner) return;
+  mainSpinner.classList.remove("show-spinner");
+};
+
+/***/ }),
+
 /***/ "./frontend/util/pin_api_util.js":
 /*!***************************************!*\
   !*** ./frontend/util/pin_api_util.js ***!
@@ -5367,13 +5422,7 @@ var getSplashBack = function getSplashBack() {
     }
   }
 
-  var showImage = function showImage(url) {
-    return function (e) {
-      e.preventDefault();
-      document.getElementById(url).classList.add("image-load");
-    };
-  };
-
+  window.scrollTo(0, 0);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "splash-back"
   }, imgUrls.map(function (col, i) {
@@ -5386,9 +5435,7 @@ var getSplashBack = function getSplashBack() {
         className: "tile-box"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "tile-img",
-        src: url,
-        id: url,
-        onLoad: showImage(url)
+        src: url
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "pin-space"
       }));

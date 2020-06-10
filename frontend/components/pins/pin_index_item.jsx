@@ -1,5 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import { removeMainSpinner } from '../../util/loading_spinner';
 
 class PinIndexItem extends React.Component{
     constructor(props){
@@ -14,18 +15,21 @@ class PinIndexItem extends React.Component{
         window.scrollTo(0, 0);
     }
 
-    showImage(e){
-        e.preventDefault();
-        document.getElementById(this.props.pin.id).classList.add("image-load");
+    showImage(lastPin){
+        return (e) => {
+            e.preventDefault();
+            if (lastPin) removeMainSpinner();
+            document.getElementById(this.props.pin.id).classList.add("image-load");
+        }
     }
 
     render(){
-        const {pin} = this.props;
+        const {pin, lastPin} = this.props;
         return (
             <div className="pin-box" onClick={this.showPinDetails}>
                 <div className="pin-box-details">
                     <div className="pin-image">
-                        <img className="thumbnail" src={pin.photoUrl} id={pin.id} onLoad={this.showImage} />
+                        <img className="thumbnail" src={pin.photoUrl} id={pin.id} onLoad={this.showImage(lastPin)} />
                     </div>
                 </div>
                 <div className="pin-space"></div>

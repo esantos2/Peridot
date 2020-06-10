@@ -9,8 +9,7 @@
     -webkit-animation: fadeIn 700ms;
 }
 
-.pin-image .image-load,
-.tile-box .image-load{
+.pin-image .image-load{
     opacity: 1;
 }
 
@@ -33,8 +32,42 @@
     -webkit-animation: spin 800ms linear infinite;
 }
 
+.all-pins-box .main-loading-spinner{
+    height: 40px;
+    width: 40px;
+    border: 10px solid rgb(228, 228, 228);
+    border-top: 10px solid lightgreen;
+    border-bottom: 10px solid lightgreen;
+    border-radius: 50%;
+    animation: spin 800ms linear infinite;
+    -webkit-animation: spin 800ms linear infinite;
+}
+
+.main-spinner-box{
+    display: none;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 20px;
+    padding: 30px;
+    margin: 30px;
+}
+
+.loading-message{
+    max-width: 500px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    margin: 20px;
+    text-align: center;
+}
+
 .pin-top-buttons .show-spinner{
     display: block;
+}
+
+.all-pins-box .show-spinner{
+    display: flex;
 }
 
 @keyframes spin{

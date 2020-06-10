@@ -12,13 +12,7 @@ export const getSplashBack = () => {
             col = [];
         }
     }
-
-    const showImage = (url) => {
-        return e => {
-            e.preventDefault();
-            document.getElementById(url).classList.add("image-load");
-        }
-    }
+    window.scrollTo(0,0);
 
     return (
         <div className="splash-back">
@@ -28,7 +22,7 @@ export const getSplashBack = () => {
                         {col.map((url) => {
                             return (
                                 <div key={url} className="tile-box">
-                                    <img className="tile-img" src={url} id={url} onLoad={showImage(url)}/>
+                                    <img className="tile-img" src={url} />
                                     <div className="pin-space"></div>
                                 </div>
                             )
