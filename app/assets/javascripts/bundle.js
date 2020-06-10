@@ -4967,7 +4967,7 @@ var selectSuggestedPins = function selectSuggestedPins(pins, userId, pinId) {
   var suggestedPins = [];
   Object.values(pins).forEach(function (pin) {
     if (pin.id === pinId) return;
-    if (pin.userId !== userId && pin.category === pins[pinId].category) suggestedPins.push(pin);
+    if (pin.category === pins[pinId].category) suggestedPins.push(pin); // if ((pin.userId !== userId) && (pin.category === pins[pinId].category)) suggestedPins.push(pin);
   });
   return suggestedPins;
 };
