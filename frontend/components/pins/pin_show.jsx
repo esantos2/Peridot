@@ -51,7 +51,7 @@ class PinShow extends React.Component{
     getSuggested(){
         const {pins, currentUserId, chosenPinId} = this.props;
         let suggested = selectSuggestedPins(pins, currentUserId, chosenPinId);
-        delete suggested[chosenPinId+1];
+        // delete suggested[chosenPinId+1];
         return suggested;
     }
 

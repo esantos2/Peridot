@@ -2714,8 +2714,8 @@ var PinShow = /*#__PURE__*/function (_React$Component) {
           pins = _this$props2.pins,
           currentUserId = _this$props2.currentUserId,
           chosenPinId = _this$props2.chosenPinId;
-      var suggested = Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_5__["selectSuggestedPins"])(pins, currentUserId, chosenPinId);
-      delete suggested[chosenPinId + 1];
+      var suggested = Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_5__["selectSuggestedPins"])(pins, currentUserId, chosenPinId); // delete suggested[chosenPinId+1];
+
       return suggested;
     }
   }, {
