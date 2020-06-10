@@ -2467,7 +2467,7 @@ var mapStateToProps = function mapStateToProps(_ref, _ref2) {
     pins = entities.boards[parseInt(params.boardId)].pins;
   } else if (params.userId) {
     pins = Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["selectUserPins"])(entities.pins, parseInt(params.userId));
-    createOption = true;
+    if (parseInt(params.userId) === session.currentUserId) createOption = true;
   } else if (params.pinId) {
     pins = Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["selectSuggestedPins"])(entities.pins, session.currentUserId, parseInt(params.pinId));
   } else {

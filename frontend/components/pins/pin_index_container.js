@@ -11,7 +11,7 @@ const mapStateToProps = ({entities, session}, {match: {params}}) => {
         pins = entities.boards[parseInt(params.boardId)].pins
     } else if (params.userId) {
         pins = selectUserPins(entities.pins, parseInt(params.userId));
-        createOption = true;
+        if ( parseInt(params.userId) === session.currentUserId ) createOption = true;
     } else if (params.pinId){
         pins = selectSuggestedPins(entities.pins, session.currentUserId, parseInt(params.pinId))
     } else {
