@@ -2306,6 +2306,7 @@ var PinIndex = /*#__PURE__*/function (_React$Component) {
       body.style.overflow = "visible";
       this.props.getInfo();
       this.reorganizePins();
+      Object(_util_loading_spinner__WEBPACK_IMPORTED_MODULE_3__["addMainSpinner"])();
       window.addEventListener("resize", this.reorganizePins);
     }
   }, {
@@ -2391,24 +2392,19 @@ var PinIndex = /*#__PURE__*/function (_React$Component) {
         className: "main-loading-spinner"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
         className: "loading-message"
-      }, "We're adding new ideas to your home feed!"));
+      }, this.props.mainFeed ? "We're adding new ideas to your home feed!" : ""));
     }
   }, {
-    key: "render",
-    value: function render() {
+    key: "showPins",
+    value: function showPins(masonryPins) {
       var _this2 = this;
 
       var pins = this.props.pins;
-      var _this$state2 = this.state,
-          columns = _this$state2.columns,
-          shuffle = _this$state2.shuffle;
-      var masonryPins = this.shufflePins();
+      var columns = this.state.columns;
       if (!pins || pins.length === 0 || masonryPins.length === 0 || !columns) return null;
       var lastCol = masonryPins.length - 1;
       var lastRow = masonryPins[lastCol].length - 1;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "pin-index-box"
-      }, this.loadingScreen(), shuffle ? Object(_util_loading_spinner__WEBPACK_IMPORTED_MODULE_3__["addMainSpinner"])() : "", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "all-pins-box"
       }, masonryPins.map(function (pinCol, colNum) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2422,7 +2418,15 @@ var PinIndex = /*#__PURE__*/function (_React$Component) {
             lastPin: lastPin
           });
         }));
-      })));
+      }));
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var masonryPins = this.shufflePins();
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "pin-index-box"
+      }, this.loadingScreen(), this.showPins(masonryPins));
     }
   }]);
 
@@ -2457,6 +2461,7 @@ var mapStateToProps = function mapStateToProps(_ref, _ref2) {
   var params = _ref2.match.params;
   var pins;
   var createOption = false;
+  var mainFeed = false;
 
   if (params.boardId) {
     pins = entities.boards[parseInt(params.boardId)].pins;
@@ -2467,11 +2472,13 @@ var mapStateToProps = function mapStateToProps(_ref, _ref2) {
     pins = Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["selectSuggestedPins"])(entities.pins, session.currentUserId, parseInt(params.pinId));
   } else {
     pins = Object(_reducers_selectors__WEBPACK_IMPORTED_MODULE_3__["selectOtherUsersPins"])(entities.pins, parseInt(session.currentUserId));
+    mainFeed = true;
   }
 
   return {
     pins: pins,
-    createOption: createOption
+    createOption: createOption,
+    mainFeed: mainFeed
   };
 };
 

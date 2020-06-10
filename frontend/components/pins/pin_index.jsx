@@ -19,6 +19,7 @@ class PinIndex extends React.Component{
         body.style.overflow = "visible";
         this.props.getInfo();
         this.reorganizePins();
+        addMainSpinner();
         window.addEventListener("resize", this.reorganizePins);
     }
 
@@ -86,35 +87,42 @@ class PinIndex extends React.Component{
         return (
             <div id="main-spinner" className="main-spinner-box">
                 <div className="main-loading-spinner"></div>
-                <h1 className="loading-message">We're adding new ideas to your home feed!</h1>
+                <h1 className="loading-message">
+                    {this.props.mainFeed ? "We're adding new ideas to your home feed!" : ""}
+                </h1>
+            </div>
+        )
+    }
+
+    showPins(masonryPins){
+        const { pins } = this.props;
+        const { columns } = this.state;
+        if (!pins || pins.length === 0 || masonryPins.length === 0 || !columns) return null;
+        const lastCol = masonryPins.length - 1;
+        const lastRow = masonryPins[lastCol].length - 1;
+        return (
+            <div className="all-pins-box">
+                {(masonryPins).map((pinCol, colNum) => {
+                    return (
+                        <div key={colNum} className="pin-column">
+                            {(colNum === 0) ? this.addCreatePin() : ""}
+                            {pinCol.map((pin, idx) => {
+                                const lastPin = colNum === lastCol && idx === lastRow;
+                                return <PinIndexItem key={idx} pin={pin} lastPin={lastPin} />;
+                            })}
+                        </div>
+                    )
+                })}
             </div>
         )
     }
 
     render(){
-        const {pins} = this.props;
-        const {columns, shuffle} = this.state;
         const masonryPins = this.shufflePins();
-        if (!pins || pins.length === 0 || masonryPins.length === 0 || !columns) return null;
-        const lastCol = masonryPins.length - 1;
-        const lastRow = masonryPins[lastCol].length - 1;
         return (
             <div className="pin-index-box">
                 {this.loadingScreen()}
-                {shuffle ? addMainSpinner() : ""}
-                <div className="all-pins-box">
-                    {(masonryPins).map((pinCol, colNum) => {
-                        return (
-                            <div key={colNum} className="pin-column">
-                                { (colNum === 0) ? this.addCreatePin() : ""}
-                                {pinCol.map((pin, idx) => {
-                                    const lastPin = colNum === lastCol && idx === lastRow;
-                                    return <PinIndexItem key={idx} pin={pin} lastPin={lastPin} />;
-                                })}
-                            </div>
-                        )
-                    })}
-                </div>
+                {this.showPins(masonryPins)}
             </div>
         )
     }

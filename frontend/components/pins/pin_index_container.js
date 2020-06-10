@@ -6,6 +6,7 @@ import { selectUserPins, selectSuggestedPins, selectOtherUsersPins } from '../..
 const mapStateToProps = ({entities, session}, {match: {params}}) => {
     let pins;
     let createOption = false;
+    let mainFeed = false;
     if (params.boardId) {
         pins = entities.boards[parseInt(params.boardId)].pins
     } else if (params.userId) {
@@ -15,8 +16,9 @@ const mapStateToProps = ({entities, session}, {match: {params}}) => {
         pins = selectSuggestedPins(entities.pins, session.currentUserId, parseInt(params.pinId))
     } else {
         pins = selectOtherUsersPins(entities.pins, parseInt(session.currentUserId));
+        mainFeed = true;
     }
-    return { pins, createOption }
+    return { pins, createOption, mainFeed }
 }
 
 const mapDispatchToProps = dispatch => ({
