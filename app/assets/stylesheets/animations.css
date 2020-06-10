@@ -32,7 +32,7 @@
     -webkit-animation: spin 800ms linear infinite;
 }
 
-.all-pins-box .main-loading-spinner{
+.pin-index-box .main-loading-spinner{
     height: 40px;
     width: 40px;
     border: 10px solid rgb(228, 228, 228);
@@ -44,15 +44,20 @@
 }
 
 .main-spinner-box{
+    opacity: 0;
     display: none;
     position: absolute;
-    justify-content: center;
+    left: 50%;
+    transform: translateX(-50%);
+    justify-content: flex-start;
     align-items: center;
     flex-direction: column;
+    width: 100%;
+    height: 100%;
     background-color: white;
     border-radius: 20px;
     padding: 30px;
-    margin: 30px;
+    transition: 300ms ease-in-out;
 }
 
 .loading-message{
@@ -66,8 +71,10 @@
     display: block;
 }
 
-.all-pins-box .show-spinner{
+.pin-index-box .show-spinner{
+    opacity: 1;
     display: flex;
+    cursor: initial;
 }
 
 @keyframes spin{

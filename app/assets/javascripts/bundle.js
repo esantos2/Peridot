@@ -2291,7 +2291,8 @@ var PinIndex = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      columns: 0
+      columns: 0,
+      shuffle: false
     };
     _this.reorganizePins = _this.reorganizePins.bind(_assertThisInitialized(_this));
     return _this;
@@ -2342,7 +2343,8 @@ var PinIndex = /*#__PURE__*/function (_React$Component) {
 
       if (numCols !== this.state.columns && numCols > 0) {
         this.setState({
-          columns: numCols
+          columns: numCols,
+          shuffle: true
         });
       }
     }
@@ -2350,10 +2352,12 @@ var PinIndex = /*#__PURE__*/function (_React$Component) {
     key: "shufflePins",
     value: function shufflePins() {
       var pins = this.props.pins;
-      var numCols = this.state.columns;
-      Object(_util_loading_spinner__WEBPACK_IMPORTED_MODULE_3__["addMainSpinner"])(); //array of columns
+      var _this$state = this.state,
+          columns = _this$state.columns,
+          shuffle = _this$state.shuffle;
+      if (!shuffle) return []; //array of columns
 
-      var pinCols = new Array(numCols);
+      var pinCols = new Array(columns);
 
       for (var i = 0; i < pinCols.length; i++) {
         pinCols[i] = new Array(0);
@@ -2371,7 +2375,7 @@ var PinIndex = /*#__PURE__*/function (_React$Component) {
 
 
       for (var _i2 = 0; _i2 < shufflePins.length; _i2++) {
-        var col = _i2 % numCols;
+        var col = _i2 % columns;
         pinCols[col].push(shufflePins[_i2]);
       }
 
@@ -2395,13 +2399,18 @@ var PinIndex = /*#__PURE__*/function (_React$Component) {
       var _this2 = this;
 
       var pins = this.props.pins;
-      if (!pins || pins.length === 0 || !this.state.columns) return null;
+      var _this$state2 = this.state,
+          columns = _this$state2.columns,
+          shuffle = _this$state2.shuffle;
       var masonryPins = this.shufflePins();
+      if (!pins || pins.length === 0 || masonryPins.length === 0 || !columns) return null;
       var lastCol = masonryPins.length - 1;
       var lastRow = masonryPins[lastCol].length - 1;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "pin-index-box"
+      }, this.loadingScreen(), shuffle ? Object(_util_loading_spinner__WEBPACK_IMPORTED_MODULE_3__["addMainSpinner"])() : "", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "all-pins-box"
-      }, this.loadingScreen(), masonryPins.map(function (pinCol, colNum) {
+      }, masonryPins.map(function (pinCol, colNum) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           key: colNum,
           className: "pin-column"
@@ -2413,7 +2422,7 @@ var PinIndex = /*#__PURE__*/function (_React$Component) {
             lastPin: lastPin
           });
         }));
-      }));
+      })));
     }
   }]);
 
