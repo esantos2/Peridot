@@ -58,12 +58,11 @@
     background-color: white;
     border-radius: 20px;
     padding: 30px;
-    transition: 300ms ease-in-out;
 }
 
 .loading-message{
     max-width: 500px;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 20px;
     text-align: center;
 }
