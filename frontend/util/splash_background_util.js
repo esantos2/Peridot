@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const getSplashBack = () => {
+export const getSplashBack = (animate = false) => {
     const urlStart = "https://peridot-seed.s3-us-west-1.amazonaws.com/Splash/splash(";
     const urlEnd = ").jpg";
     const imgUrls = [];
@@ -13,9 +13,9 @@ export const getSplashBack = () => {
         }
     }
     window.scrollTo(0,0);
-
+    let pageAnimation = (animate) ? "splash-back front" : "splash-back";
     return (
-        <div className="splash-back">
+        <div className={pageAnimation}>
             {imgUrls.map((col, i) => {
                 return (
                     <div key={i} className="splash-col">
@@ -23,7 +23,6 @@ export const getSplashBack = () => {
                             return (
                                 <div key={url} className="tile-box">
                                     <img className="tile-img" src={url} />
-                                    <div className="pin-space"></div>
                                 </div>
                             )
                         })}

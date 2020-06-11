@@ -4318,7 +4318,7 @@ var Welcome = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, Object(_util_splash_background_util__WEBPACK_IMPORTED_MODULE_2__["getSplashBack"])(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, Object(_util_splash_background_util__WEBPACK_IMPORTED_MODULE_2__["getSplashBack"])(true), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "modal-background"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "modal-child",
@@ -5424,6 +5424,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 
 var getSplashBack = function getSplashBack() {
+  var animate = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
   var urlStart = "https://peridot-seed.s3-us-west-1.amazonaws.com/Splash/splash(";
   var urlEnd = ").jpg";
   var imgUrls = [];
@@ -5439,8 +5440,9 @@ var getSplashBack = function getSplashBack() {
   }
 
   window.scrollTo(0, 0);
+  var pageAnimation = animate ? "splash-back front" : "splash-back";
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "splash-back"
+    className: pageAnimation
   }, imgUrls.map(function (col, i) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       key: i,
@@ -5452,8 +5454,6 @@ var getSplashBack = function getSplashBack() {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "tile-img",
         src: url
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "pin-space"
       }));
     }));
   }));

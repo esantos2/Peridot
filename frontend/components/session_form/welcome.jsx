@@ -27,7 +27,7 @@ class Welcome extends React.Component{
     render(){
         return (
             <div>
-                {getSplashBack()}
+                {getSplashBack(true)}
                 <div className="modal-background">
                     <div className="modal-child" onClick={e => e.stopPropagation()}>
                         <div className="login-signup">
