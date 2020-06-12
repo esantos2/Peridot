@@ -64,9 +64,9 @@ class UserProfile extends React.Component{
                         <a onClick={this.toggleBoardForm}><li>Create Board</li></a>
                         <Link to="/pin-builder"><li>Create Pin</li></Link>
                     </ul>
-                    <div className="icon">
+                    {/* <div className="icon">
                         <i className="fas fa-pencil-alt"></i>
-                    </div>
+                    </div> */}
                 </div>
             )
         }
