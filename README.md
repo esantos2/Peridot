@@ -5,7 +5,9 @@ other users' shared images, as well as contribute their own collections.
 
 [Visit the site](https://peri-dot.herokuapp.com/#/)
 
-<img align="center" width="650" height="auto" src="https://peridot-seed.s3-us-west-1.amazonaws.com/welcome3.png">
+<p align="center">
+  <img width="650" height="auto" src="https://peridot-seed.s3-us-west-1.amazonaws.com/welcome4.png">
+</p>
 
 ## Technologies
 * Ruby on Rails
@@ -15,7 +17,7 @@ other users' shared images, as well as contribute their own collections.
 
 ## Features
 
-###Discover feed suggestions
+### Discover feed suggestions
 * When viewing a pin, a suggested feed is generated below containing similar images
 <p align="center">
   <img max-width="650" height="auto" src="https://peridot-seed.s3-us-west-1.amazonaws.com/gifs/peridot_suggested_pins3.gif">
