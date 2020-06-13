@@ -5,6 +5,8 @@ other users' shared images, as well as contribute their own collections.
 
 [Visit the site](https://peri-dot.herokuapp.com/#/)
 
+<img align="center" width="650" height="auto" src="https://peridot-seed.s3-us-west-1.amazonaws.com/welcome3.png">
+
 ## Technologies
 * Ruby on Rails
 * React/Redux
@@ -13,47 +15,17 @@ other users' shared images, as well as contribute their own collections.
 
 ## Features
 
+###Discover feed suggestions
 * When viewing a pin, a suggested feed is generated below containing similar images
 <p align="center">
-  <img max-width="650" height="auto" src="./app/assets/images/gifs/peridot_feed_demo2.gif">
+  <img max-width="650" height="auto" src="https://peridot-seed.s3-us-west-1.amazonaws.com/gifs/peridot_suggested_pins3.gif">
 </p>
 
-* View other users' pins and add them to your own collections.
-<p align="center">
-  <img max-width="650" height="auto" src="./app/assets/images/gifs/peridot_save_pin_demo.gif">
-</p>
+* Frontend filters generate the suggested feed. Selectors populate the components with pins of the same category 
+    and check user ownership to ensure only unique and unsaved pins are displayed.
 
-
-* Create and edit your own pins and boards to save images and ideas.
-<p align="center">
-  <img max-width="650" height="auto" src="./app/assets/images/gifs/peridot_create_pin_demo.gif">
-</p>
-
-* Responsive design to aide an inviting discover feed
-<p align="center">
-  <img max-width="650" height="auto" src="./app/assets/images/gifs/peridot_responsive_demo2.gif">
-</p>
-
-## Masonry layout
-* Home feed organization is paramount to the user experience. The masonry style layout must be responsive and 
-    visually appealing, with columns of consistent widths and variable hieghts. The number of columns is
-    caluclated from the current width of the viewport and adjust by an event listener on the window. 
-    After fetching, the pins are randomized by a custom shuffling algorithm and individually assigned to a column. 
-    CSS flexbox and animations are used to display the image upon loading.
-
-<p align="center">
-  <img width="auto" height="auto" src="./app/assets/images/home_feed.png">
-</p>
-
-## Discover feed suggestions
-* Discovering new ideas is easier when you can view other images related to the ones you like.
-    When viewing individual pins, frontend filters generate a suggested feed of similar pins.
-    To implement this, selectors populate the components with pins of the same category 
-    and check user ownership to ensure unique and unsaved pins are displayed.
-
-```
+```javascript
 export const selectSuggestedPins = (pins, userId, pinId) => {
-    //select based on category, ignore currently viewed pin
     let suggestedPins = [];
     Object.values(pins).forEach( pin => {
         if (pin.id === pinId) return;
@@ -62,6 +34,26 @@ export const selectSuggestedPins = (pins, userId, pinId) => {
     return suggestedPins;
 };
 ```
+
+### View other users' pins and boards or create your own
+* View an assortment of other users' pins and add them to your own collections.
+<p align="center">
+  <img max-width="650" height="auto" src="https://peridot-seed.s3-us-west-1.amazonaws.com/gifs/peridot_save_pin.gif">
+</p>
+
+* Create and edit your own pins and boards to save and organize your ideas.
+<p align="center">
+  <img max-width="650" height="auto" src="https://peridot-seed.s3-us-west-1.amazonaws.com/gifs/peridot_create_pin3.gif">
+</p>
+
+### Masonry layout
+* After fetching, pins are randomized with a shuffling algorithm and individually assigned to a column. 
+    The number of columns is caluclated from the current width of the viewport and updated by an event listener on the window. 
+    CSS flexbox and animations are used to display the image upon loading.
+
+<p align="center">
+  <img max-width="650" height="auto" src="https://peridot-seed.s3-us-west-1.amazonaws.com/gifs/ezgif.com-optimize.gif">
+</p>
 
 ## Coming soon
 * Lazy loading images
