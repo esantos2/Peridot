@@ -74,7 +74,7 @@ class EditPinForm extends React.Component {
         e.preventDefault();
         const { pin, currentUserId, deletePin, closeEditForm } = this.props;
         if (currentUserId === pin.userId) {
-            closeEditForm();
+            closeEditForm(e);
             deletePin(pin.id);
             this.props.history.push(`/users/${currentUserId}/pins`);
         }
