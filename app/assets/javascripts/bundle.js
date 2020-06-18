@@ -2088,7 +2088,7 @@ var EditPinForm = /*#__PURE__*/function (_React$Component) {
           closeEditForm = _this$props3.closeEditForm;
 
       if (currentUserId === pin.userId) {
-        closeEditForm(e);
+        closeEditForm();
         deletePin(pin.id);
         this.props.history.push("/users/".concat(currentUserId, "/pins"));
       }
