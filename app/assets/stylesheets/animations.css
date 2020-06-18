@@ -59,6 +59,7 @@
     background-color: white;
     border-radius: 20px;
     padding: 30px;
+    transition: 300ms ease-in-out;
 }
 
 .loading-message{

@@ -126,7 +126,7 @@
     width: 100%;
     max-width: 600px;
     opacity: 0;
-    transition: opacity 300ms ease-in;
+    /* transition: opacity 300ms ease-in; */
 }
 
 .pin-image-show .thumbnail{

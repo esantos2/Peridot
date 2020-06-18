@@ -2365,19 +2365,15 @@ var PinIndex = /*#__PURE__*/function (_React$Component) {
       } //shuffle pins
 
 
-      var shufflePins = pins;
+      var shufflePins = pins; // for (let i = shufflePins.length - 1; i > 0; i--) {
+      //     const randIdx = Math.floor(Math.random() * (i + 1));
+      //     [shufflePins[i], shufflePins[randIdx]] = [shufflePins[randIdx], shufflePins[i]];
+      // }
+      //add pins to columns
 
-      for (var _i = shufflePins.length - 1; _i > 0; _i--) {
-        var randIdx = Math.floor(Math.random() * (_i + 1));
-        var _ref = [shufflePins[randIdx], shufflePins[_i]];
-        shufflePins[_i] = _ref[0];
-        shufflePins[randIdx] = _ref[1];
-      } //add pins to columns
-
-
-      for (var _i2 = 0; _i2 < shufflePins.length; _i2++) {
-        var col = _i2 % columns;
-        pinCols[col].push(shufflePins[_i2]);
+      for (var _i = 0; _i < shufflePins.length; _i++) {
+        var col = _i % columns;
+        pinCols[col].push(shufflePins[_i]);
       }
 
       return pinCols;
