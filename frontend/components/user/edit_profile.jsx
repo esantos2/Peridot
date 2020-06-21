@@ -3,8 +3,7 @@ import React from 'react';
 class EditProfileForm extends React.Component{
     constructor(props){
         super(props);
-        const { users, currentUserId } = this.props;
-        const user = users[currentUserId];
+        const { user } = this.props;
         this.state = {
             email: user.email,
             username: user.username,
@@ -12,7 +11,11 @@ class EditProfileForm extends React.Component{
             last_name: user.last_name,
             bio: user.bio
         }
-        this.submitForm = this.submitForm.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    update(field) {
+        return e => this.setState({ [field]: e.currentTarget.value });
     }
 
     handleSubmit(e) {
@@ -20,7 +23,7 @@ class EditProfileForm extends React.Component{
         const { username, first_name, last_name, bio } = this.state;
         let user = { username, first_name, last_name, bio };
         this.props.updateDetails(user);
-        this.props.closeEditForm(e);
+        this.props.closeEditForm();
     }
 
     render(){
@@ -30,24 +33,24 @@ class EditProfileForm extends React.Component{
                 <div className="modal-child-round-box" onClick={e => e.stopPropagation()}>
                     <div className="edit-details">
                         <h1>Edit Profile</h1>
-                        <div className="pin-edit-form-box">
-                            <div className="edit-pin-board">
+                        <div className="user-edit-form-box">
+                            <div className="user-edit-details">
                                 <div className="content">
                                     <div>
                                         <p>Username</p>
-                                        <input type="text" value={username} onChange={this.update("username")} />
+                                        <input type="text" value={username || ""} onChange={this.update("username")} />
                                     </div>
                                     <div>
                                         <p>First Name</p>
-                                        <input type="text" value={first_name} onChange={this.update("first_name")} />
+                                        <input type="text" value={first_name || ""} onChange={this.update("first_name")} />
                                     </div>
                                     <div>
                                         <p>Last Name</p>
-                                        <input type="text" value={last_name} onChange={this.update("last_name")} />
+                                        <input type="text" value={last_name || ""} onChange={this.update("last_name")} />
                                     </div>
                                     <div>
                                         <p>Bio</p>
-                                        <textarea rows="3" value={bio} onChange={this.update("bio")} />
+                                        <textarea rows="3" value={bio || ""} onChange={this.update("bio")} />
                                     </div>
                                 </div>
                                 <div className="image">
