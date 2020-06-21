@@ -75,6 +75,7 @@ class UserProfile extends React.Component{
     render(){
         const {user} = this.props;
         if (!user) return null;
+        let profileName = user.firstName ? `${user.firstName} ${user.lastName}` : `${user.email}`;
         return (
             <div className="user-profile-box">
                 {this.showBoardForm()}
@@ -84,7 +85,7 @@ class UserProfile extends React.Component{
                     </div>
                     <div className="user-details">
                         <div className="info">
-                            <h1>{`${user.firstName} ${user.lastName}`}</h1>
+                            <h1>{profileName}</h1>
                             {/* <h3>47 followers • 5 following</h3> */}
                             <h3>{user.bio}</h3>
                         </div>

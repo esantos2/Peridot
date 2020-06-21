@@ -2088,7 +2088,7 @@ var EditPinForm = /*#__PURE__*/function (_React$Component) {
           closeEditForm = _this$props3.closeEditForm;
 
       if (currentUserId === pin.userId) {
-        closeEditForm();
+        closeEditForm(e);
         deletePin(pin.id);
         this.props.history.push("/users/".concat(currentUserId, "/pins"));
       }
@@ -4519,6 +4519,7 @@ var UserProfile = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var user = this.props.user;
       if (!user) return null;
+      var profileName = user.firstName ? "".concat(user.firstName, " ").concat(user.lastName) : "".concat(user.email);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "user-profile-box"
       }, this.showBoardForm(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -4529,7 +4530,7 @@ var UserProfile = /*#__PURE__*/function (_React$Component) {
         className: "user-details"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "info"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "".concat(user.firstName, " ").concat(user.lastName)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, user.bio)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, profileName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, user.bio)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "image"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "profile-pic",
