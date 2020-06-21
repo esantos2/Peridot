@@ -102,3 +102,64 @@
 #create-options li a:visited{
     color: black;
 }
+
+.edit-details .user-edit-form-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: none;
+}
+
+.user-edit-details{
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.user-edit-details .content{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 80%;
+    padding: 20px;
+}
+
+.edit-details .content div{
+    display: flex;
+    border-bottom: 1px solid rgb(223, 223, 223);
+}
+
+.edit-details .content div:last-of-type{
+    border-bottom: none;
+}
+
+.edit-details .content div p{
+    width: 30%;
+    width: 150px;
+}
+
+.edit-details .content input,
+.edit-details .content textarea{
+    width: 60%;
+}
+
+.user-edit-details .image{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    height: 100%;
+}
+
+.user-edit-details .image img{
+    width: 90px;
+    height: 90px;
+}
+
+.user-edit-form-box .bottom-options{
+    display: flex;
+    justify-content: flex-end;
+    padding: 0;
+}

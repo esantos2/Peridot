@@ -33,8 +33,8 @@ class EditProfileForm extends React.Component{
                 <div className="modal-child-round-box" onClick={e => e.stopPropagation()}>
                     <div className="edit-details">
                         <h1>Edit Profile</h1>
-                        <div className="pin-edit-form-box">
-                            <div className="edit-pin-board">
+                        <div className="user-edit-form-box">
+                            <div className="user-edit-details">
                                 <div className="content">
                                     <div>
                                         <p>Username</p>
