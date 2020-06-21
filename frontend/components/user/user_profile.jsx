@@ -1,15 +1,18 @@
 import React from 'react';
 import {NavLink, Link, withRouter} from 'react-router-dom';
 import CreateBoardForm from '../boards/board_create_form';
+import EditProfileForm from './edit_profile';
 
 class UserProfile extends React.Component{
     constructor(props){
         super(props)
         this.state = {
-            boardForm: false
+            boardForm: false,
+            editForm: false
         }
         this.toggleMenu = this.toggleMenu.bind(this);
         this.toggleBoardForm = this.toggleBoardForm.bind(this);
+        this.toggleEditForm = this.toggleEditForm.bind(this);
     }
 
     componentDidMount(){
@@ -64,11 +67,27 @@ class UserProfile extends React.Component{
                         <a onClick={this.toggleBoardForm}><li>Create Board</li></a>
                         <Link to="/pin-builder"><li>Create Pin</li></Link>
                     </ul>
-                    {/* <div className="icon">
+                    <div className="icon" onClick={this.toggleEditForm}>
                         <i className="fas fa-pencil-alt"></i>
-                    </div> */}
+                    </div>
                 </div>
             )
+        }
+    }
+
+    toggleEditForm(){
+        let status = this.state.editForm;
+        this.setState({editForm: !status});
+    }
+
+    showEditForm(){
+        const {user, updateDetails} = this.props;
+        if ( this.state.editForm ){
+            return ( <EditProfileForm 
+                user={user}
+                updateDetails={updateDetails}
+                closeEditForm={this.toggleEditForm}
+            />)
         }
     }
 
@@ -79,6 +98,7 @@ class UserProfile extends React.Component{
         return (
             <div className="user-profile-box">
                 {this.showBoardForm()}
+                {this.showEditForm()}
                 <div className="header">
                     <div className="top-buttons">
                         {this.currentUserOnly()}
