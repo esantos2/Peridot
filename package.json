@@ -34,13 +34,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Arctive/Peridot.git"
+    "url": "git+https://github.com/esantos2/Peridot.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Arctive/Peridot/issues"
+    "url": "https://github.com/esantos2/Peridot/issues"
   },
-  "homepage": "https://github.com/Arctive/Peridot#readme"
+  "homepage": "https://github.com/esantos2/Peridot#readme"
 }
