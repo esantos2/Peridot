@@ -3,7 +3,7 @@
 Peridot is a single page app inspired by Pinterest, where users can discover new ideas and inspiration through 
 other users' shared images, as well as contribute their own collections.
 
-[Visit the site](https://peri-dot.herokuapp.com/#/)
+<!-- [Visit the site](https://peri-dot.herokuapp.com/#/) -->
 
 <p align="center">
   <img width="650" height="auto" src="https://peridot-seed.s3-us-west-1.amazonaws.com/welcome4.png">
